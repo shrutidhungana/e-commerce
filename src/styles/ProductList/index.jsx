@@ -25,6 +25,7 @@ export const ProductImage = styled('img')({
   height: 'auto',
   objectFit: 'cover',
   overflow: 'hidden',
+  padding: '2px',
 });
 
 export const ProductName = styled('h3')({
