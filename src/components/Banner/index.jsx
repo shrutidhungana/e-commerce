@@ -11,16 +11,7 @@ const Banner = () => {
     return (
         <StyledBanner>
             <BannerImage src = {bannerImage} />
-            {/*<BannerContent>
-            <Typography variant="h6">Huge Collection</Typography>
-            </BannerContent>
-            <BannerTitle variant="h2">
-            Gadgets, Jewelry and more
-            </BannerTitle>
-            <BannerDescription variant="subtitle">
-          Torem ipsum dolor sit amet, consectetur adipisicing elitsed do eiusmo
-          tempor incididunt ut labore et dolore magna
-    </BannerDescription>*/}
+           
         </StyledBanner>
     );
 }

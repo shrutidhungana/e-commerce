@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 import { Box, Typography } from "@mui/system";
-import { Colors, DrawerWidth } from '../theme';
+import { Colors } from '../theme';
 import { Link } from "react-router-dom";
 
 

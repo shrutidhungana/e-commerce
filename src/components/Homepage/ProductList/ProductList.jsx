@@ -1,6 +1,8 @@
 import { useState } from "react";
 import {  useQuery } from 'react-query';
 import { AddShoppingCart, Visibility } from '@mui/icons-material';
+import { ProductCard, ProductImage, ProductName, ProductPrice, AddToCartButton, ViewDetailsButton, ViewAllButton } from "../../../styles/ProductList";
+import { Grid } from "@mui/material";
 
 
 
@@ -15,11 +17,7 @@ const fetchProducts = async () => {
 const ProductList = () => {
   const { data, isLoading, error } = useQuery('products', fetchProducts);
 
-  const [cart, setCart] = useState([]);
-
-  const addToCart = (product) => {
-    setCart((prevCart) => [...prevCart, product]);
-  };
+  
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -42,7 +40,7 @@ const ProductList = () => {
                 variant="contained"
                 color="primary"
                 startIcon={<AddShoppingCart />}
-                onClick={() => addToCart(product)}
+                
               >
                 Add to cart
               </AddToCartButton>
@@ -57,7 +55,9 @@ const ProductList = () => {
           </Grid>
         ))}
       </Grid>
-      <ViewAllButton variant="contained" onClick={() => console.log('View all')}>
+      <ViewAllButton variant="contained"
+        
+        onClick={() => console.log('View all')}>
         View all
       </ViewAllButton>
     </>
