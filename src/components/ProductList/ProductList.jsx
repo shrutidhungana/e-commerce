@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext } from "react";
 import {  useQuery } from 'react-query';
 import { AddShoppingCart, Visibility } from '@mui/icons-material';
-import { ProductCard, ProductImage, ProductName, ProductPrice, AddToCartButton, ViewDetailsButton, StyledProgress } from '../../styles/ProductList'
+import { ProductCard, ProductImage, ProductName, ProductPrice, AddToCartButton, ViewDetailsButton, StyledProgress, StyledLink } from '../../styles/ProductList'
 import { Grid } from "@mui/material";
+import { CartContext } from "../../context/Cart";
 
 
 
@@ -16,7 +17,7 @@ const fetchProducts = async () => {
 
 const ProductList = ({startPoint,numItems}) => {
   const { data, isLoading, error } = useQuery('products', fetchProducts);
-
+  const { addToCart } = useContext(CartContext);
   
 
   if (isLoading) {
@@ -40,17 +41,21 @@ const ProductList = ({startPoint,numItems}) => {
                 variant="contained"
                 color="primary"
                 startIcon={<AddShoppingCart />}
-                
+                onClick={() => {
+                  addToCart(product);
+                }}
               >
-                Add to cart
+              Add to Cart
               </AddToCartButton>
+              <StyledLink to = {`/products/${product.id}`}>
               <ViewDetailsButton
                 variant="contained"
                 color="secondary"
                 startIcon={<Visibility />}
               >
                 View details
-              </ViewDetailsButton>
+                </ViewDetailsButton>
+                </StyledLink>
             </ProductCard>
           </Grid>
         ))}

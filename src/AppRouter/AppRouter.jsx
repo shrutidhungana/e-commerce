@@ -7,6 +7,8 @@ import Banner from '../components/Banner';
  import Homepage from '../components/Homepage/Homepage';
 import Products from '../components/Products/Products';
 import MoreProducts from '../components/MoreProducts/MoreProducts';
+import Details from '../components/Details/Details';
+
 const AppRouter = () => {
   return (
       <div>
@@ -17,7 +19,7 @@ const AppRouter = () => {
                   <Route exact path="/" element={<Homepage />} />
                   <Route path="/products" element={<Products />} />
                   <Route  path="/remainproducts" element={<MoreProducts />} />
-                   
+                  <Route exact path="/products/:id" element={<Details/>} />
               </Routes>       
               
   </Router>  

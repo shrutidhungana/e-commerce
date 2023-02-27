@@ -1,6 +1,6 @@
 import React, { createContext, useReducer } from "react";
-import CartReducer from "../Reducer/CartReducer";
-import { ADD_TO_CART, REMOVE_FROM_CART } from "../Reducer/ReducerTypes";
+import CartReducer from "../../Reducer/CartReducer"
+import { ADD_TO_CART, REMOVE_FROM_CART } from "../../Reducer/ReducerTypes";
 
 export const CartContext = createContext(null);
 
