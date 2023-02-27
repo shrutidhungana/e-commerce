@@ -25,7 +25,7 @@ import {
       <AppbarContainer>
         <AppbarHeader variant="h2">Wearable Tech</AppbarHeader>
             <MyList type="row">
-                
+            <StyledLink  to="/"><StyledListItemText primary="Home"/></StyledLink>
                 <StyledLink  to="/products"><StyledListItemText primary="Products"/></StyledLink>
                 <StyledLink to = "/authenticate">
                         <StyledListItemText primary="Authenticate" /></StyledLink>
