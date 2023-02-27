@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {  useQuery } from 'react-query';
 import { AddShoppingCart, Visibility } from '@mui/icons-material';
-import { ProductCard, ProductImage, ProductName, ProductPrice, AddToCartButton, ViewDetailsButton, ViewAllButton } from "../../../styles/ProductList";
+import { ProductCard, ProductImage, ProductName, ProductPrice, AddToCartButton, ViewDetailsButton, StyledProgress } from '../../styles/ProductList'
 import { Grid } from "@mui/material";
 
 
@@ -11,16 +11,16 @@ const apiUrl = 'https://fakestoreapi.com/products';
 const fetchProducts = async () => {
   const response = await fetch(apiUrl);
   const data = await response.json();
-  return data.slice(0, 4);
+    return data;
 };
 
-const ProductList = () => {
+const ProductList = ({startPoint,numItems}) => {
   const { data, isLoading, error } = useQuery('products', fetchProducts);
 
   
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <StyledProgress />;
   }
 
   if (error) {
@@ -30,7 +30,7 @@ const ProductList = () => {
   return (
     <>
       <Grid container spacing={2}>
-        {data.map((product) => (
+        {data.slice(startPoint, numItems).map((product) => (
           <Grid item xs={12} md={3} key={product.id}>
             <ProductCard>
               <ProductImage src={product.image} alt={product.title} />
@@ -55,11 +55,7 @@ const ProductList = () => {
           </Grid>
         ))}
       </Grid>
-      <ViewAllButton variant="contained"
-        
-        onClick={() => console.log('View all')}>
-        View all
-      </ViewAllButton>
+     
     </>
   );
 }
