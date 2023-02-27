@@ -3,7 +3,8 @@ import { UIProvider } from './context/UI'
 import AppRouter from './AppRouter/AppRouter'
 import { ThemeProvider } from '@mui/system';
 import { Container, Typography, Box, Stack, Grid, Button } from "@mui/material";
-import theme from './styles/theme'
+import theme from './styles/theme';
+import CartState from './context/Cart';
 const App = () => {
   return (
     <div> 
@@ -16,8 +17,10 @@ const App = () => {
         }}
           >
         <Stack>
-        <UIProvider>
-        <AppRouter />
+            <UIProvider>
+              <CartState>
+                <AppRouter />
+                </CartState>
       </UIProvider>
         </Stack>
      </Container>

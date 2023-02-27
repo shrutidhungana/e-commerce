@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import { Grid, Button } from '@mui/material';
 import { Colors } from '../theme';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { Link } from 'react-router-dom';
 
 
 
@@ -16,7 +16,7 @@ export const ProductCard = styled(Grid)(() => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '10px',
-   height: '100%',
+   height: '90%',
     
 }));
   
@@ -24,7 +24,7 @@ export const ProductImage = styled('img')({
   // maxWidth: '80%',
   width: '50%',
   height: '50%',
-  objectFit: 'cover',
+  objectFit: 'contain',
   overflow: 'hidden',
   
 });
@@ -32,7 +32,21 @@ export const ProductImage = styled('img')({
 export const ProductName = styled('h3')({
   textAlign: 'center',
   color: Colors.primary,
-  fontFamily:'"Open Sans", "Sans Serif"'
+  fontFamily: '"Open Sans", "Sans Serif"',
+  maxWidth: '100%',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  '&:hover': {
+    whiteSpace: 'normal',
+    maxWidth: 'unset',
+    overflow: 'visible',
+    textOverflow: 'unset',
+    color: Colors.primaryHover,
+    cursor: 'pointer',
+  },
+  
+
 });
 
 export const ProductPrice = styled('h4')({
@@ -83,7 +97,7 @@ export const ViewAllDiv = styled('div')(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-}))
+}));
 
 export const StyledProgress = styled(CircularProgress)(() => ({
   color: Colors.secondary,
@@ -94,5 +108,10 @@ export const StyledProgress = styled(CircularProgress)(() => ({
   left: '50%',
   transform: 'translate(-50%, -50%)',
   
-}))
+}));
+
+export const StyledLink = styled(Link)(() => ({
+  textDecoration: 'none',
+  fontFamily: '"Open Sans","Sans Serif"',
+}));
 
