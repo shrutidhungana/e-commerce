@@ -88,9 +88,7 @@ export const ViewAllButton = styled(Button)(( ) => ({
     backgroundColor: Colors.primaryHover,
     
   }
-    
-  
-  
+
 }));
 
 export const ViewAllDiv = styled('div')(() => ({
