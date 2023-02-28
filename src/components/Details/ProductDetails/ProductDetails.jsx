@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { useParams } from 'react-router-dom';
-import { ProductImage, ProductName, ProductCard, ProductPrice, ProductDescription, ProductCategory, AddToCartButton,StyledProgress,ViewAllDiv,ViewAllButton, ProductDiv } from "../../../styles/Details";
+import { Image, ProductName, ProductCard, ProductPrice, ProductDescription, ProductCategory, AddToCartButton,StyledProgress,ViewAllDiv,ViewAllButton, ProductDiv } from "../../../styles/Details";
 import { useContext } from "react";
 import { CartContext } from "../../../context/Cart";
 import { AddShoppingCart } from '@mui/icons-material';
@@ -26,17 +26,17 @@ const ProductDetails = () => {
     <>
          <ProductDiv>
         <ProductCard>
-            <ProductImage image={image} alt={title} />
-            <ProductName>{title}</ProductName>
-        <ProductPrice>${price}</ProductPrice>
-        <ProductCategory>{category}</ProductCategory>
-        <ProductDescription>{description}.</ProductDescription>
+          <Image src={image} alt={title } />
+            <ProductName>Name: {title}</ProductName>
+        <ProductPrice>Price: ${price}</ProductPrice>
+        <ProductCategory>Category: {category}</ProductCategory>
+        <ProductDescription>About: {description}.</ProductDescription>
         <AddToCartButton
         variant="contained"
-        color="primary"
+        // color="primary"
         startIcon={<AddShoppingCart />}
         onClick={() => {
-          addToCart(product);
+          addToCart(data);
         }}
       >
       Add to Cart

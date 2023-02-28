@@ -35,11 +35,11 @@ const ProductList = ({startPoint,numItems}) => {
           <Grid item xs={12} md={3} key={product.id}>
             <ProductCard>
               <ProductImage src={product.image} alt={product.title} />
-              <ProductName>{product.title}</ProductName>
-              <ProductPrice>${product.price.toFixed(2)}</ProductPrice>
+              <ProductName>Name: {product.title}</ProductName>
+              <ProductPrice>Price: ${product.price.toFixed(2)}</ProductPrice>
               <AddToCartButton
                 variant="contained"
-                color="primary"
+                // color="primary"
                 startIcon={<AddShoppingCart />}
                 onClick={() => {
                   addToCart(product);

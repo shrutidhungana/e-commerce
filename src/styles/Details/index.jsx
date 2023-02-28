@@ -2,13 +2,19 @@ import { Grid,Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Colors } from '../theme';
 import CircularProgress from '@mui/material/CircularProgress';
+import { CardMedia } from '@mui/material';
 
 
 
-export const ProductImage = styled('img')({
-  // maxWidth: '80%',
-  height: 0,
-  paddingTop: '56.25%',
+
+export const Image = styled('img')({
+  width: '50%',
+  height: '50%',
+  objectFit: 'contain',
+  overflow: 'hidden',
+  
+  
+  // paddingTop: '56.25%',
   
 });
 
@@ -50,12 +56,12 @@ export const ProductPrice = styled('h4')({
   textAlign: 'center',
   color: Colors.secondary,
   fontSize: '17px',
-  fontFamily:'"Open Sans", "Sans Serif"'
+  fontFamily:'"Open Sans"'
 });
 
 export const AddToCartButton = styled(Button)(() => ({
   marginTop: '3px',
-  fontFamily: '"Open Sans", "Sans Serif"',
+  fontFamily: '"Open Sans"',
   backgroundColor: Colors.primary,
   '&:hover': {
     backgroundColor: Colors.primaryHover,
@@ -67,10 +73,10 @@ export const AddToCartButton = styled(Button)(() => ({
 export const ProductDescription = styled('p')({
   color: Colors.primary,
   overflow: 'auto',
-  fontSize: '16px',
+  fontSize: '15px',
   textAlign: 'center',
   fontWeight: 500,
-  fontFamily: '"Open Sans" "sans serif"',
+  fontFamily: '"Open Sans"',
 });
 
 export const ProductCategory = styled('p')({
@@ -79,7 +85,7 @@ export const ProductCategory = styled('p')({
   fontSize: '20px',
   textAlign: 'center',
   fontWeight: 'bold',
-  fontFamily: '"Open Sans" "sans serif"',
+  fontFamily: '"Open Sans"',
 });
 
 
