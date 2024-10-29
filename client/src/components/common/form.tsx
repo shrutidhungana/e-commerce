@@ -10,18 +10,10 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import { FormControl, FormData } from "@/types";
 
-type FormControl = {
-  type: string;
-  name: string;
-  label: string;
-  value?: string | number;
-  options?: { id: string; label: string }[];
-  componentType: "input" | "select" | "textarea"; // For select and radio
-};
-type FormData = {
-  [key: string]: string; // Flexible structure for form values
-};
+
+
 
 type FormProps = {
   formControls: FormControl[];
