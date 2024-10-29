@@ -1,11 +1,6 @@
 // Define an interface for the form control
-interface FormControl {
-  name: string;
-  label: string;
-  placeholder: string;
-  componentType: string;
-  type: string;
-}
+import {FormControl} from '@/types'
+
 
 // Declare the array using the FormControl interface
 export const registerFormControls: FormControl[] = [
