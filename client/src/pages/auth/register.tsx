@@ -3,7 +3,11 @@ import AuthLayout from "@/components/auth/layout";
 import Link from "next/link";
 import CommonForm from "@/components/common/form";
 import { registerFormControls } from "@/config";
-import { FormData } from "@/types";
+import { FormData, RegisterResponse } from "@/types";
+import { useDispatch } from "react-redux";
+import { registerUser } from "@/store/auth-slice";
+import { AppDispatch } from "@/store/store";
+import { useRouter } from "next/router";
 
 type RegisterProps = {};
 
@@ -14,11 +18,30 @@ const initialState: FormData = {
 };
 
 const AuthRegister: React.FC<RegisterProps> = () => {
-    const [formData, setFormData] = useState<FormData>(initialState);
-    const onSubmit = (
-     e: React.FormEvent<HTMLFormElement>,
-      
-    ) => {};
+  const [formData, setFormData] = useState<FormData>(initialState);
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(registerUser(formData)).then((data) => {
+      console.log(data);
+      const response = data as {
+        payload: RegisterResponse | null;
+        meta: {
+          requestStatus: "fulfilled" | "pending" | "rejected";
+        };
+      };
+      if (
+        response.meta.requestStatus === "fulfilled" &&
+        response.payload?.success
+      ) {
+        router.push("/auth/login");
+      }
+    });
+  };
+
+  console.log(formData);
 
   return (
     <AuthLayout>
