@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { AuthState, User } from "@/types";
+import { AuthState, User, RegisterUserPayload, FormData } from "@/types";
 import axios from "axios";
 import { apiEndpoints } from "@/utils/api";
 
@@ -11,17 +11,16 @@ const initialState: AuthState = {
 
 const { register } = apiEndpoints;
 
-type RegisterUserPayload = {
-  // Define the shape of your form data here
-  userName?: string;
-  email: string;
-  password: string;
-}
 
-export const registerUser = createAsyncThunk<User | null, RegisterUserPayload>(
+
+export const registerUser = createAsyncThunk<
+  User | null,
+  RegisterUserPayload
+  
+>(
   "/auth/register",
 
-  async (formData: any) => {
+  async (formData: FormData) => {
     const response = await axios.post(register, formData, {
       withCredentials: true,
     });

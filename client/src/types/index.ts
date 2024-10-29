@@ -28,6 +28,12 @@ export type FormData = {
 };
 
 
+export type RegisterUserPayload = {
+  // Define the shape of your form data here
+  userName?: string;
+  email: string;
+  password: string;
+};
 export type RegisterResponse = {
   success: boolean;
   message: string;

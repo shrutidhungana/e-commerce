@@ -5,6 +5,8 @@ import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import CheckAuth from "@/components/common/checkAuth";
 
+import { Toaster } from "@/components/ui/toaster";
+
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -22,6 +24,7 @@ const user = null;
         />
         <link rel="icon" href="/favicon.png" />
       </Head>
+      <Toaster />
       <CheckAuth isAuthenticated={isAuthenticated} user={user}>
         <Component {...pageProps} /> {/* Render the page component */}
       </CheckAuth>
