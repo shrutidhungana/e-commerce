@@ -1,11 +1,11 @@
 import AdminLayout from '@/components/admin-view/layout';
 import React from 'react';
 
-type featuresProps = {
+type FeaturesProps = {
     
 };
 
-const AdminFeatures:React.FC<featuresProps> = () => {
+const AdminFeatures:React.FC<FeaturesProps> = () => {
     
     return (
         <AdminLayout>

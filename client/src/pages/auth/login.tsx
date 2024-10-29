@@ -1,11 +1,11 @@
 import React from 'react';
 import AuthLayout from '@/components/auth/layout';
 
-type loginProps = {
+type LoginProps = {
     
 };
 
-const login:React.FC<loginProps> = () => {
+const Login:React.FC<LoginProps> = () => {
     
     return (
       <AuthLayout>
@@ -15,4 +15,4 @@ const login:React.FC<loginProps> = () => {
       </AuthLayout>
     );
 }
-export default login;
+export default Login;

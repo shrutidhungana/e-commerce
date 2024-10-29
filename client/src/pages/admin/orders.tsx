@@ -1,11 +1,11 @@
 import React from 'react';
 import AdminLayout from '@/components/admin-view/layout'
 
-type ordersProps = {
+type OrdersProps = {
     
 };
 
-const AdminOrders:React.FC<ordersProps> = () => {
+const AdminOrders:React.FC<OrdersProps> = () => {
     
     return (
         <AdminLayout>

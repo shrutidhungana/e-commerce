@@ -1,11 +1,11 @@
 import AuthLayout from '@/components/auth/layout';
 import React from 'react';
 
-type registerProps = {
+type RegisterProps = {
     
 };
 
-const register:React.FC<registerProps> = () => {
+const Register:React.FC<RegisterProps> = () => {
     
     return (
         <AuthLayout>
@@ -15,4 +15,4 @@ const register:React.FC<registerProps> = () => {
         </AuthLayout>
     )
 }
-export default register;
+export default Register;

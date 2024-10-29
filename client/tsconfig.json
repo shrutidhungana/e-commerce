@@ -12,9 +12,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "src", // add this line to help the paths resolve from `src`
-    "paths": {
-      "@/*": ["./*"]
+   // add this line to help the paths resolve from `src`
+     "paths": {
+      "@/*": ["./src/*"]
     },
     "target": "ES2017"
   },
