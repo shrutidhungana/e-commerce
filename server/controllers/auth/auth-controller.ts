@@ -89,7 +89,14 @@ const loginUser = async (req: Request, res: Response): Promise<void | Response> 
 };
 
 // logout
+const logoutUser = async (req: Request, res: Response): Promise<void | Response> => {
+  res.clearCookie("token").json({
+    success: true,
+    message: "Logged out successfully!",
+  });
+};
+
 
 // middleware
 
-export {registerUser, loginUser}
+export {registerUser, loginUser, logoutUser}
