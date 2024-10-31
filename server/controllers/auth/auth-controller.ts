@@ -9,54 +9,54 @@ const registerUser = async (req: Request, res: Response): Promise<void | Respons
 
   try {
     const checkUser = await User.findOne({ email });
-    if (checkUser)
+    if (checkUser) {
       return res.json({
         success: false,
-        message: "User Already exists with the same email! Please try again",
+        message: "User already exists with the same email! Please try again",
       });
+    }
+
     const hashPassword = await bcrypt.hash(password, 15);
     const newUser = new User({
       userName,
       email,
       password: hashPassword,
     });
+
     await newUser.save();
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Your registration is successful",
     });
   } catch (e) {
     console.log(e);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Some error occured",
+      message: "Some error occurred",
     });
   }
-  return res.status(500).json({
-    success: false,
-    message: "Unexpected error occurred",
-  });
 };
 
 // login
-const loginUser = async (req: Request, res: Response): Promise<void |Response> => {
+const loginUser = async (req: Request, res: Response): Promise<void | Response> => {
   const { email, password } = req.body;
+
   try {
-     const checkUser = await User.findOne({ email });
-     if (!checkUser)
-       return res.json({
-         success: false,
-         message: "User doesn't exists! Please register first",
-       });
-    const checkPasswordMatch = await bcrypt.compare(
-      password,
-      checkUser.password
-    );
-    if (!checkPasswordMatch)
+    const checkUser = await User.findOne({ email });
+    if (!checkUser) {
+      return res.json({
+        success: false,
+        message: "User doesn't exist! Please register first",
+      });
+    }
+
+    const checkPasswordMatch = await bcrypt.compare(password, checkUser.password);
+    if (!checkPasswordMatch) {
       return res.json({
         success: false,
         message: "Incorrect password! Please try again",
       });
+    }
 
     const token = jwt.sign(
       {
@@ -69,7 +69,7 @@ const loginUser = async (req: Request, res: Response): Promise<void |Response> =
       { expiresIn: "60m" }
     );
 
-    res.cookie("token", token, { httpOnly: true, secure: false }).json({
+    return res.cookie("token", token, { httpOnly: true, secure: false }).json({
       success: true,
       message: "Logged in successfully",
       user: {
@@ -81,15 +81,11 @@ const loginUser = async (req: Request, res: Response): Promise<void |Response> =
     });
   } catch (e) {
     console.log(e);
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
-      message: "Some error occured",
+      message: "Some error occurred",
     });
   }
-  return res.status(500).json({
-    success: false,
-    message: "Unexpected error occurred",
-  });
 };
 
 // logout
