@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { registerUser } from "@/store/auth-slice";
 import { AppDispatch } from "@/store/store";
 import { useRouter } from "next/router";
-import { toast } from "react-toastify";
 import { useToast } from "@/hooks/use-toast";
 
 type RegisterProps = {};
@@ -28,31 +27,41 @@ const AuthRegister: React.FC<RegisterProps> = () => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(registerUser(formData)).then((data) => {
-      console.log(data);
+     
       const response = data as {
-        payload: RegisterResponse;
+        payload?: RegisterResponse;
         meta: {
           requestStatus: "fulfilled" | "pending" | "rejected";
         };
+        error?: {
+          message: string;
+        };
       };
+
+       
       if (
         response.meta.requestStatus === "fulfilled" &&
         response.payload?.success
       ) {
-       toast({
-         title: "Success!",
-         description: response.payload.message, // Custom message
-         duration: 5000, // Duration in milliseconds
-         type: "success", // Type of toast (success, error, info, etc.)
-         // Optionally, you can add a custom class for styling
-         className: "bg-green-500 text-white", // Example styling class
-       });
+        toast({
+          title: "Success!",
+          description: response.payload.message, 
+          duration: 5000, 
+          className: "bg-green-500 text-white", 
+        });
         router.push("/auth/login");
+      } else {
+          toast({
+            title: "Error!",
+            description: response.error?.message,
+            duration: 5000,
+            variant: 'destructive'
+          });
       }
     });
   };
 
-  console.log(formData);
+
 
   return (
     <AuthLayout>

@@ -1,22 +1,28 @@
-import store from "@/store/store";
+import store, { RootState } from "@/store/store";
 import "@/styles/globals.css";
 import Head from "next/head";
 import type { AppProps } from "next/app";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import CheckAuth from "@/components/common/checkAuth";
-
 import { Toaster } from "@/components/ui/toaster";
 
 
-export default function App({ Component, pageProps }: AppProps) {
+function AuthWrapper({ children }) {
+  const { user, isAuthenticated } = useSelector(
+    (state: RootState) => state.auth
+  );
+  return (
+    <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+      {children}
+    </CheckAuth>
+  );
+}
 
-const isAuthenticated = false; // Replace with actual logic to check if user is authenticated
-const user = null; 
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <Head>
         <title>TrendHive</title>
-
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
           name="description"
@@ -25,9 +31,9 @@ const user = null;
         <link rel="icon" href="/favicon.png" />
       </Head>
       <Toaster />
-      <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+      <AuthWrapper>
         <Component {...pageProps} /> {/* Render the page component */}
-      </CheckAuth>
+      </AuthWrapper>
     </Provider>
   );
 }
