@@ -1,15 +1,17 @@
-export type User ={
+export type User = {
   id: string;
   name: string;
   email: string;
-  // Add other user properties as needed
-}
+  success: boolean; // This property is required
+  user: string;
+  role: string;
+};
 
-export type AuthState ={
+export type AuthState = {
   isAuthenticated: boolean;
   isLoading: boolean;
   user: User | null;
-}
+};
 
 export type FormControl = {
   name: string;
@@ -27,7 +29,6 @@ export type FormData = {
   [key: string]: string | undefined; // Index signature allowing string or undefined
 };
 
-
 export type RegisterUserPayload = {
   // Define the shape of your form data here
   userName?: string;
@@ -37,4 +38,9 @@ export type RegisterUserPayload = {
 export type RegisterResponse = {
   success: boolean;
   message: string;
-}
+};
+
+export type LoginResponse = {
+  success: boolean;
+  message: string;
+};

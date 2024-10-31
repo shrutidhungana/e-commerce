@@ -3,7 +3,11 @@ import AuthLayout from "@/components/auth/layout";
 import Link from "next/link";
 import CommonForm from "@/components/common/form";
 import { loginFormControls } from "@/config";
-import { FormData } from "@/types";
+import { FormData, LoginResponse } from "@/types";
+import { loginUser } from "@/store/auth-slice";
+import { useToast } from "@/hooks/use-toast";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
 
 type LoginProps = {};
 
@@ -14,7 +18,46 @@ const initialState: FormData = {
 
 const AuthLogin: React.FC<LoginProps> = () => {
   const [formData, setFormData] = useState<FormData>(initialState);
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {};
+  const dispatch = useDispatch<AppDispatch>();
+const { toast } = useToast();
+
+ const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+   e.preventDefault();
+   dispatch(loginUser(formData)).then((data) => {
+     const response = data as {
+       payload?: LoginResponse;
+       meta: {
+         requestStatus: "fulfilled" | "pending" | "rejected";
+       };
+       error?: {
+         message: string;
+       };
+     };
+
+     if (
+       response.meta.requestStatus === "fulfilled" &&
+       response.payload?.success
+     ) {
+       toast({
+         title: "Success!",
+         description: response.payload.message,
+         duration: 5000,
+         className: "bg-green-500 text-white",
+       });
+       
+     } else {
+       toast({
+         title: "Error!",
+         description: response.error?.message,
+         duration: 5000,
+         variant: "destructive",
+       });
+     }
+   });
+ };
+
+
+
 
   return (
     <AuthLayout>
