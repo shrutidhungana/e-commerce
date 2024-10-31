@@ -1,10 +1,19 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../../modals/User";
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+
+interface ExtendedRequest extends Request {
+  user?: {
+    id: string;
+    role: string;
+    email: string;
+    userName: string;
+  };
+}
 
 // register
-const registerUser = async (req: Request, res: Response): Promise<void | Response> => {
+const registerUser = async (req: ExtendedRequest, res: Response): Promise<void | Response> => {
   const { userName, email, password } = req.body;
 
   try {
@@ -98,5 +107,27 @@ const logoutUser = async (req: Request, res: Response): Promise<void | Response>
 
 
 // middleware
+const authMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void | Response> => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized user!",
+    });
+  }
 
-export {registerUser, loginUser, logoutUser}
+  try {
+    const decoded = jwt.verify(token, "CLIENT_SECRET_KEY") as { id: string; role: string; email: string; userName: string };
+    (req as Request & { user: typeof decoded }).user = decoded; // Explicitly cast req
+    next();
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: "Unauthorized user!",
+    });
+  }
+
+};
+
+
+export {registerUser, loginUser, logoutUser, authMiddleware}
