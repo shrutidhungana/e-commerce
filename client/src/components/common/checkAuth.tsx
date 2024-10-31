@@ -15,6 +15,8 @@ const CheckAuth: React.FC<CheckAuthProps> = ({
   const router = useRouter();
   const { pathname } = router;
 
+  
+
   useEffect(() => {
     const redirectTo = () => {
       // Handle home route

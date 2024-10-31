@@ -7,7 +7,7 @@ import { Provider, useSelector, useDispatch } from "react-redux";
 import { checkAuth } from "@/store/auth-slice";
 import CheckAuth from "@/components/common/checkAuth";
 import { Toaster } from "@/components/ui/toaster";
-import { LuLoader2 } from "react-icons/lu";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type AuthWrapperProps = {
   children: React.ReactNode; // Specify the type for children
@@ -22,7 +22,7 @@ function AuthWrapper({ children }: Readonly<AuthWrapperProps>) {
     dispatch(checkAuth());
   }, [dispatch]);
 
-if(isLoading) return <LuLoader2 />
+ if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
   return (
     <CheckAuth isAuthenticated={isAuthenticated} user={user}>
