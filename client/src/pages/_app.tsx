@@ -1,3 +1,4 @@
+import React from 'react'
 import store, { RootState } from "@/store/store";
 import "@/styles/globals.css";
 import Head from "next/head";
@@ -7,7 +8,11 @@ import CheckAuth from "@/components/common/checkAuth";
 import { Toaster } from "@/components/ui/toaster";
 
 
-function AuthWrapper({ children }) {
+type AuthWrapperProps = {
+  children: React.ReactNode; // Specify the type for children
+}
+
+function AuthWrapper({ children }: Readonly<AuthWrapperProps>) {
   const { user, isAuthenticated } = useSelector(
     (state: RootState) => state.auth
   );
@@ -17,6 +22,7 @@ function AuthWrapper({ children }) {
     </CheckAuth>
   );
 }
+
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
