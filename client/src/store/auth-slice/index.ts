@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { AuthState, User, RegisterUserPayload, FormData } from "@/types";
+import { AuthState, User, RegisterUserPayload, FormData, } from "@/types";
 import axios from "axios";
 import { apiEndpoints } from "@/utils/api";
 
@@ -9,15 +9,9 @@ const initialState: AuthState = {
   user: null,
 };
 
-const { register, login } = apiEndpoints;
+const { register, login, logout, auth } = apiEndpoints;
 
-
-
-export const registerUser = createAsyncThunk<
-  User | null,
-  RegisterUserPayload
-  
->(
+export const registerUser = createAsyncThunk<User | null, RegisterUserPayload>(
   "/auth/register",
 
   async (formData: FormData) => {
@@ -35,6 +29,38 @@ export const loginUser = createAsyncThunk<User | null, RegisterUserPayload>(
   async (formData: FormData) => {
     const response = await axios.post(login, formData, {
       withCredentials: true,
+    });
+
+    return response.data;
+  }
+);
+
+export const logoutUser = createAsyncThunk<User | null>(
+  "/auth/logout",
+
+  async () => {
+    const response = await axios.post(
+      logout,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
+export const checkAuth = createAsyncThunk<User | null>(
+  "/auth/checkauth",
+
+  async () => {
+    const response = await axios.get<User>(auth, {
+      withCredentials: true,
+      headers: {
+        "Cache-Control":
+          "no-store, no-cache, must-revalidate, proxy-revalidate",
+      },
     });
 
     return response.data;
@@ -87,8 +113,37 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+      })
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(checkAuth.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(
+        checkAuth.fulfilled,
+        (state, action: PayloadAction<User | null>) => {
+          state.isLoading = false;
+
+          // Check if action.payload is not null
+          if (action.payload) {
+            state.user = action.payload; // Now TypeScript knows action.payload is User
+            state.isAuthenticated = true;
+          } else {
+            // Handle the case where action.payload is null
+            state.user = null;
+            state.isAuthenticated = false;
+          }
+        }
+      )
+      .addCase(checkAuth.rejected, (state) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
       });
-  }
+  },
 });
 
 export const { setUser } = authSlice.actions;

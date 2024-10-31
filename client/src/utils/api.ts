@@ -3,5 +3,7 @@ const API_BASE_URL = "http://localhost:5000/api"
 export const apiEndpoints = {
   register: `${API_BASE_URL}/auth/register`,
   login: `${API_BASE_URL}/auth/login`,
+  logout: `${API_BASE_URL}/auth/logout`,
+  auth: `${API_BASE_URL}/auth/check-auth`,
   // Add other API endpoints here as needed
 };

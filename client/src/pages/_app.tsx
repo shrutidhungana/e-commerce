@@ -1,28 +1,35 @@
-import React from 'react'
-import store, { RootState } from "@/store/store";
+import React, { useEffect } from "react";
+import store, { RootState, AppDispatch } from "@/store/store";
 import "@/styles/globals.css";
 import Head from "next/head";
 import type { AppProps } from "next/app";
-import { Provider, useSelector } from "react-redux";
+import { Provider, useSelector, useDispatch } from "react-redux";
+import { checkAuth } from "@/store/auth-slice";
 import CheckAuth from "@/components/common/checkAuth";
 import { Toaster } from "@/components/ui/toaster";
-
+import { LuLoader2 } from "react-icons/lu";
 
 type AuthWrapperProps = {
   children: React.ReactNode; // Specify the type for children
-}
+};
 
 function AuthWrapper({ children }: Readonly<AuthWrapperProps>) {
-  const { user, isAuthenticated } = useSelector(
+  const { user, isAuthenticated, isLoading } = useSelector(
     (state: RootState) => state.auth
   );
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+
+if(isLoading) return <LuLoader2 />
+
   return (
     <CheckAuth isAuthenticated={isAuthenticated} user={user}>
       {children}
     </CheckAuth>
   );
 }
-
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
