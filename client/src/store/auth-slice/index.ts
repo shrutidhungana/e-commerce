@@ -62,7 +62,7 @@ export const checkAuth = createAsyncThunk<User | null>(
           "no-store, no-cache, must-revalidate, proxy-revalidate",
       },
     });
-
+    
     return response.data;
   }
 );
@@ -129,7 +129,8 @@ const authSlice = createSlice({
 
           // Check if action.payload is not null
           if (action.payload) {
-            state.user = action.payload; // Now TypeScript knows action.payload is User
+            state.user = action.payload;
+            
             state.isAuthenticated = true;
           } else {
             // Handle the case where action.payload is null

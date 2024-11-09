@@ -38,7 +38,7 @@ const registerUser = async (req: ExtendedRequest, res: Response): Promise<void |
       message: "Your registration is successful",
     });
   } catch (e) {
-    console.log(e);
+  
     return res.status(500).json({
       success: false,
       message: "Some error occurred",
@@ -89,7 +89,7 @@ const loginUser = async (req: Request, res: Response): Promise<void | Response> 
       },
     });
   } catch (e) {
-    console.log(e);
+   
     return res.status(500).json({
       success: false,
       message: "Some error occurred",

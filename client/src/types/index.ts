@@ -1,10 +1,15 @@
+import { ReactNode } from "react";
+
 export type User = {
   id: string;
   name: string;
   email: string;
   success: boolean; // This property is required
-  user: string;
-  role: string;
+
+  user: {
+    // Change this to an object
+    role: string | null; // Assuming role is a string
+  };
 };
 
 export type AuthState = {
@@ -45,5 +50,9 @@ export type LoginResponse = {
   message: string;
 };
 
-
-
+export type SidebarMenuItem = {
+  id: string;
+  label: string;
+  path: string;
+  icon: ReactNode;
+};
