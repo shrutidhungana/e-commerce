@@ -1,6 +1,5 @@
 // Define an interface for the form control
-import {FormControl} from '@/types'
-
+import { FormControl } from '@/types'
 
 // Declare the array using the FormControl interface
 export const registerFormControls: FormControl[] = [
@@ -43,3 +42,5 @@ export const loginFormControls:FormControl[] = [
     type: "password",
   },
 ];
+
+

@@ -15,7 +15,7 @@ const CheckAuth: React.FC<CheckAuthProps> = ({
   const router = useRouter();
   const { pathname } = router;
 
-  
+
 
   useEffect(() => {
     const redirectTo = () => {
@@ -50,7 +50,7 @@ const CheckAuth: React.FC<CheckAuthProps> = ({
     if (pathToRedirect) {
       router.push(pathToRedirect);
     }
-  }, [isAuthenticated, pathname, router, user?.role]);
+  }, [isAuthenticated, pathname, router]);
 
   return <>{children}</>;
 };
