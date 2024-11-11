@@ -6,5 +6,9 @@ export const apiEndpoints = {
   logout: `${API_BASE_URL}/auth/logout`,
   auth: `${API_BASE_URL}/auth/check-auth`,
   image: `${API_BASE_URL}/admin/products/upload-image`,
+  addProducts: `${API_BASE_URL}/admin/products/add`,
+  listProducts: `${API_BASE_URL}/admin/products/lists`,
+  editProduct: `${API_BASE_URL}/admin/products/edit/:id`,
+  deleteProduct: `${API_BASE_URL}/admin/products/delete/:id`,
   // Add other API endpoints here as needed
 };
