@@ -5,5 +5,6 @@ export const apiEndpoints = {
   login: `${API_BASE_URL}/auth/login`,
   logout: `${API_BASE_URL}/auth/logout`,
   auth: `${API_BASE_URL}/auth/check-auth`,
+  image: `${API_BASE_URL}/admin/products/upload-image`,
   // Add other API endpoints here as needed
 };

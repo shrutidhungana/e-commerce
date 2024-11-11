@@ -33,6 +33,7 @@ const AdminProducts: React.FC<productsProps> = () => {
     useState<InitialProductFormData>(initialFormData);
  const [imageFile, setImageFile] = useState<File | null>(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>("");
+    const [imageLoadingState, setImageLoadingState] = useState<boolean>(false);
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
@@ -61,6 +62,8 @@ const AdminProducts: React.FC<productsProps> = () => {
                 setImageFile={setImageFile}
                 uploadedImageUrl={uploadedImageUrl}
                 setUploadedImageUrl={setUploadedImageUrl}
+                setImageLoadingState={setImageLoadingState}
+                imageLoadingState={imageLoadingState}
               />
               <div className="py-6">
                 <CommonForm
