@@ -23,7 +23,7 @@ export const addNewProduct = createAsyncThunk<Product, NewProductPayload>(
     }
 );
 
-export const fetchAllProducts = createAsyncThunk<Array<Product>, NewProductPayload>(
+export const fetchAllProducts = createAsyncThunk<{ data:Array<Product>}, void>(
   "/products/fetchAllProducts",
   async () => {
     const result = await axios.get(listProducts);
@@ -68,10 +68,9 @@ const AdminProductsSlice = createSlice({
           })
           .addCase(
             fetchAllProducts.fulfilled,
-              (state, action: PayloadAction<Array<Product>>) => {
-                console.log(action.payload)
+            (state, action: PayloadAction<{ data: Array<Product> }>) => {
               state.isLoading = false;
-              state.productList = action.payload;
+              state.productList = action.payload.data;
             }
           )
           .addCase(fetchAllProducts.rejected, (state, action) => {

@@ -58,7 +58,7 @@ const ProductImageUpload: React.FC<ProductImageUploadProps> = ({
       const data = new FormData();
       data.append("my_file", imageFile);
       const response = await axios.post(image, data);
-      console.log(response, "response");
+
       if (response?.data?.success) {
         setUploadedImageUrl(response?.data?.result?.url);
         setImageLoadingState(false);
