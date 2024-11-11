@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AdminLayout from "@/components/admin-view/layout";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,8 +9,17 @@ import {
 } from "@/components/ui/sheet";
 import CommonForm from "@/components/common/form";
 import { addProductFormElements } from "@/config";
-import { InitialProductFormData } from "@/types";
+import { InitialProductFormData, RegisterResponse } from "@/types";
 import ProductImageUpload from "@/components/admin-view/image-upload";
+import { AppDispatch, RootState } from "@/store/store";
+import {
+  addNewProduct,
+  deleteAddedProduct,
+  editAddedProduct,
+  fetchAllProducts,
+} from "@/store/admin/products-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { useToast } from "@/hooks/use-toast";
 
 type productsProps = {};
 
@@ -31,12 +40,63 @@ const AdminProducts: React.FC<productsProps> = () => {
     useState(false);
   const [formData, setFormData] =
     useState<InitialProductFormData>(initialFormData);
- const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>("");
-    const [imageLoadingState, setImageLoadingState] = useState<boolean>(false);
+  const [imageLoadingState, setImageLoadingState] = useState<boolean>(false);
+
+  const { toast } = useToast();
+  const { productList } = useSelector(
+    (state: RootState) => state.adminProducts
+  );
+
+  const dispatch = useDispatch<AppDispatch>();
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    dispatch(
+      addNewProduct({
+        ...formData,
+        image: uploadedImageUrl,
+      })
+    ).then((data) => {
+      const response = data as {
+        payload?: RegisterResponse;
+        meta: {
+          requestStatus: "fulfilled" | "pending" | "rejected";
+        };
+        error?: {
+          message: string;
+        };
+      };
+
+      if (
+        response.meta.requestStatus === "fulfilled" &&
+        response.payload?.success
+      ) {
+        dispatch(fetchAllProducts());
+        setFormData(initialFormData);
+        setOpenCreateProductsDialog(false);
+        setImageFile(null);
+        toast({
+          title: "Success!",
+          description: response.payload.message,
+          duration: 5000,
+          className: "bg-green-500 text-white",
+        });
+      } else {
+        toast({
+          title: "Error!",
+          description: response.error?.message,
+          duration: 5000,
+          variant: "destructive",
+        });
+      }
+    });
   };
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, [dispatch]);
 
   return (
     <AdminLayout>
