@@ -1,15 +1,33 @@
 import React from 'react';
+import { logoutUser } from "@/store/auth-slice";
+import { LogOut } from "lucide-react";
+import { AppDispatch } from "@/store/store";
+import { Button } from "../ui/button";
+import { useDispatch } from "react-redux";
 
 type headerProps = {
     
 };
 
-const ShoppingHeader:React.FC<headerProps> = () => {
+const ShoppingHeader: React.FC<headerProps> = () => {
+     const dispatch = useDispatch<AppDispatch>();
+
+     const handleLogout = () => {
+       dispatch(logoutUser());
+     };
     
     return (
-        <div>
-            Shopping Header
+      <header>
+        <div className="flex flex-1 justify-end">
+          <Button
+            className="inline-flex gap-2 items-center rounded-md px-4 py-2 text-sm font-medium shadow"
+            onClick={handleLogout}
+          >
+            <LogOut />
+            Logout
+          </Button>
         </div>
+      </header>
     );
 }
 export default ShoppingHeader;

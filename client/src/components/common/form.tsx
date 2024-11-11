@@ -7,20 +7,18 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "../ui/select";     
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { FormControl, FormData } from "@/types";
+import { FormControl} from "@/types";
 
 
-
-
-type FormProps = {
+type FormProps<T extends Record<string, string | undefined| number| File| null  >> = {
   formControls: FormControl[];
-  formData: FormData;
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void; // Function to handle form submission
-  buttonText: string; // Text for the submit button
+  formData: T;
+  setFormData: React.Dispatch<React.SetStateAction<T>>;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  buttonText: string;
   isBtnDisabled?: boolean;
 };
 
@@ -33,17 +31,17 @@ type ControlItem = FormControl & {
   // e.g., 'text', 'password', etc.
 };
 
-const CommonForm: React.FC<FormProps> = ({
+const CommonForm = <T extends Record<string, string | undefined | number | File| null>>({
   formControls,
   formData,
   setFormData,
   onSubmit,
   buttonText,
   isBtnDisabled,
-}) => {
+}: FormProps<T>)=> {
   const renderInputsByComponentType = (getControlItem: ControlItem) => {
     let element: JSX.Element | null = null;
-    const value = formData[getControlItem.name] || "";
+    const value = formData[getControlItem.name] ?? "";
 
     switch (getControlItem?.componentType) {
       case "input":
@@ -53,18 +51,20 @@ const CommonForm: React.FC<FormProps> = ({
             name={getControlItem?.name}
             placeholder={getControlItem?.placeholder}
             id={getControlItem?.name}
-                value={value}
-                onChange={(e) => setFormData({
-                    ...formData,
-                    [getControlItem?.name]: e.target.value
-                })}
+            value={String(value)}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                [getControlItem?.name]: e.target.value,
+              })
+            }
           />
         );
         break;
       case "select":
         element = (
           <Select
-            value={value}
+            value={String(value)}
             onValueChange={(value) =>
               setFormData({
                 ...formData,
@@ -97,7 +97,7 @@ const CommonForm: React.FC<FormProps> = ({
             name={getControlItem?.name}
             placeholder={getControlItem?.placeholder}
             id={getControlItem?.id}
-            value={value}
+            value={String(value)}
             onChange={(e) =>
               setFormData({
                 ...formData,
@@ -115,7 +115,7 @@ const CommonForm: React.FC<FormProps> = ({
             placeholder={getControlItem?.placeholder}
             id={getControlItem?.name}
             type={getControlItem?.type}
-            value={value}
+            value={String(value)}
             onChange={(e) =>
               setFormData({
                 ...formData,
