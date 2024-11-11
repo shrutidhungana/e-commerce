@@ -79,3 +79,39 @@ export type InitialProductFormData = {
   averageReview: number;
   [key: string]: string | undefined| number| File| null ;
 };
+
+export type Product = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  brand: string;
+  price: string;
+  salePrice: string;
+  totalStock: string;
+  averageReview: number;
+  image: File | string | null;
+};
+
+
+export type ProductState = {
+  isLoading: boolean,
+  productList: Array<Product>,
+}
+
+export type NewProductPayload = {
+  title: string;
+  description: string;
+  category: string;
+  brand: string;
+  price: string;
+  salePrice: string;
+  totalStock: string;
+  averageReview: number;
+  image: File | string | null;
+};
+
+export type EditProductPayload = {
+  id: string;
+  formData: InitialProductFormData;
+};
