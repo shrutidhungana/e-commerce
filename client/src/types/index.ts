@@ -8,7 +8,9 @@ export type User = {
 
   user: {
     // Change this to an object
-    role: string | null; // Assuming role is a string
+    role: string | null;
+    userName: string;
+    // Assuming role is a string
   };
 };
 
@@ -127,3 +129,11 @@ export type Response = {
     message: string;
   };
 };
+
+export type HeaderMenuItem = {
+  id: string;
+  label: string;
+  path: string;
+};
+
+
