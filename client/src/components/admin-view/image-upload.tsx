@@ -15,7 +15,9 @@ type ProductImageUploadProps = {
   setUploadedImageUrl: React.Dispatch<React.SetStateAction<string>>;
   imageLoadingState: boolean;
   setImageLoadingState: React.Dispatch<React.SetStateAction<boolean>>;
+  isEditMode: boolean;
 };
+
 
 const ProductImageUpload: React.FC<ProductImageUploadProps> = ({
   imageFile,
@@ -24,6 +26,8 @@ const ProductImageUpload: React.FC<ProductImageUploadProps> = ({
   setUploadedImageUrl,
   imageLoadingState,
   setImageLoadingState,
+  isEditMode
+  
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { image } = apiEndpoints;
@@ -88,7 +92,9 @@ const ProductImageUpload: React.FC<ProductImageUploadProps> = ({
       return (
         <Label
           htmlFor="image-upload"
-          className="flex flex-col items-center justify-center h-32 cursor-pointer"
+          className={`${
+            isEditMode ? "cursor-not-allowed" : ""
+          } flex flex-col items-center justify-center h-32 cursor-pointer`}
         >
           <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
           <span>Drag & drop or click to upload image</span>
@@ -124,7 +130,9 @@ const ProductImageUpload: React.FC<ProductImageUploadProps> = ({
     <div className="w-full max-w-md mx-auto mt-4">
       <Label className="text-lg font-semibold mb-2 block">Upload Image</Label>
       <div
-        className="border-2 border-dashed rounded-lg p-4"
+        className={`${
+          isEditMode ? "opacity-60" : ""
+        } border-2 border-dashed rounded-lg p-4`}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
@@ -134,6 +142,7 @@ const ProductImageUpload: React.FC<ProductImageUploadProps> = ({
           ref={inputRef}
           onChange={handleImageFileChange}
           className="hidden"
+          disabled={isEditMode}
         />
         {renderImageUploadContent()}
       </div>
