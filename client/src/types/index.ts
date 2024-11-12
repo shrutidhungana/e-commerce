@@ -4,13 +4,13 @@ export type User = {
   id: string;
   name: string;
   email: string;
-  success: boolean; // This property is required
+  success: boolean; 
 
   user: {
-    // Change this to an object
+   
     role: string | null;
     userName: string;
-    // Assuming role is a string
+    
   };
 };
 
@@ -24,20 +24,19 @@ export type FormControl = {
   name: string;
   label: string;
   placeholder?: string;
-  componentType: "input" | "select" | "textarea"; // Union type to ensure strict matching
+  componentType: "input" | "select" | "textarea"; 
   type?: string;
   options?: { id: string; label: string }[];
 };
 
 export type FormData = {
-  userName?: string; // Optional property
-  email: string; // Required property
-  password: string; // Required property
-  [key: string]: string | undefined |File|null; // Index signature allowing string or undefined
+  userName?: string; 
+  email: string; 
+  password: string;
+  [key: string]: string | undefined |File|null; 
 };
 
 export type RegisterUserPayload = {
-  // Define the shape of your form data here
   userName?: string;
   email: string;
   password: string;
@@ -151,5 +150,13 @@ export type SortOption = {
   id: string;
   label: string;
 };
+
+export type CategoryOptionsMap = {
+  [key: string]: string; 
+};
+
+export type BrandOptionsMap = {
+  [key: string]: string; 
+}
 
 
