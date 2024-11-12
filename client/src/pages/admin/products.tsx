@@ -12,6 +12,7 @@ import { addProductFormElements } from "@/config";
 import { InitialProductFormData, RegisterResponse } from "@/types";
 import ProductImageUpload from "@/components/admin-view/image-upload";
 import { AppDispatch, RootState } from "@/store/store";
+import AdminProductTile from "@/components/admin-view/product-tile";
 import {
   addNewProduct,
   deleteAddedProduct,
@@ -107,36 +108,54 @@ const AdminProducts: React.FC<productsProps> = () => {
           </Button>
         </div>
         <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
-          <Sheet
-            open={openCreateProductsDialog}
-            onOpenChange={() => {
-              setOpenCreateProductsDialog(false);
-            }}
-          >
-            <SheetContent side="right" className="overflow-auto">
-              <SheetHeader>
-                <SheetTitle>Add New Product</SheetTitle>
-              </SheetHeader>
-              <ProductImageUpload
-                imageFile={imageFile}
-                setImageFile={setImageFile}
-                uploadedImageUrl={uploadedImageUrl}
-                setUploadedImageUrl={setUploadedImageUrl}
-                setImageLoadingState={setImageLoadingState}
-                imageLoadingState={imageLoadingState}
-              />
-              <div className="py-6">
-                <CommonForm
-                  formControls={addProductFormElements}
-                  formData={formData}
+          {productList && productList.length > 0
+            ? productList?.map((productItem) => (
+              <AdminProductTile
+                key = {productItem?._id}
                   setFormData={setFormData}
-                  buttonText={"Add"}
-                  onSubmit={onSubmit}
+                  setOpenCreateProductsDialog={setOpenCreateProductsDialog}
+                  
+                  product={productItem}
+                 
                 />
-              </div>
-            </SheetContent>
-          </Sheet>
+              ))
+            : null}
         </div>
+        <Sheet
+          open={openCreateProductsDialog}
+          onOpenChange={() => {
+            setOpenCreateProductsDialog(false);
+           
+            setFormData(initialFormData);
+          }}
+        >
+          <SheetContent side="right" className="overflow-auto">
+            <SheetHeader>
+              <SheetTitle>
+                Add New Product
+              </SheetTitle>
+            </SheetHeader>
+            <ProductImageUpload
+              imageFile={imageFile}
+              setImageFile={setImageFile}
+              uploadedImageUrl={uploadedImageUrl}
+              setUploadedImageUrl={setUploadedImageUrl}
+              setImageLoadingState={setImageLoadingState}
+              imageLoadingState={imageLoadingState}
+              
+            />
+            <div className="py-6">
+              <CommonForm
+                onSubmit={onSubmit}
+                formData={formData}
+                setFormData={setFormData}
+                buttonText={"Add"}
+                formControls={addProductFormElements}
+               
+              />
+            </div>
+          </SheetContent>
+        </Sheet>
       </>
     </AdminLayout>
   );
