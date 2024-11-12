@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import CommonForm from "@/components/common/form";
 import { addProductFormElements } from "@/config";
-import { InitialProductFormData, RegisterResponse } from "@/types";
+import { InitialProductFormData, RegisterResponse, HandleDelete, Response } from "@/types";
 import ProductImageUpload from "@/components/admin-view/image-upload";
 import { AppDispatch, RootState } from "@/store/store";
 import AdminProductTile from "@/components/admin-view/product-tile";
@@ -62,39 +62,31 @@ const AdminProducts: React.FC<productsProps> = () => {
             id: currentEditedId,
             formData,
           })
-      ).then((data) => {
-        console.log(data, "edit");
-         const response = data as {
-           payload?: RegisterResponse;
-           meta: {
-             requestStatus: "fulfilled" | "pending" | "rejected";
-           };
-           error?: {
-             message: string;
-           };
-         };
-        if (
-          response.meta.requestStatus === "fulfilled" &&
-          response.payload?.success
-        ) {
-          dispatch(fetchAllProducts());
-          setFormData(initialFormData);
-          setOpenCreateProductsDialog(false);
-          setImageFile(null);
-          toast({
-            title: "Success!",
-            description: response.payload.message,
-            duration: 5000,
-            className: "bg-green-500 text-white",
-          });
-        } else {
-          toast({
-            title: "Error!",
-            description: response.error?.message,
-            duration: 5000,
-            variant: "destructive",
-          });
-        }
+        ).then((data) => {
+         
+          const response = data as Response
+          if (
+            response.meta.requestStatus === "fulfilled" &&
+            response.payload?.success
+          ) {
+            dispatch(fetchAllProducts());
+            setFormData(initialFormData);
+            setOpenCreateProductsDialog(false);
+            setImageFile(null);
+            toast({
+              title: "Success!",
+              description: response.payload.message,
+              duration: 5000,
+              className: "bg-green-500 text-white",
+            });
+          } else {
+            toast({
+              title: "Error!",
+              description: response.error?.message,
+              duration: 5000,
+              variant: "destructive",
+            });
+          }
         })
       : dispatch(
           addNewProduct({
@@ -102,15 +94,7 @@ const AdminProducts: React.FC<productsProps> = () => {
             image: uploadedImageUrl,
           })
         ).then((data) => {
-          const response = data as {
-            payload?: RegisterResponse;
-            meta: {
-              requestStatus: "fulfilled" | "pending" | "rejected";
-            };
-            error?: {
-              message: string;
-            };
-          };
+          const response = data as Response
 
           if (
             response.meta.requestStatus === "fulfilled" &&
@@ -137,6 +121,39 @@ const AdminProducts: React.FC<productsProps> = () => {
         });
   };
 
+  const isFormValid = () => {
+    return Object.keys(formData)
+      ?.map((key) => formData[key] !== "")
+      ?.every((item) => item);
+  };
+
+  const handleDelete: HandleDelete = (getCurrentProductId) => {
+    dispatch(deleteAddedProduct(getCurrentProductId)).then((data) => {
+      console.log(data)
+       const response = data as Response
+      if (
+        response.meta.requestStatus === "fulfilled" &&
+        response.payload?.success
+      ) {
+        dispatch(fetchAllProducts());
+        toast({
+          title: "Success!",
+          description: response.payload.message,
+          duration: 5000,
+          className: "bg-green-500 text-white",
+        });
+      } else {
+        toast({
+          title: "Error!",
+          description: response.error?.message,
+          duration: 5000,
+          variant: "destructive",
+        });
+      }
+
+    })
+  }
+
   useEffect(() => {
     dispatch(fetchAllProducts());
   }, [dispatch]);
@@ -158,6 +175,7 @@ const AdminProducts: React.FC<productsProps> = () => {
                   setOpenCreateProductsDialog={setOpenCreateProductsDialog}
                   setCurrentEditedId={setCurrentEditedId}
                   product={productItem}
+                  handleDelete={handleDelete}
                 />
               ))
             : null}
@@ -166,7 +184,7 @@ const AdminProducts: React.FC<productsProps> = () => {
           open={openCreateProductsDialog}
           onOpenChange={() => {
             setOpenCreateProductsDialog(false);
-              setCurrentEditedId(null);
+            setCurrentEditedId(null);
             setFormData(initialFormData);
           }}
         >
@@ -192,6 +210,7 @@ const AdminProducts: React.FC<productsProps> = () => {
                 setFormData={setFormData}
                 buttonText={currentEditedId !== null ? "Edit" : "Add"}
                 formControls={addProductFormElements}
+                isBtnDisabled={!isFormValid()}
               />
             </div>
           </SheetContent>

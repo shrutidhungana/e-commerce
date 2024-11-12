@@ -2,13 +2,14 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import Image from "next/image";
-import { Product, InitialProductFormData } from "../../types";
+import { Product, InitialProductFormData, HandleDelete } from "../../types";
 
 type AdminProductTileProps = {
   product: Product;
   setFormData: React.Dispatch<React.SetStateAction<InitialProductFormData>>;
-    setOpenCreateProductsDialog: React.Dispatch<React.SetStateAction<boolean>>;
-  setCurrentEditedId: React.Dispatch<React.SetStateAction<null|string>>
+  setOpenCreateProductsDialog: React.Dispatch<React.SetStateAction<boolean>>;
+  setCurrentEditedId: React.Dispatch<React.SetStateAction<null | string>>;
+  handleDelete: HandleDelete;
 };
 
 const AdminProductTile: React.FC<AdminProductTileProps> = ({
@@ -16,6 +17,7 @@ const AdminProductTile: React.FC<AdminProductTileProps> = ({
     setFormData,
     setOpenCreateProductsDialog,
     setCurrentEditedId,
+    handleDelete,
    
 }) => {
     const salePrice = parseFloat(product?.salePrice || "0");
@@ -55,14 +57,13 @@ const AdminProductTile: React.FC<AdminProductTileProps> = ({
           <Button
             onClick={() => {
               setOpenCreateProductsDialog(true);
-             setCurrentEditedId(product?._id || null);
-                          setFormData(product);
-                          
+              setCurrentEditedId(product?._id ?? null);
+              setFormData(product);
             }}
           >
             Edit
           </Button>
-          <Button>Delete</Button>
+          <Button onClick={() => handleDelete(product?._id ?? "")}>Delete</Button>
         </CardFooter>
       </div>
     </Card>
