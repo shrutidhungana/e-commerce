@@ -136,4 +136,15 @@ export type HeaderMenuItem = {
   path: string;
 };
 
+export type FilterOption = {
+  id: string;
+  label: string;
+};
+
+export type FilterOptions = {
+  category: FilterOption[];
+  brand: FilterOption[];
+  [key: string]: FilterOption[];
+};
+
 

@@ -1,5 +1,9 @@
-// Define an interface for the form control
-import { FormControl, AddProductFormElement, HeaderMenuItem } from "@/types";
+import {
+  FormControl,
+  AddProductFormElement,
+  HeaderMenuItem,
+  FilterOptions,
+} from "@/types";
 
 // Declare the array using the FormControl interface
 export const registerFormControls: FormControl[] = [
@@ -26,7 +30,7 @@ export const registerFormControls: FormControl[] = [
   },
 ];
 
-export const loginFormControls:FormControl[] = [
+export const loginFormControls: FormControl[] = [
   {
     name: "email",
     label: "Email",
@@ -61,21 +65,20 @@ export const addProductFormElements: AddProductFormElement[] = [
     label: "Category",
     name: "category",
     componentType: "select",
-     placeholder: "Please Select Category",
+    placeholder: "Please Select Category",
     options: [
       { id: "men", label: "Men" },
       { id: "women", label: "Women" },
       { id: "kids", label: "Kids" },
       { id: "accessories", label: "Accessories" },
       { id: "footwear", label: "Footwear" },
-    ]
-   
+    ],
   },
   {
     label: "Brand",
     name: "brand",
     componentType: "select",
-     placeholder: "Please Select Brand",
+    placeholder: "Please Select Brand",
     options: [
       { id: "nike", label: "Nike" },
       { id: "adidas", label: "Adidas" },
@@ -84,8 +87,7 @@ export const addProductFormElements: AddProductFormElement[] = [
       { id: "zara", label: "Zara" },
       { id: "h&m", label: "H&M" },
       { id: "ethnic", label: "Ethnic" },
-      
-    ]
+    ],
   },
   {
     label: "Price",
@@ -152,3 +154,22 @@ export const shoppingViewHeaderMenuItems: HeaderMenuItem[] = [
   //   path: "/shop/search",
   // },
 ];
+
+export const filterOptions: FilterOptions = {
+  category: [
+    { id: "men", label: "Men" },
+    { id: "women", label: "Women" },
+    { id: "kids", label: "Kids" },
+    { id: "accessories", label: "Accessories" },
+    { id: "footwear", label: "Footwear" },
+  ],
+  brand: [
+    { id: "nike", label: "Nike" },
+    { id: "adidas", label: "Adidas" },
+    { id: "puma", label: "Puma" },
+    { id: "levi", label: "Levi's" },
+    { id: "zara", label: "Zara" },
+    { id: "h&m", label: "H&M" },
+    { id: "ethnic", label: "Ethnic" },
+  ],
+};
