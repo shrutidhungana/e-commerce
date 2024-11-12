@@ -81,7 +81,7 @@ export type InitialProductFormData = {
 };
 
 export type Product = {
-  _id?: string;
+  _id?: string | undefined;
   title: string;
   description: string;
   category: string;
@@ -114,4 +114,16 @@ export type NewProductPayload = {
 export type EditProductPayload = {
   id: string;
   formData: InitialProductFormData;
+};
+
+export type HandleDelete = (productId: string) => void;
+ 
+export type Response = {
+  payload?: RegisterResponse;
+  meta: {
+    requestStatus: "fulfilled" | "pending" | "rejected";
+  };
+  error?: {
+    message: string;
+  };
 };

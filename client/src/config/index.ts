@@ -61,18 +61,21 @@ export const addProductFormElements: AddProductFormElement[] = [
     label: "Category",
     name: "category",
     componentType: "select",
+     placeholder: "Please Select Category",
     options: [
       { id: "men", label: "Men" },
       { id: "women", label: "Women" },
       { id: "kids", label: "Kids" },
       { id: "accessories", label: "Accessories" },
       { id: "footwear", label: "Footwear" },
-    ],
+    ]
+   
   },
   {
     label: "Brand",
     name: "brand",
     componentType: "select",
+     placeholder: "Please Select Brand",
     options: [
       { id: "nike", label: "Nike" },
       { id: "adidas", label: "Adidas" },
@@ -80,7 +83,9 @@ export const addProductFormElements: AddProductFormElement[] = [
       { id: "levi", label: "Levi's" },
       { id: "zara", label: "Zara" },
       { id: "h&m", label: "H&M" },
-    ],
+      { id: "ethnic", label: "Ethnic" },
+      
+    ]
   },
   {
     label: "Price",
