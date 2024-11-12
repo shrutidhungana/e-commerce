@@ -40,7 +40,7 @@ const MenuItems = () => {
 
 const HeaderRightContent = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-  console.log(user?.user)
+  
   const router = useRouter()
   const dispatch = useDispatch<AppDispatch>();
   const handleLogout = () => {
