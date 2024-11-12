@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDownIcon } from "lucide-react";
+import { sortOptions } from "@/config";
 
 type listingProps = {};
 
@@ -35,7 +36,19 @@ const ShoppingListing: React.FC<listingProps> = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-[200px]">
-                  <DropdownMenuRadioGroup></DropdownMenuRadioGroup>
+                  <DropdownMenuRadioGroup>
+                    {sortOptions?.map((sortItem) => (
+                      <DropdownMenuRadioItem
+                        value={sortItem.id}
+                        key={sortItem.id}
+                        className="flex items-center space-x-2"
+                      >
+                        <span className="inline-block w-4 h-4 border-2 border-gray-300 rounded-full"></span>{" "}
+                        
+                        <span>{sortItem.label}</span>
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>

@@ -147,4 +147,9 @@ export type FilterOptions = {
   [key: string]: FilterOption[];
 };
 
+export type SortOption = {
+  id: string;
+  label: string;
+};
+
 
