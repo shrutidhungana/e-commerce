@@ -3,10 +3,12 @@ import {
   AddProductFormElement,
   HeaderMenuItem,
   FilterOptions,
-  SortOption
+  SortOption,
+  CategoryOptionsMap,
+  BrandOptionsMap,
 } from "@/types";
 
-// Declare the array using the FormControl interface
+
 export const registerFormControls: FormControl[] = [
   {
     name: "userName",
@@ -155,6 +157,24 @@ export const shoppingViewHeaderMenuItems: HeaderMenuItem[] = [
   //   path: "/shop/search",
   // },
 ];
+
+export const categoryOptionsMap: CategoryOptionsMap = {
+  men: "Men",
+  women: "Women",
+  kids: "Kids",
+  accessories: "Accessories",
+  footwear: "Footwear",
+};
+
+export const brandOptionsMap: BrandOptionsMap = {
+  nike: "Nike",
+  adidas: "Adidas",
+  puma: "Puma",
+  levi: "Levi",
+  zara: "Zara",
+  "h&m": "H&M",
+  ethnic: "Ethnic",
+};
 
 export const filterOptions: FilterOptions = {
   category: [

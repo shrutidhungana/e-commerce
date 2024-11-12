@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ShoppingLayout from "@/components/shopping-view/layout";
 import ProductFilter from "@/components/shopping-view/filter";
 import {
@@ -11,10 +11,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArrowUpDownIcon } from "lucide-react";
 import { sortOptions } from "@/config";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
 
 type listingProps = {};
 
 const ShoppingListing: React.FC<listingProps> = () => {
+    const dispatch = useDispatch<AppDispatch>();
   return (
     <ShoppingLayout>
       <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
@@ -44,7 +47,6 @@ const ShoppingListing: React.FC<listingProps> = () => {
                         className="flex items-center space-x-2"
                       >
                         <span className="inline-block w-4 h-4 border-2 border-gray-300 rounded-full"></span>{" "}
-                        
                         <span>{sortItem.label}</span>
                       </DropdownMenuRadioItem>
                     ))}
@@ -53,6 +55,7 @@ const ShoppingListing: React.FC<listingProps> = () => {
               </DropdownMenu>
             </div>
           </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4"></div>
         </div>
       </div>
     </ShoppingLayout>
