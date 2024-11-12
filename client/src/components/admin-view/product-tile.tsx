@@ -7,16 +7,20 @@ import { Product, InitialProductFormData } from "../../types";
 type AdminProductTileProps = {
   product: Product;
   setFormData: React.Dispatch<React.SetStateAction<InitialProductFormData>>;
-  setOpenCreateProductsDialog: React.Dispatch<React.SetStateAction<boolean>>;
+    setOpenCreateProductsDialog: React.Dispatch<React.SetStateAction<boolean>>;
+  setCurrentEditedId: React.Dispatch<React.SetStateAction<null|string>>
 };
 
 const AdminProductTile: React.FC<AdminProductTileProps> = ({
-  product,
-  setFormData,
-  setOpenCreateProductsDialog,
+    product,
+    setFormData,
+    setOpenCreateProductsDialog,
+    setCurrentEditedId,
+   
 }) => {
-  const salePrice = parseFloat(product?.salePrice || "0");
-  const price = parseFloat(product?.price || "0");
+    const salePrice = parseFloat(product?.salePrice || "0");
+    const price = parseFloat(product?.price || "0");
+    
 
   return (
     <Card className="w-full max-w-sm mx-auto">
@@ -48,7 +52,16 @@ const AdminProductTile: React.FC<AdminProductTileProps> = ({
           </div>
         </CardContent>
         <CardFooter className="flex justify-between items-center">
-          <Button>Edit</Button>
+          <Button
+            onClick={() => {
+              setOpenCreateProductsDialog(true);
+             setCurrentEditedId(product?._id || null);
+                          setFormData(product);
+                          
+            }}
+          >
+            Edit
+          </Button>
           <Button>Delete</Button>
         </CardFooter>
       </div>

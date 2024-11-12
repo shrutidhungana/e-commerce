@@ -44,6 +44,7 @@ const AdminProducts: React.FC<productsProps> = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>("");
   const [imageLoadingState, setImageLoadingState] = useState<boolean>(false);
+  const [currentEditedId, setCurrentEditedId] = useState<string | null>(null);
 
   const { toast } = useToast();
   const { productList } = useSelector(
@@ -54,45 +55,86 @@ const AdminProducts: React.FC<productsProps> = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(
-      addNewProduct({
-        ...formData,
-        image: uploadedImageUrl,
-      })
-    ).then((data) => {
-      const response = data as {
-        payload?: RegisterResponse;
-        meta: {
-          requestStatus: "fulfilled" | "pending" | "rejected";
-        };
-        error?: {
-          message: string;
-        };
-      };
 
-      if (
-        response.meta.requestStatus === "fulfilled" &&
-        response.payload?.success
-      ) {
-        dispatch(fetchAllProducts());
-        setFormData(initialFormData);
-        setOpenCreateProductsDialog(false);
-        setImageFile(null);
-        toast({
-          title: "Success!",
-          description: response.payload.message,
-          duration: 5000,
-          className: "bg-green-500 text-white",
+    currentEditedId !== null
+      ? dispatch(
+          editAddedProduct({
+            id: currentEditedId,
+            formData,
+          })
+      ).then((data) => {
+        console.log(data, "edit");
+         const response = data as {
+           payload?: RegisterResponse;
+           meta: {
+             requestStatus: "fulfilled" | "pending" | "rejected";
+           };
+           error?: {
+             message: string;
+           };
+         };
+        if (
+          response.meta.requestStatus === "fulfilled" &&
+          response.payload?.success
+        ) {
+          dispatch(fetchAllProducts());
+          setFormData(initialFormData);
+          setOpenCreateProductsDialog(false);
+          setImageFile(null);
+          toast({
+            title: "Success!",
+            description: response.payload.message,
+            duration: 5000,
+            className: "bg-green-500 text-white",
+          });
+        } else {
+          toast({
+            title: "Error!",
+            description: response.error?.message,
+            duration: 5000,
+            variant: "destructive",
+          });
+        }
+        })
+      : dispatch(
+          addNewProduct({
+            ...formData,
+            image: uploadedImageUrl,
+          })
+        ).then((data) => {
+          const response = data as {
+            payload?: RegisterResponse;
+            meta: {
+              requestStatus: "fulfilled" | "pending" | "rejected";
+            };
+            error?: {
+              message: string;
+            };
+          };
+
+          if (
+            response.meta.requestStatus === "fulfilled" &&
+            response.payload?.success
+          ) {
+            dispatch(fetchAllProducts());
+            setFormData(initialFormData);
+            setOpenCreateProductsDialog(false);
+            setImageFile(null);
+            toast({
+              title: "Success!",
+              description: response.payload.message,
+              duration: 5000,
+              className: "bg-green-500 text-white",
+            });
+          } else {
+            toast({
+              title: "Error!",
+              description: response.error?.message,
+              duration: 5000,
+              variant: "destructive",
+            });
+          }
         });
-      } else {
-        toast({
-          title: "Error!",
-          description: response.error?.message,
-          duration: 5000,
-          variant: "destructive",
-        });
-      }
-    });
   };
 
   useEffect(() => {
@@ -110,13 +152,12 @@ const AdminProducts: React.FC<productsProps> = () => {
         <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
           {productList && productList.length > 0
             ? productList?.map((productItem) => (
-              <AdminProductTile
-                key = {productItem?._id}
+                <AdminProductTile
+                  key={productItem?._id}
                   setFormData={setFormData}
                   setOpenCreateProductsDialog={setOpenCreateProductsDialog}
-                  
+                  setCurrentEditedId={setCurrentEditedId}
                   product={productItem}
-                 
                 />
               ))
             : null}
@@ -125,14 +166,14 @@ const AdminProducts: React.FC<productsProps> = () => {
           open={openCreateProductsDialog}
           onOpenChange={() => {
             setOpenCreateProductsDialog(false);
-           
+              setCurrentEditedId(null);
             setFormData(initialFormData);
           }}
         >
           <SheetContent side="right" className="overflow-auto">
             <SheetHeader>
               <SheetTitle>
-                Add New Product
+                {currentEditedId !== null ? "Edit Product" : "Add New Product"}
               </SheetTitle>
             </SheetHeader>
             <ProductImageUpload
@@ -142,16 +183,15 @@ const AdminProducts: React.FC<productsProps> = () => {
               setUploadedImageUrl={setUploadedImageUrl}
               setImageLoadingState={setImageLoadingState}
               imageLoadingState={imageLoadingState}
-              
+              isEditMode={currentEditedId !== null}
             />
             <div className="py-6">
               <CommonForm
                 onSubmit={onSubmit}
                 formData={formData}
                 setFormData={setFormData}
-                buttonText={"Add"}
+                buttonText={currentEditedId !== null ? "Edit" : "Add"}
                 formControls={addProductFormElements}
-               
               />
             </div>
           </SheetContent>
