@@ -129,7 +129,7 @@ const AdminProducts: React.FC<productsProps> = () => {
 
   const handleDelete: HandleDelete = (getCurrentProductId) => {
     dispatch(deleteAddedProduct(getCurrentProductId)).then((data) => {
-      console.log(data)
+     
        const response = data as Response
       if (
         response.meta.requestStatus === "fulfilled" &&

@@ -4,13 +4,11 @@ export type User = {
   id: string;
   name: string;
   email: string;
-  success: boolean; 
+  success: boolean;
 
   user: {
-   
     role: string | null;
     userName: string;
-    
   };
 };
 
@@ -24,16 +22,16 @@ export type FormControl = {
   name: string;
   label: string;
   placeholder?: string;
-  componentType: "input" | "select" | "textarea"; 
+  componentType: "input" | "select" | "textarea";
   type?: string;
   options?: { id: string; label: string }[];
 };
 
 export type FormData = {
-  userName?: string; 
-  email: string; 
+  userName?: string;
+  email: string;
   password: string;
-  [key: string]: string | undefined |File|null; 
+  [key: string]: string | undefined | File | null;
 };
 
 export type RegisterUserPayload = {
@@ -58,18 +56,17 @@ export type SidebarMenuItem = {
   icon: ReactNode;
 };
 
-
 export type AddProductFormElement = {
   name: string;
   label: string;
   placeholder?: string;
-  componentType: "input" | "select" | "textarea"; 
-  type?: string; 
-  options?: { id: string; label: string }[]; 
+  componentType: "input" | "select" | "textarea";
+  type?: string;
+  options?: { id: string; label: string }[];
 };
 
 export type InitialProductFormData = {
-  image: File | string| null;
+  image: File | string | null;
   title: string;
   description: string;
   category: string;
@@ -78,7 +75,7 @@ export type InitialProductFormData = {
   salePrice: string;
   totalStock: string;
   averageReview: number;
-  [key: string]: string | undefined| number| File| null ;
+  [key: string]: string | undefined | number | File | null;
 };
 
 export type Product = {
@@ -94,11 +91,10 @@ export type Product = {
   image: File | string | null;
 };
 
-
 export type ProductState = {
-  isLoading: boolean,
-  productList: Array<Product>,
-}
+  isLoading: boolean;
+  productList: Array<Product>;
+};
 
 export type NewProductPayload = {
   title: string;
@@ -118,7 +114,7 @@ export type EditProductPayload = {
 };
 
 export type HandleDelete = (productId: string) => void;
- 
+
 export type Response = {
   payload?: RegisterResponse;
   meta: {
@@ -152,11 +148,15 @@ export type SortOption = {
 };
 
 export type CategoryOptionsMap = {
-  [key: string]: string; 
+  [key: string]: string;
 };
 
 export type BrandOptionsMap = {
-  [key: string]: string; 
-}
+  [key: string]: string;
+};
 
-
+export type ShopState = {
+  isLoading: boolean;
+  productList: Array<Product>;
+  productDetails: null;
+};
