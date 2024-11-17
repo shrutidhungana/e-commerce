@@ -160,3 +160,18 @@ export type ShopState = {
   productList: Array<Product>;
   productDetails: null;
 };
+
+export type Filters = {
+  category?: string[]; // Make sure category and brand are arrays of strings
+  brand?: string[];
+  [key: string]: string[] | undefined;
+};
+
+
+export type FilterParams = Record<string, string[] | undefined>;
+
+export type FetchProductsParams = {
+  filterParams: Record<string, string[] | undefined>; 
+  sortParams: string;
+};
+
