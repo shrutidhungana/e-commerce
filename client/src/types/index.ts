@@ -7,7 +7,7 @@ export type User = {
   success: boolean;
 
   user: {
-    role: string | null;
+    role: string | null | undefined;
     userName: string;
   };
 };
@@ -15,7 +15,7 @@ export type User = {
 export type AuthState = {
   isAuthenticated: boolean;
   isLoading: boolean;
-  user: User | null;
+  user: User | null ;
 };
 
 export type FormControl = {

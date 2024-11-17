@@ -86,7 +86,7 @@ const ShoppingListing: React.FC<listingProps> = () => {
   useEffect(() => {
     if (filters && Object.keys(filters)?.length > 0) {
       const createQueryString = createSearchParamsHelper(filters);
-      router.push({
+      router.replace({
         pathname: router.pathname,
         query: {
           ...query,
@@ -94,7 +94,7 @@ const ShoppingListing: React.FC<listingProps> = () => {
         },
       });
     }
-  }, [filters, router, query]);
+  }, [filters]);
 
   return (
     <ShoppingLayout>
