@@ -17,12 +17,15 @@ function AuthWrapper({ children }: Readonly<AuthWrapperProps>) {
   const { user, isAuthenticated, isLoading } = useSelector(
     (state: RootState) => state.auth
   );
+
+
+
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
- if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
+  if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
   return (
     <CheckAuth isAuthenticated={isAuthenticated} user={user?.user}>

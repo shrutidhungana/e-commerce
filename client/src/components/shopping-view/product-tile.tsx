@@ -13,6 +13,7 @@ type ShoppingProductTileProps = {
 const ShoppingProductTile: React.FC<ShoppingProductTileProps> = ({
   product,
 }) => {
+
   let badgeContent: React.ReactNode = null;
   let badgeClass = "absolute top-2 left-2 bg-red-500 hover:bg-red-600";
 
@@ -38,6 +39,7 @@ const ShoppingProductTile: React.FC<ShoppingProductTileProps> = ({
               layout="fill"
               objectFit="cover"
               className="rounded-t-lg"
+              priority
             />
           )}
           {badgeContent && <Badge className={badgeClass}>{badgeContent}</Badge>}
