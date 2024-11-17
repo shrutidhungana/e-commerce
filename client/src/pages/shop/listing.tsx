@@ -13,7 +13,7 @@ import { ArrowUpDownIcon } from "lucide-react";
 import { sortOptions } from "@/config";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { fetchAllFilteredProducts } from "@/store/shop/products-slice";
+import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { Filters, FilterParams } from "@/types";
 import { useRouter } from "next/router";
@@ -37,7 +37,9 @@ const ShoppingListing: React.FC<listingProps> = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
-  const { productList } = useSelector((state: RootState) => state.shopProducts);
+  const { productList, productDetails } = useSelector((state: RootState) => state.shopProducts);
+
+  
 
   const [filters, setFilters] = useState<Filters>({});
   const [sort, setSort] = useState<string>("");
@@ -70,6 +72,12 @@ const ShoppingListing: React.FC<listingProps> = () => {
     sessionStorage.setItem("filters", JSON.stringify(cpyFilters));
   };
 
+  function handleGetProductDetails(getCurrentProductId: string) {
+    console.log(getCurrentProductId);
+    dispatch(fetchProductDetails(getCurrentProductId));
+  }
+
+
   useEffect(() => {
     if (filters !== null && sort !== null)
       dispatch(
@@ -86,7 +94,7 @@ const ShoppingListing: React.FC<listingProps> = () => {
   useEffect(() => {
     if (filters && Object.keys(filters)?.length > 0) {
       const createQueryString = createSearchParamsHelper(filters);
-      router.replace({
+      router.push({
         pathname: router.pathname,
         query: {
           ...query,
@@ -144,6 +152,7 @@ const ShoppingListing: React.FC<listingProps> = () => {
                   <ShoppingProductTile
                     key={productItem?._id}
                     product={productItem}
+                    handleGetProductDetails={handleGetProductDetails}
                   />
                 ))
               : null}

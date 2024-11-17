@@ -158,7 +158,7 @@ export type BrandOptionsMap = {
 export type ShopState = {
   isLoading: boolean;
   productList: Array<Product>;
-  productDetails: null;
+  productDetails: Product | null;
 };
 
 export type Filters = {
@@ -174,4 +174,6 @@ export type FetchProductsParams = {
   filterParams: Record<string, string[] | undefined>; 
   sortParams: string;
 };
+
+
 

@@ -8,12 +8,13 @@ import { Button } from "../ui/button";
 
 type ShoppingProductTileProps = {
   product: Product;
+  handleGetProductDetails: (productId: string) => void;
 };
 
 const ShoppingProductTile: React.FC<ShoppingProductTileProps> = ({
   product,
+  handleGetProductDetails,
 }) => {
-
   let badgeContent: React.ReactNode = null;
   let badgeClass = "absolute top-2 left-2 bg-red-500 hover:bg-red-600";
 
@@ -29,8 +30,8 @@ const ShoppingProductTile: React.FC<ShoppingProductTileProps> = ({
     badgeContent = "Sale";
   }
   return (
-    <Card className="w-full max-w-sm mx-auto">
-      <div>
+    <Card className="w-full max-w-sm mx-auto cursor-pointer">
+      <div onClick={() => product?._id && handleGetProductDetails(product._id)}>
         <div className="relative w-full h-[500px] ">
           {product?.image && typeof product?.image === "string" && (
             <Image
