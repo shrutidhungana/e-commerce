@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { apiEndpoints } from "@/utils/api";
 import axios from "axios";
-import { ShopState, Product } from "@/types";
+import { ShopState, Product, FetchProductsParams } from "@/types";
 
 const initialState: ShopState = {
   isLoading: false,
@@ -13,9 +13,16 @@ const { shopProducts } = apiEndpoints;
 
 export const fetchAllFilteredProducts = createAsyncThunk<
   { data: Array<Product> },
-  void
->("/products/fetchAllProducts", async () => {
-  const result = await axios.get(shopProducts);
+  FetchProductsParams
+>("/products/fetchAllProducts", async ({ filterParams, sortParams }) => {
+  
+
+  const query = new URLSearchParams({
+    ...filterParams,
+    sortBy: sortParams,
+  });
+
+  const result = await axios.get(`${shopProducts}?${query}`);
   return result?.data;
 });
 

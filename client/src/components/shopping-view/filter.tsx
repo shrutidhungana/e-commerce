@@ -3,13 +3,16 @@ import { filterOptions } from "@/config";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
 import { Separator } from "../ui/separator";
+import { Filters } from '@/types';
+
 
 type filterProps = {
-    
+  filters: Filters;
+  handleFilter: (getSectionId: string, getCurrentOption: string) => void;
 };
 
-const ProductFilter:React.FC<filterProps> = () => {
-    
+const ProductFilter:React.FC<filterProps> = ({filters, handleFilter}) => {
+  // console.log({ filters })
     return (
       <div className="bg-background rounded-lg shadow-sm">
         <div className="p-4 border-b">
@@ -26,13 +29,21 @@ const ProductFilter:React.FC<filterProps> = () => {
                       className="flex font-medium items-center gap-2"
                       key={option?.id}
                     >
-                      <Checkbox />
+                      <Checkbox
+                        checked={
+                          filters &&
+                          Object.keys(filters)?.length > 0 &&
+                          filters[keyItem] &&
+                          filters[keyItem]?.indexOf(option.id) > -1
+                        }
+                        onCheckedChange={() => handleFilter(keyItem, option.id)}
+                      />
                       {option.label}
                     </Label>
                   ))}
                 </div>
-                  </div>
-                  <Separator />
+              </div>
+              <Separator />
             </>
           ))}
         </div>
