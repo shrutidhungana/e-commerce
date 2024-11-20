@@ -17,6 +17,7 @@ import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/prod
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { Filters, FilterParams } from "@/types";
 import { useRouter } from "next/router";
+import ProductDetailsDialog from "@/components/shopping-view/product-details";
 
 type listingProps = {};
 
@@ -43,6 +44,7 @@ const ShoppingListing: React.FC<listingProps> = () => {
 
   const [filters, setFilters] = useState<Filters>({});
   const [sort, setSort] = useState<string>("");
+  const [openDetailsDialog, setOpenDetailsDialog] = useState<boolean>(false);
   const { query } = router;
 
   const categorySearchParam = query.category as string | undefined;
@@ -104,6 +106,10 @@ const ShoppingListing: React.FC<listingProps> = () => {
     }
   }, [filters]);
 
+  useEffect(() => {
+    if (productDetails !== null) setOpenDetailsDialog(true);
+  }, [productDetails]);
+
   return (
     <ShoppingLayout>
       <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
@@ -158,6 +164,11 @@ const ShoppingListing: React.FC<listingProps> = () => {
               : null}
           </div>
         </div>
+        <ProductDetailsDialog
+          open={openDetailsDialog}
+          setOpen={setOpenDetailsDialog}
+          productDetails={productDetails}
+        />
       </div>
     </ShoppingLayout>
   );
