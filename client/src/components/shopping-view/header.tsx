@@ -56,23 +56,23 @@ const HeaderRightContent = () => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="bg-black">
-            <AvatarFallback className="bg-black text-white font-extrabold">
+            <AvatarFallback className="bg-black text-white font-extrabold cursor-pointer">
               {user?.user?.userName[0]?.toUpperCase()}
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent side="right" className="w-56">
+        <DropdownMenuContent side="bottom" className="w-56">
           <DropdownMenuLabel>
             Logged in as {user?.user?.userName}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => router.push("/shop/account")}>
-            <UserCog className="mr-2 h-4 w-4" />
+            <UserCog className="mr-2 h-4 w-4 cursor-pointer" />
             Account
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
+            <LogOut className="mr-2 h-4 w-4 cursor-pointer" />
             Logout
           </DropdownMenuItem>
         </DropdownMenuContent>
