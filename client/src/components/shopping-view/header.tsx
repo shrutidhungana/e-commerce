@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { logoutUser } from "@/store/auth-slice";
 import { HousePlug, LogOut, Menu, ShoppingCart, UserCog } from "lucide-react";
 import { AppDispatch, RootState } from "@/store/store";
@@ -19,39 +19,50 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-
+import UserCartWrapper from "./cart-wrapper";
 
 type headerProps = {};
 
 const MenuItems = () => {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
-      {
-        shoppingViewHeaderMenuItems?.map((menuItem :HeaderMenuItem) => (
-          <Link className="text-sm font-medium" key= {menuItem.id} href={menuItem.path}>
-            {menuItem.label}
-          </Link>
-        ))
-         }
+      {shoppingViewHeaderMenuItems?.map((menuItem: HeaderMenuItem) => (
+        <Link
+          className="text-sm font-medium"
+          key={menuItem.id}
+          href={menuItem.path}
+        >
+          {menuItem.label}
+        </Link>
+      ))}
     </nav>
   );
-}
+};
 
 const HeaderRightContent = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-  
-  const router = useRouter()
+  const [openCartSheet, setOpenCartSheet] = useState<boolean>(false);
+
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const handleLogout = () => {
     dispatch(logoutUser());
   };
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">
-      <Button variant="outline" size="icon" className="relative">
-        <ShoppingCart className="w-6 h-6" />
-        <span className="sr-only">User Cart</span>
-      </Button>
+      <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
+        <Button
+          variant="outline"
+          size="icon"
+          className="relative"
+          onClick={() => setOpenCartSheet(true)}
+        >
+          <ShoppingCart className="w-6 h-6" />
+          <span className="sr-only">User Cart</span>
+        </Button>
+        <UserCartWrapper />
+      </Sheet>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -79,11 +90,9 @@ const HeaderRightContent = () => {
       </DropdownMenu>
     </div>
   );
-}
+};
 
 const ShoppingHeader: React.FC<headerProps> = () => {
- 
-
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="flex h-16 items-center justify-between px-4 md:px-6">
