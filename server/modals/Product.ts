@@ -1,6 +1,7 @@
 import mongoose, { Document } from "mongoose";
 
 export interface IProduct extends Document {
+  _id: mongoose.Types.ObjectId;
   image: string;
   title: string;
   description: string;
@@ -9,7 +10,7 @@ export interface IProduct extends Document {
   price: number;
   salePrice: number;
   totalStock: number;
-//   averageReview: number;
+  //   averageReview: number;
 }
 
 const ProductSchema = new mongoose.Schema<IProduct>(

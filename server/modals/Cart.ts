@@ -3,7 +3,7 @@ import { IProduct } from "./Product";
 
 
 interface CartItem {
-  productId:  IProduct; // Allow either ObjectId or populated Product
+  productId:  IProduct; 
   quantity: number;
 }
 
