@@ -7,6 +7,7 @@ export type User = {
   success: boolean;
 
   user: {
+    id: string;
     role: string | null | undefined;
     userName: string;
   };
@@ -175,13 +176,24 @@ export type FetchProductsParams = {
   sortParams: string;
 };
 
+export type CartItems = {
+  image: string;
+  price: number;
+  productId: string,
+  quantity: number,
+  salePrice: number,
+  title: string,
+
+}
+
 export type Cart = {
   productId: string;
   quantity: number;
+  items: CartItems[];
 }
 
 export type CartState = {
-  cartItems: Array<Cart>;
+  cartItems: Array<Cart> ;
   isLoading: boolean;
 };
 

@@ -13,11 +13,16 @@ import { ArrowUpDownIcon } from "lucide-react";
 import { sortOptions } from "@/config";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
+import {
+  fetchAllFilteredProducts,
+  fetchProductDetails,
+} from "@/store/shop/products-slice";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
-import { Filters, FilterParams } from "@/types";
+import { Filters, FilterParams, Response, Cart } from "@/types";
 import { useRouter } from "next/router";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
+import { addProductToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { useToast } from "@/hooks/use-toast";
 
 type listingProps = {};
 
@@ -38,14 +43,18 @@ const ShoppingListing: React.FC<listingProps> = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
 
-  const { productList, productDetails } = useSelector((state: RootState) => state.shopProducts);
-
-  
+  const { productList, productDetails } = useSelector(
+    (state: RootState) => state.shopProducts
+  );
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { cartItems } = useSelector((state: RootState) => state.shopCart);
 
   const [filters, setFilters] = useState<Filters>({});
   const [sort, setSort] = useState<string>("");
   const [openDetailsDialog, setOpenDetailsDialog] = useState<boolean>(false);
+  const [hasOpened, setHasOpened] = useState<boolean>(false);
   const { query } = router;
+  const { toast } = useToast();
 
   const categorySearchParam = query.category as string | undefined;
 
@@ -74,11 +83,61 @@ const ShoppingListing: React.FC<listingProps> = () => {
     sessionStorage.setItem("filters", JSON.stringify(cpyFilters));
   };
 
-  function handleGetProductDetails(getCurrentProductId: string) {
+  const handleGetProductDetails = (getCurrentProductId: string) => {
     console.log(getCurrentProductId);
     dispatch(fetchProductDetails(getCurrentProductId));
-  }
+  };
 
+  const handleAddToCart = (getCurrentProductId: string, getTotalStock: string) => {
+
+   let getCartItems = cartItems.items || [];
+
+   if (getCartItems.length) {
+     const indexOfCurrentItem = getCartItems.findIndex(
+       (item: Cart) => item.productId === getCurrentProductId
+     );
+     if (indexOfCurrentItem > -1) {
+       const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+       if (getQuantity + 1 > getTotalStock) {
+         toast({
+           title: `Only ${getQuantity} quantity can be added for this item`,
+           variant: "destructive",
+         });
+
+         return;
+       }
+     }
+   }
+    
+    dispatch(
+      addProductToCart({
+        userId: user?.user?.id ?? "",
+        productId: getCurrentProductId,
+        quantity: 1,
+      })
+    ).then((data) => {
+      const response = data as Response;
+      if (
+        response.meta.requestStatus === "fulfilled" &&
+        response.payload?.success
+      ) {
+        dispatch(fetchCartItems(user?.user?.id ?? ''));
+        toast({
+          title: "Success!",
+          description: response.payload.message,
+          duration: 5000,
+          className: "bg-green-500 text-white",
+        });
+      } else {
+        toast({
+          title: "Error!",
+          description: response.error?.message,
+          duration: 5000,
+          variant: "destructive",
+        });
+      }
+    });
+  };
 
   useEffect(() => {
     if (filters !== null && sort !== null)
@@ -107,8 +166,11 @@ const ShoppingListing: React.FC<listingProps> = () => {
   }, [filters]);
 
   useEffect(() => {
-    if (productDetails !== null) setOpenDetailsDialog(true);
-  }, [productDetails]);
+    if (productDetails !== null && !hasOpened) {
+      setOpenDetailsDialog(true);
+      setHasOpened(true);
+    }
+  }, [productDetails, hasOpened]);
 
   return (
     <ShoppingLayout>
@@ -159,6 +221,7 @@ const ShoppingListing: React.FC<listingProps> = () => {
                     key={productItem?._id}
                     product={productItem}
                     handleGetProductDetails={handleGetProductDetails}
+                    handleAddToCart={handleAddToCart}
                   />
                 ))
               : null}
@@ -168,6 +231,7 @@ const ShoppingListing: React.FC<listingProps> = () => {
           open={openDetailsDialog}
           setOpen={setOpenDetailsDialog}
           productDetails={productDetails}
+          handleAddToCart= {handleAddToCart}
         />
       </div>
     </ShoppingLayout>
