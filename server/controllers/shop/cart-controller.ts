@@ -173,8 +173,8 @@ const updateCartItemQuantity = async (
       data: {
         ...cart.toObject(),
         items: populateCartItems,
-        message: 'Successfully updated cart items.'
       },
+      message: "Successfully updated cart items.",
     });
   } catch {
       res.status(500).json({
@@ -235,6 +235,7 @@ const deleteCartItems = async (
         ...cart.toObject(),
         items: populateCartItems,
       },
+      message: "Successfully deleted cart item."
     });
   } catch {
       res.status(500).json({
