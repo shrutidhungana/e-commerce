@@ -9,11 +9,13 @@ import { Button } from "../ui/button";
 type ShoppingProductTileProps = {
   product: Product;
   handleGetProductDetails: (productId: string) => void;
+  handleAddToCart: (getCurrentProductId: string, getTotalStock: string) => void;
 };
 
 const ShoppingProductTile: React.FC<ShoppingProductTileProps> = ({
   product,
   handleGetProductDetails,
+  handleAddToCart,
 }) => {
   let badgeContent: React.ReactNode = null;
   let badgeClass = "absolute top-2 left-2 bg-red-500 hover:bg-red-600";
@@ -75,7 +77,14 @@ const ShoppingProductTile: React.FC<ShoppingProductTileProps> = ({
             Out Of Stock
           </Button>
         ) : (
-          <Button className="w-full">Add to cart</Button>
+          <Button
+            className="w-full"
+              onClick={() => handleAddToCart(product?._id ?? "",
+                 product?.totalStock
+              )}
+          >
+            Add to cart
+          </Button>
         )}
       </CardFooter>
     </Card>

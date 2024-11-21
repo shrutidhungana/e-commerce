@@ -13,12 +13,14 @@ type productDetailsProps = {
   productDetails: Product | null;
   open: boolean;
   setOpen: (open: boolean) => void;
+  handleAddToCart: (getCurrentProductId: string, getTotalStock: string) => void;
 };
 
 const ProductDetailsDialog: React.FC<productDetailsProps> = ({
   productDetails,
   open,
   setOpen,
+  handleAddToCart,
 }) => {
   const salePrice = parseFloat(productDetails?.salePrice ?? "0");
   const price = parseFloat(productDetails?.price ?? "0");
@@ -81,7 +83,17 @@ const ProductDetailsDialog: React.FC<productDetailsProps> = ({
                 Out of Stock
               </Button>
             ) : (
-              <Button className="w-full">Add to Cart</Button>
+              <Button
+                className="w-full"
+                onClick={() =>
+                  handleAddToCart(
+                    productDetails?._id??"",
+                    productDetails?.totalStock??""
+                  )
+                }
+              >
+                Add to Cart
+              </Button>
             )}
           </div>
           <Separator />
@@ -104,7 +116,6 @@ const ProductDetailsDialog: React.FC<productDetailsProps> = ({
                     <StarIcon className="w-5 h-5 fill-primary" />
                   </div>
                   <p className="text-muted-foreground">This is awesome.</p>
-                  
                 </div>
               </div>
             </div>
