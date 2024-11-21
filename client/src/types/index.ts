@@ -177,16 +177,17 @@ export type FetchProductsParams = {
 };
 
 export type CartItems = {
+  id?: string;
   image: string;
   price: number;
-  productId: string,
-  quantity: number,
-  salePrice: number,
-  title: string,
-
-}
+  productId: string;
+  quantity: number;
+  salePrice: number;
+  title: string;
+};
 
 export type Cart = {
+  id?: string;
   productId: string;
   quantity: number;
   items: CartItems[];
