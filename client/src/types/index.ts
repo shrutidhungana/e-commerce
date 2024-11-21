@@ -175,5 +175,25 @@ export type FetchProductsParams = {
   sortParams: string;
 };
 
+export type Cart = {
+  productId: string;
+  quantity: number;
+}
+
+export type CartState = {
+  cartItems: Array<Cart>;
+  isLoading: boolean;
+};
+
+export type CartPayload = {
+  productId: string;
+  quantity: number;
+  userId:string,
+};
+
+export type DeleteCartPayload = {
+  userId: string;
+  productId: string;
+}
 
 
