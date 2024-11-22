@@ -1,7 +1,10 @@
 import Address from "../../modals/Address";
 import { Request, Response } from "express";
 
-const addAddress = async (req:Request, res:Response):Promise<void |Response> => {
+const addAddress = async (
+  req: Request,
+  res: Response
+): Promise<void | Response> => {
   try {
     const { userId, address, city, pincode, phone, notes } = req.body;
 
@@ -26,6 +29,113 @@ const addAddress = async (req:Request, res:Response):Promise<void |Response> => 
     res.status(201).json({
       success: true,
       data: newlyCreatedAddress,
+      message: "Successfully added address.",
+    });
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: "Error",
+    });
+  }
+};
+
+const fetchAllAddress = async (
+  req: Request,
+  res: Response
+): Promise<void | Response> => {
+  try {
+    const { userId } = req.params;
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "User id is required!",
+      });
+    }
+
+    const addressList = await Address.find({ userId });
+
+    res.status(200).json({
+      success: true,
+      data: addressList,
+      message: "Successfully fetch Address.",
+    });
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: "Error",
+    });
+  }
+};
+
+const editAddress = async (
+  req: Request,
+  res: Response
+): Promise<void | Response> => {
+  try {
+    const { userId, addressId } = req.params;
+    const formData = req.body;
+
+    if (!userId || !addressId) {
+      return res.status(400).json({
+        success: false,
+        message: "User and address id is required!",
+      });
+    }
+
+    const address = await Address.findOneAndUpdate(
+      {
+        _id: addressId,
+        userId,
+      },
+      formData,
+      { new: true }
+    );
+
+    if (!address) {
+      return res.status(404).json({
+        success: false,
+        message: "Address not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: address,
+      message: "Successfully edited Address.",
+    });
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: "Error",
+    });
+  }
+};
+
+const deleteAddress = async (
+  req: Request,
+  res: Response
+): Promise<void | Response> => {
+  try {
+    const { userId, addressId } = req.params;
+    if (!userId || !addressId) {
+      return res.status(400).json({
+        success: false,
+        message: "User and address id is required!",
+      });
+    }
+
+    const address = await Address.findOneAndDelete({ _id: addressId, userId });
+
+    if (!address) {
+      return res.status(404).json({
+        success: false,
+        message: "Address not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Address deleted successfully",
     });
   } catch (e) {
     console.log(e);
@@ -36,4 +146,4 @@ const addAddress = async (req:Request, res:Response):Promise<void |Response> => 
   }
 };
 
-export {addAddress}
+export { addAddress, fetchAllAddress, editAddress, deleteAddress };
