@@ -1,5 +1,5 @@
 import React from "react";
-import { CartItems, Response,Cart } from "@/types";
+import { CartItems, Response, Cart } from "@/types";
 import Image from "next/image";
 import { Minus, Plus, Trash } from "lucide-react";
 import { Button } from "../ui/button";
@@ -28,25 +28,21 @@ const UserCartItemsContent: React.FC<UserCartItemsContentProps> = ({
   ).toFixed(2);
 
   const handleUpdateQuantity = (
-    
     getCartItem: CartItems,
     typeOfAction: string
   ) => {
-
     if (typeOfAction == "plus") {
       let getCartItems = cartItems.items || [];
 
       if (getCartItems.length) {
         const indexOfCurrentCartItem = getCartItems.findIndex(
-          (item:Cart) => item.productId === getCartItem?.productId
+          (item: Cart) => item.productId === getCartItem?.productId
         );
 
         const getCurrentProductIndex = productList.findIndex(
           (product) => product._id === getCartItem?.productId
         );
         const getTotalStock = productList[getCurrentProductIndex].totalStock;
-
-        console.log(getCurrentProductIndex, getTotalStock, "getTotalStock");
 
         if (indexOfCurrentCartItem > -1) {
           const getQuantity = getCartItems[indexOfCurrentCartItem].quantity;
@@ -61,7 +57,7 @@ const UserCartItemsContent: React.FC<UserCartItemsContentProps> = ({
         }
       }
     }
-   
+
     dispatch(
       updateCartQuantity({
         userId: user?.user?.id ?? "",
@@ -73,7 +69,7 @@ const UserCartItemsContent: React.FC<UserCartItemsContentProps> = ({
       })
     ).then((data) => {
       const response = data as Response;
-      
+
       if (
         response.meta.requestStatus === "fulfilled" &&
         response.payload?.success
@@ -95,11 +91,13 @@ const UserCartItemsContent: React.FC<UserCartItemsContentProps> = ({
     });
   };
 
-  const handleCartItemDelete = (getCartItem:CartItems) => {
-    dispatch(deleteItemInCart({
-      userId: user?.user?.id ?? "",
-      productId: getCartItem?.productId
-    })).then((data) => {
+  const handleCartItemDelete = (getCartItem: CartItems) => {
+    dispatch(
+      deleteItemInCart({
+        userId: user?.user?.id ?? "",
+        productId: getCartItem?.productId,
+      })
+    ).then((data) => {
       const response = data as Response;
 
       if (
@@ -120,8 +118,8 @@ const UserCartItemsContent: React.FC<UserCartItemsContentProps> = ({
           variant: "destructive",
         });
       }
-    })
-  }
+    });
+  };
 
   return (
     <div className="flex items-center space-x-4">

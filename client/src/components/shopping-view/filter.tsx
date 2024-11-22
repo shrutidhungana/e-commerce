@@ -12,7 +12,7 @@ type filterProps = {
 };
 
 const ProductFilter:React.FC<filterProps> = ({filters, handleFilter}) => {
-  // console.log({ filters })
+ 
     return (
       <div className="bg-background rounded-lg shadow-sm">
         <div className="p-4 border-b">

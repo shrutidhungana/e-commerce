@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { Dialog, DialogContent } from "../ui/dialog";
 import Image from "next/image";
 import { Product } from "@/types";
@@ -8,6 +8,9 @@ import { Input } from "../ui/input";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { StarIcon } from "lucide-react";
 import { Label } from "../ui/label";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
+import { setProductDetails } from "@/store/shop/products-slice";
 
 type productDetailsProps = {
   productDetails: Product | null;
@@ -26,8 +29,11 @@ const ProductDetailsDialog: React.FC<productDetailsProps> = ({
   const price = parseFloat(productDetails?.price ?? "0");
   const totalStock = parseFloat(productDetails?.totalStock ?? "0");
 
+   const dispatch = useDispatch<AppDispatch>();
+
   const handleDialogClose = () => {
-     setOpen(false);
+    setOpen(false);
+     dispatch(setProductDetails());
   }
 
   return (
