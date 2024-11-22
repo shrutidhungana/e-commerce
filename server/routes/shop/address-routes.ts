@@ -9,7 +9,7 @@ import {
 const router: Router = express.Router();
 
 router.post("/add", addAddress as express.RequestHandler);
-router.get("/get/:userId", fetchAllAddress as  express.RequestHandler);
+router.get("/lists/:userId", fetchAllAddress as  express.RequestHandler);
 router.delete(
   "/delete/:userId/:addressId",
   deleteAddress as express.RequestHandler

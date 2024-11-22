@@ -16,7 +16,7 @@ export type User = {
 export type AuthState = {
   isAuthenticated: boolean;
   isLoading: boolean;
-  user: User | null ;
+  user: User | null;
 };
 
 export type FormControl = {
@@ -80,7 +80,6 @@ export type InitialProductFormData = {
 };
 
 export type Product = {
-  
   _id?: string | undefined;
   title: string;
   description: string;
@@ -169,11 +168,10 @@ export type Filters = {
   [key: string]: string[] | undefined;
 };
 
-
 export type FilterParams = Record<string, string[] | undefined>;
 
 export type FetchProductsParams = {
-  filterParams: Record<string, string[] | undefined>; 
+  filterParams: Record<string, string[] | undefined>;
   sortParams: string;
 };
 
@@ -192,23 +190,23 @@ export type Cart = {
   productId: string;
   quantity: number;
   items: CartItems[];
-}
+};
 
 export type CartState = {
-  cartItems: Array<Cart> ;
+  cartItems: Array<Cart>;
   isLoading: boolean;
 };
 
 export type CartPayload = {
   productId: string;
   quantity: number;
-  userId:string,
+  userId: string;
 };
 
 export type DeleteCartPayload = {
   userId: string;
   productId: string;
-}
+};
 
 export type CurrentItem = {
   id: string;
@@ -216,4 +214,34 @@ export type CurrentItem = {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 };
 
+export type Address = {
+  userId: string;
+  address: string;
+  city: string;
+  pincode: string;
+  notes: string;
+  phone: string;
+};
 
+export type AddressState = {
+  isLoading: boolean;
+  addressList: Array<Address>;
+};
+
+export type InitialAddressFormData = {
+  address: string;
+  city: string;
+  pincode: string;
+  notes: string;
+  phone: string;
+  [key: string]: string;
+};
+
+
+export type AddressPayload = {
+  address: string;
+  city: string;
+  pincode: string;
+  notes: string;
+  phone: string;
+}; 

@@ -16,5 +16,9 @@ export const apiEndpoints = {
   cartItems: `${API_BASE_URL}/shop/cart/lists/:userId`,
   updateCartItemQuantity: `${API_BASE_URL}/shop/cart/update-cart`,
   deleteCartItem: `${API_BASE_URL}/shop/cart/:userId/:productId`,
+  addAddress: `${API_BASE_URL}/shop/address/add`,
+  listAddress: `${API_BASE_URL}/shop/address/lists/:userId`,
+  editAddress: `${API_BASE_URL}/shop/address/update/:userId/:addressId`,
+  deleteAddress: `${API_BASE_URL}/shop/address/delete/:userId/:addressId`,
   // Add other API endpoints here as needed
 };
