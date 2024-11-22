@@ -29,6 +29,7 @@ const addAddress = async (
     res.status(201).json({
       success: true,
       data: newlyCreatedAddress,
+      message: "Successfully added address.",
     });
   } catch (e) {
     res.status(500).json({
@@ -56,16 +57,15 @@ const fetchAllAddress = async (
     res.status(200).json({
       success: true,
       data: addressList,
+      message: "Successfully fetch Address.",
     });
   } catch (e) {
-    console.log(e);
     res.status(500).json({
       success: false,
       message: "Error",
     });
   }
 };
-
 
 const editAddress = async (
   req: Request,
@@ -101,6 +101,41 @@ const editAddress = async (
     res.status(200).json({
       success: true,
       data: address,
+      message: "Successfully edited Address.",
+    });
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: "Error",
+    });
+  }
+};
+
+const deleteAddress = async (
+  req: Request,
+  res: Response
+): Promise<void | Response> => {
+  try {
+    const { userId, addressId } = req.params;
+    if (!userId || !addressId) {
+      return res.status(400).json({
+        success: false,
+        message: "User and address id is required!",
+      });
+    }
+
+    const address = await Address.findOneAndDelete({ _id: addressId, userId });
+
+    if (!address) {
+      return res.status(404).json({
+        success: false,
+        message: "Address not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Address deleted successfully",
     });
   } catch (e) {
     console.log(e);
@@ -111,4 +146,4 @@ const editAddress = async (
   }
 };
 
-export { addAddress, fetchAllAddress, editAddress };
+export { addAddress, fetchAllAddress, editAddress, deleteAddress };
