@@ -52,7 +52,6 @@ const ShoppingListing: React.FC<listingProps> = () => {
   const [filters, setFilters] = useState<Filters>({});
   const [sort, setSort] = useState<string>("");
   const [openDetailsDialog, setOpenDetailsDialog] = useState<boolean>(false);
-  const [hasOpened, setHasOpened] = useState<boolean>(false);
   const { query } = router;
   const { toast } = useToast();
 
@@ -84,12 +83,11 @@ const ShoppingListing: React.FC<listingProps> = () => {
   };
 
   const handleGetProductDetails = (getCurrentProductId: string) => {
-    console.log(getCurrentProductId);
     dispatch(fetchProductDetails(getCurrentProductId));
   };
 
   const handleAddToCart = (getCurrentProductId: string, getTotalStock: string) => {
-
+  
    let getCartItems = cartItems.items || [];
 
    if (getCartItems.length) {
@@ -166,11 +164,11 @@ const ShoppingListing: React.FC<listingProps> = () => {
   }, [filters]);
 
   useEffect(() => {
-    if (productDetails !== null && !hasOpened) {
+    if (productDetails !== null ) {
       setOpenDetailsDialog(true);
-      setHasOpened(true);
+      
     }
-  }, [productDetails, hasOpened]);
+  }, [productDetails]);
 
   return (
     <ShoppingLayout>
