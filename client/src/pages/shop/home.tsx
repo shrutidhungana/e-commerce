@@ -18,7 +18,8 @@ import {
   ShoppingBasket,
   UmbrellaIcon,
   WashingMachine,
-  WatchIcon,
+    WatchIcon,
+  BookUser
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -32,6 +33,25 @@ import { AppDispatch, RootState } from "@/store/store";
 import { useRouter } from "next/router";
 
 type homeProps = {};
+
+const categoriesWithIcon = [
+  { id: "men", label: "Men", icon: ShirtIcon },
+  { id: "women", label: "Women", icon: CloudLightning },
+  { id: "kids", label: "Kids", icon: BabyIcon },
+  { id: "accessories", label: "Accessories", icon: WatchIcon },
+  { id: "footwear", label: "Footwear", icon: UmbrellaIcon },
+];
+
+const brandsWithIcon = [
+  { id: "nike", label: "Nike", icon: Shirt },
+  { id: "adidas", label: "Adidas", icon: WashingMachine },
+  { id: "puma", label: "Puma", icon: ShoppingBasket },
+  { id: "levi", label: "Levi's", icon: Airplay },
+  { id: "zara", label: "Zara", icon: Images },
+    { id: "h&m", label: "H&M", icon: Heater },
+    {id: "ethnic", label: "Ethnic", icon:BookUser}
+  
+];
 
 const ShoppingHome: React.FC<homeProps> = () => {
   const slides = [bannerOne, bannerTwo, bannerThree];
@@ -70,6 +90,19 @@ const ShoppingHome: React.FC<homeProps> = () => {
             <h2 className="text-3xl font-bold text-center mb-8">
               Shop by category
             </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {categoriesWithIcon.map((categoryItem) => (
+                <Card
+                  key={categoryItem?.id}
+                  className="cursor-pointer hover:shadow-lg transition-shadow"
+                >
+                  <CardContent className="flex flex-col items-center justify-center p-6">
+                    <categoryItem.icon className="w-12 h-12 mb-4 text-primary" />
+                    <span className="font-bold">{categoryItem.label}</span>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </section>
         <section className="py-12 bg-gray-50">
@@ -77,6 +110,20 @@ const ShoppingHome: React.FC<homeProps> = () => {
             <h2 className="text-3xl font-bold text-center mb-8">
               Shop by Brand
             </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {brandsWithIcon.map((brandItem) => (
+                  <Card
+                      key={brandItem?.id}
+                  
+                  className="cursor-pointer hover:shadow-lg transition-shadow"
+                >
+                  <CardContent className="flex flex-col items-center justify-center p-6">
+                    <brandItem.icon className="w-12 h-12 mb-4 text-primary" />
+                    <span className="font-bold">{brandItem.label}</span>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </section>
       </div>
