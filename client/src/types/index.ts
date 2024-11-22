@@ -80,6 +80,7 @@ export type InitialProductFormData = {
 };
 
 export type Product = {
+  
   _id?: string | undefined;
   title: string;
   description: string;
