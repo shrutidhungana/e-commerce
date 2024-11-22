@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "@/config";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Label } from "../ui/label";
 import { HeaderMenuItem } from "@/types";
@@ -26,16 +27,44 @@ type headerProps = {};
 
 const MenuItems = () => {
   const router = useRouter();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+ const handleNavigate = (getCurrentMenuItem: HeaderMenuItem) => {
+   sessionStorage.removeItem("filters");
+
+   const currentFilter =
+     getCurrentMenuItem.id !== "home" && getCurrentMenuItem.id !== "products"
+       ? {
+           category: [getCurrentMenuItem.id],
+         }
+       : null;
+
+   sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+    
+    if (router.pathname.includes("listing") && currentFilter !== null) {
+      router.push({
+        pathname: router.pathname,
+        query: {
+          category: getCurrentMenuItem.id,
+        },
+      });
+    } else {
+      router.push(getCurrentMenuItem?.path);
+    }
+   
+ };
+  
+  
   return (
     <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
       {shoppingViewHeaderMenuItems?.map((menuItem: HeaderMenuItem) => (
-        <Link
-          className="text-sm font-medium"
+        <Label
+          onClick={() => handleNavigate(menuItem)}
+          className="text-sm font-medium cursor-pointer"
           key={menuItem.id}
-          href={menuItem.path}
         >
           {menuItem.label}
-        </Link>
+        </Label>
       ))}
     </nav>
   );
@@ -43,7 +72,7 @@ const MenuItems = () => {
 
 const HeaderRightContent = () => {
   const { user } = useSelector((state: RootState) => state.auth);
-   const { cartItems } = useSelector((state:RootState) => state.shopCart);
+  const { cartItems } = useSelector((state: RootState) => state.shopCart);
   const [openCartSheet, setOpenCartSheet] = useState<boolean>(false);
 
   const router = useRouter();
@@ -51,9 +80,9 @@ const HeaderRightContent = () => {
   const handleLogout = () => {
     dispatch(logoutUser());
   };
-   useEffect(() => {
-     dispatch(fetchCartItems(user?.user?.id??""));
-   }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchCartItems(user?.user?.id ?? ""));
+  }, [dispatch]);
 
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">

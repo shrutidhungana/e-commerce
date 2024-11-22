@@ -9,7 +9,7 @@ import {
   Airplay,
   BabyIcon,
   ChevronLeftIcon,
-  ChevronRightIcon,
+  ChevronRightIcon, 
   CloudLightning,
   Heater,
   Images,
@@ -33,7 +33,7 @@ import { AppDispatch, RootState } from "@/store/store";
 import { useRouter } from "next/router";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { useToast } from "@/hooks/use-toast";
-import { Response } from "@/types";
+import { Response, CurrentItem } from "@/types";
 
 type homeProps = {};
 
@@ -65,11 +65,24 @@ const ShoppingHome: React.FC<homeProps> = () => {
   const { user } = useSelector((state: RootState) => state.auth);
 
   const slides = [bannerOne, bannerTwo, bannerThree];
-  const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch<AppDispatch>();
+    const router = useRouter()
 
   const handleGetProductDetails = (getCurrentProductId: string) => {
     dispatch(fetchProductDetails(getCurrentProductId));
   };
+    
+    
+    const handleNavigateToListingPage = (getCurrentItem:CurrentItem, section: string) => {
+        
+        sessionStorage.removeItem("filters");
+        const currentFilter = {
+            [section]: [getCurrentItem.id],
+        };
+        
+        sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+        router.push(`/shop/listing`)
+    }
 
   const handleAddToCart = (getCurrentProductId: string) => {
     dispatch(
@@ -172,6 +185,9 @@ const ShoppingHome: React.FC<homeProps> = () => {
                 <Card
                   key={categoryItem?.id}
                   className="cursor-pointer hover:shadow-lg transition-shadow"
+                  onClick={() =>
+                    handleNavigateToListingPage(categoryItem, "category")
+                  }
                 >
                   <CardContent className="flex flex-col items-center justify-center p-6">
                     <categoryItem.icon className="w-12 h-12 mb-4 text-primary" />
@@ -192,6 +208,9 @@ const ShoppingHome: React.FC<homeProps> = () => {
                 <Card
                   key={brandItem?.id}
                   className="cursor-pointer hover:shadow-lg transition-shadow"
+                  onClick={() =>
+                    handleNavigateToListingPage(brandItem, "brand")
+                  }
                 >
                   <CardContent className="flex flex-col items-center justify-center p-6">
                     <brandItem.icon className="w-12 h-12 mb-4 text-primary" />
