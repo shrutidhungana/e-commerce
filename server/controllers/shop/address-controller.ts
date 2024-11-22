@@ -29,7 +29,7 @@ const addAddress = async (
     res.status(201).json({
       success: true,
       data: newlyCreatedAddress,
-      message: "Successfully added address.",
+      message: "Address is added successfully",
     });
   } catch (e) {
     res.status(500).json({
@@ -57,7 +57,7 @@ const fetchAllAddress = async (
     res.status(200).json({
       success: true,
       data: addressList,
-      message: "Successfully fetch Address.",
+      message: "List of Addresses fetched Successfully",
     });
   } catch (e) {
     res.status(500).json({
@@ -101,7 +101,7 @@ const editAddress = async (
     res.status(200).json({
       success: true,
       data: address,
-      message: "Successfully edited Address.",
+      message: "Address is deleted successfully.",
     });
   } catch (e) {
     res.status(500).json({
@@ -135,7 +135,7 @@ const deleteAddress = async (
 
     res.status(200).json({
       success: true,
-      message: "Address deleted successfully",
+      message: "Address is deleted successfully.",
     });
   } catch (e) {
     res.status(500).json({
