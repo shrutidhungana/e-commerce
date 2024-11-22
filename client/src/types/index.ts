@@ -210,4 +210,10 @@ export type DeleteCartPayload = {
   productId: string;
 }
 
+export type CurrentItem = {
+  id: string;
+  label: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+};
+
 
