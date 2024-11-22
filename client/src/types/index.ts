@@ -237,11 +237,21 @@ export type InitialAddressFormData = {
   [key: string]: string;
 };
 
-
 export type AddressPayload = {
   address: string;
   city: string;
   pincode: string;
   notes: string;
   phone: string;
-}; 
+};
+
+export type EditAddressPayload = {
+  userId: string;
+  addressId: string;
+  formData: InitialAddressFormData;
+};
+
+export type DeleteAddressPayload = {
+  userId: string;
+  addressId: string;
+};
