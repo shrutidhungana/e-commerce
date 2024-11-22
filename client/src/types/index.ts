@@ -238,6 +238,7 @@ export type InitialAddressFormData = {
 };
 
 export type AddressPayload = {
+  userId?: string;
   address: string;
   city: string;
   pincode: string;
@@ -246,7 +247,7 @@ export type AddressPayload = {
 };
 
 export type EditAddressPayload = {
-  userId: string;
+  userId: string | null;
   addressId: string;
   formData: InitialAddressFormData;
 };

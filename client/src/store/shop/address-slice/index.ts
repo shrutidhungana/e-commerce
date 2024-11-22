@@ -38,6 +38,9 @@ export const fetchAllAddresses = createAsyncThunk<
 export const editAddress = createAsyncThunk<Address, EditAddressPayload>(
   "/addresses/editaAddress",
   async ({ userId, addressId, formData }) => {
+     if (!userId || !addressId) {
+       throw new Error("userId or addressId is null or undefined");
+     }
     const response = await axios.put(
       `${updateAddress
         ?.replace(":userId", userId)
