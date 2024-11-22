@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { apiEndpoints } from "../../../utils/api";
+import { apiEndpoints } from "@/utils/api";
 import axios from "axios";
 import {
   AddressState,
   InitialAddressFormData,
   AddressPayload,
   Address,
-    EditAddressPayload,
-  DeleteAddressPayload
-} from "../../../types";
+  EditAddressPayload,
+  DeleteAddressPayload,
+} from "@/types";
 
 const initialState: AddressState = {
   isLoading: false,
@@ -49,13 +49,12 @@ export const editAddress = createAsyncThunk<Address, EditAddressPayload>(
 );
 
 export const deleteAddress = createAsyncThunk<Address, DeleteAddressPayload>(
-    "/addresses/deleteAddress",
-    async ({ userId, addressId, }) => {
+  "/addresses/deleteAddress",
+  async ({ userId, addressId }) => {
     const response = await axios.put(
       `${removeAddress
         ?.replace(":userId", userId)
-        ?.replace(":addressId", addressId)}`,
-      
+        ?.replace(":addressId", addressId)}`
     );
     return response.data;
   }
@@ -64,33 +63,33 @@ export const deleteAddress = createAsyncThunk<Address, DeleteAddressPayload>(
 const addressSlice = createSlice({
   name: "address",
   initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder
-          .addCase(addNewAddress.pending, (state) => {
-            state.isLoading = true;
-          })
-          .addCase(addNewAddress.fulfilled, (state) => {
-            state.isLoading = false;
-          })
-          .addCase(addNewAddress.rejected, (state) => {
-            state.isLoading = false;
-          })
-          .addCase(fetchAllAddresses.pending, (state) => {
-            state.isLoading = true;
-          })
-          .addCase(
-            fetchAllAddresses.fulfilled,
-            (state, action: PayloadAction<{ data: Array<Address> }>) => {
-              state.isLoading = false;
-              state.addressList = action.payload.data;
-            }
-          )
-          .addCase(fetchAllAddresses.rejected, (state) => {
-            state.isLoading = false;
-            state.addressList = [];
-          });
-  }
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(addNewAddress.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addNewAddress.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(addNewAddress.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(fetchAllAddresses.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(
+        fetchAllAddresses.fulfilled,
+        (state, action: PayloadAction<{ data: Array<Address> }>) => {
+          state.isLoading = false;
+          state.addressList = action.payload.data;
+        }
+      )
+      .addCase(fetchAllAddresses.rejected, (state) => {
+        state.isLoading = false;
+        state.addressList = [];
+      });
+  },
 });
 
 export default addressSlice.reducer;

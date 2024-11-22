@@ -139,7 +139,7 @@ const ShoppingHome: React.FC<homeProps> = () => {
   return (
     <ShoppingLayout>
       <div className="flex flex-col min-h-screen">
-        <div className="relative w-full h-[600px] overflow-hidden">
+        <div className="relative w-full h-[750px] overflow-hidden">
           {slides?.map((slide, index) => (
             <Image
               key={index}
