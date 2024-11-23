@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import CommonForm from "../common/form";
 import { addressFormControls } from "@/config";
-import { InitialAddressFormData, Response } from "@/types";
+import {
+  InitialAddressFormData,
+  Response,
+  Address as AddressType,
+} from "@/types";
 import { useToast } from "@/hooks/use-toast";
 import AddressCard from "./address-card";
 import {
@@ -34,8 +38,6 @@ const Address: React.FC<AddressProps> = () => {
   const { user } = useSelector((state: RootState) => state.auth);
   const { addressList } = useSelector((state: RootState) => state.shopAddress);
 
-  console.log(addressList);
-
   const handleManageAddress = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -50,20 +52,86 @@ const Address: React.FC<AddressProps> = () => {
 
       return;
     }
+
+    currentEditedId !== null
+      ? dispatch(
+          editAddress({
+            userId: user?.user?.id ?? "",
+            addressId: currentEditedId,
+            formData,
+          })
+        ).then((data) => {
+          const response = data as Response;
+
+          if (
+            response.meta.requestStatus === "fulfilled" &&
+            response.payload?.success
+          ) {
+            dispatch(fetchAllAddresses(user?.user?.id ?? ""));
+            setFormData(initialAddressFormData);
+            setCurrentEditedId(null);
+
+            toast({
+              title: "Success!",
+              description: response.payload.message,
+              duration: 5000,
+              className: "bg-green-500 text-white",
+            });
+          } else {
+            toast({
+              title: "Error!",
+              description: response.error?.message,
+              duration: 5000,
+              variant: "destructive",
+              className: "text-white",
+            });
+          }
+        })
+      : dispatch(
+          addNewAddress({
+            ...formData,
+            userId: user?.user?.id ?? "",
+          })
+        ).then((data) => {
+          const response = data as Response;
+
+          if (
+            response.meta.requestStatus === "fulfilled" &&
+            response.payload?.success
+          ) {
+            dispatch(fetchAllAddresses(user?.user?.id ?? ""));
+            setFormData(initialAddressFormData);
+            toast({
+              title: "Success!",
+              description: response.payload.message,
+              duration: 5000,
+              className: "bg-green-500 text-white",
+            });
+          } else {
+            toast({
+              title: "Error!",
+              description: response.error?.message,
+              duration: 5000,
+              variant: "destructive",
+              className: "text-white",
+            });
+          }
+        });
+  };
+
+  const handleDeleteAddress = (getCurrentAddress: AddressType) => {
     dispatch(
-      addNewAddress({
-        ...formData,
+      deleteAddress({
         userId: user?.user?.id ?? "",
+        addressId: getCurrentAddress._id ?? "",
       })
     ).then((data) => {
       const response = data as Response;
-
       if (
         response.meta.requestStatus === "fulfilled" &&
         response.payload?.success
       ) {
         dispatch(fetchAllAddresses(user?.user?.id ?? ""));
-        setFormData(initialAddressFormData);
         toast({
           title: "Success!",
           description: response.payload.message,
@@ -79,6 +147,18 @@ const Address: React.FC<AddressProps> = () => {
           className: "text-white",
         });
       }
+    });
+  };
+
+  const handleEditAddress = (getCurrentAddress: AddressType) => {
+    setCurrentEditedId(getCurrentAddress?._id ?? "");
+    setFormData({
+      ...formData,
+      address: getCurrentAddress?.address,
+      city: getCurrentAddress?.city,
+      phone: getCurrentAddress?.phone,
+      pincode: getCurrentAddress?.pincode,
+      notes: getCurrentAddress?.notes,
     });
   };
 
@@ -100,17 +180,22 @@ const Address: React.FC<AddressProps> = () => {
               <AddressCard
                 key={singleAddressItem?.userId}
                 addressInfo={singleAddressItem}
+                handleDeleteAddress={handleDeleteAddress}
+                handleEditAddress={handleEditAddress}
               />
             ))
           : null}
       </div>
       <CardHeader>
-        <CardTitle>Add New Address</CardTitle>
+        <CardTitle>
+          {" "}
+          {currentEditedId !== null ? "Edit Address" : "Add New Address"}
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
         <CommonForm
           formControls={addressFormControls}
-          buttonText="Add"
+          buttonText={currentEditedId !== null ? "Edit" : "Add"}
           formData={formData}
           setFormData={setFormData}
           onSubmit={handleManageAddress}

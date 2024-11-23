@@ -101,7 +101,7 @@ const editAddress = async (
     res.status(200).json({
       success: true,
       data: address,
-      message: "Address is deleted successfully.",
+      message: "Address is updated successfully.",
     });
   } catch (e) {
     res.status(500).json({
