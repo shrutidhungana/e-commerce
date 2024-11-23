@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import CommonForm from "../common/form";
 import { DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { OrderState } from "../../types";
-import { RootState } from "@/store/store";
+import { RootState, AppDispatch } from "@/store/store";
 
 type OrdersDetailsProps = {};
 const initialFormData: OrderState = {
@@ -72,11 +72,26 @@ const AdminOrderDetailsView: React.FC<OrdersDetailsProps> = () => {
               <span>User Name:</span>
               <span className="text-black">{user?.user?.userName}</span>
             </div>
-            <div>Address: Guheshwori</div>
-            <div>City: Kathmandu</div>
-            <div>Pincode: 2345</div>
-            <div>Phone: +977-9861495261</div>
-            <div>Note: Hello</div>
+            <div className="flex justify-between">
+              <span>Address:</span>
+              <span className="text-black">Guheshwori</span>
+            </div>
+            <div className="flex justify-between">
+              <span>City:</span>
+              <span className="text-black">Kathmandu</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Pincode:</span>
+              <span className="text-black">2345</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Phone:</span>
+              <span className="text-black">+977-9861495261</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Note:</span>
+              <span className="text-black">Hello</span>
+            </div>
           </div>
         </div>
 
@@ -105,7 +120,6 @@ const AdminOrderDetailsView: React.FC<OrdersDetailsProps> = () => {
             setFormData={setFormData}
             buttonText={"Update"}
             onSubmit={handleUpdateStatus}
-            
           />
         </div>
       </div>
