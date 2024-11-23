@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Dialog } from "../ui/dialog";
 import { Badge } from "../ui/badge";
+import ShoppingOrderDetailsView from "./order-details";
 import {
   Table,
   TableBody,
@@ -17,6 +18,8 @@ import { AppDispatch, RootState } from "../../store/store";
 type OrdersProps = {};
 
 const ShoppingOrders: React.FC<OrdersProps> = () => {
+  const [openDetailsDialog, setOpenDetailsDialog] = useState<boolean>(false);
+  const { user } = useSelector((state: RootState) => state.auth);
   return (
     <Card>
       <CardHeader>
@@ -42,7 +45,21 @@ const ShoppingOrders: React.FC<OrdersProps> = () => {
               <TableCell>In Process</TableCell>
               <TableCell>$1000</TableCell>
               <TableCell>
-                <Button>View Details </Button>
+                <Dialog
+                  open={openDetailsDialog}
+                  onOpenChange={() => {
+                    setOpenDetailsDialog(false);
+                  }}
+                >
+                  <Button
+                    onClick={() => {
+                      setOpenDetailsDialog(true);
+                    }}
+                  >
+                    View Details{" "}
+                                  </Button>
+                                  <ShoppingOrderDetailsView />
+                </Dialog>
               </TableCell>
             </TableRow>
           </TableBody>
