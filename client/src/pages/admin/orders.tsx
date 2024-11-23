@@ -2,6 +2,7 @@ import React from 'react';
 import AdminLayout from '@/components/admin-view/layout'
 import AdminOrdersView from "@/components/admin-view/orders";
 
+
 type OrdersProps = {
     
 };

@@ -257,3 +257,7 @@ export type DeleteAddressPayload = {
   userId: string;
   addressId: string;
 };
+
+export type OrderState = {
+  status: string;
+}
