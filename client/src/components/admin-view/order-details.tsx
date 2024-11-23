@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-
 import CommonForm from "../common/form";
 import { DialogContent } from "../ui/dialog";
-import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
-import { Badge } from "../ui/badge";
-import { useDispatch, useSelector } from "react-redux";
-import { useToast } from "../../hooks/use-toast";
+import { useSelector } from "react-redux";
 import { OrderState } from "../../types";
-import { AppDispatch, RootState } from "@/store/store";
+import { RootState } from "@/store/store";
 
 type OrdersDetailsProps = {};
 const initialFormData: OrderState = {
@@ -21,58 +17,75 @@ const AdminOrderDetailsView: React.FC<OrdersDetailsProps> = () => {
 
   const handleUpdateStatus = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+   
   };
 
   return (
-    <DialogContent className="sm:max-w-[600px]">
-      <div className="grid gap-6">
-        <div className="grid gap-2">
-          <div className="flex mt-6 items-center justify-between">
-            <p className="font-medium">Order ID</p>
-            <Label>123456</Label>
-          </div>
-          <div className="flex mt-2 items-center justify-between">
-            <p className="font-medium">Order Date</p>
-            <Label>23/11/2024</Label>
-          </div>
-
-          <div className="flex mt-2 items-center justify-between">
-            <p className="font-medium">Order Price</p>
-            <Label>$1000</Label>
-          </div>
-          <div className="flex mt-2 items-center justify-between">
-            <p className="font-medium">Order Status</p>
-            <Label>In Process</Label>
-          </div>
-        </div>
-        <Separator />
-        <div className="grid gap-4">
-          <div className="grid gap-2">
-            <div className="font-medium">Order Details</div>
-            <ul className="grid gap-3">
-              <li className="flex items-center justify-between">
-                <span>Product 1</span>
-                <span>$100</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <Separator />
-        <div className="grid gap-4">
-          <div className="grid gap-2">
-            <div className="font-medium">Shipping Info</div>
-            <div className="grid gap-0.5 text-muted-foreground">
-              <span>{user?.user?.userName}</span>
-              <span>Guheshwori</span>
-              <span>Kathmandu</span>
-              <span>2345</span>
-              <span>+977-9861495261</span>
-              <span>Hello</span>
+    <DialogContent className="bg-white p-6 sm:max-w-[600px] rounded-lg shadow-lg">
+      <div className="space-y-8">
+        {/* Order Overview */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold text-black tracking-wide">
+            Order Details
+          </h2>
+          <Separator className="bg-black" />
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span className="font-medium text-gray-800">Order ID</span>
+              <span className="text-black">123456</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium text-gray-800">Order Date</span>
+              <span className="text-black">23/11/2024</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium text-gray-800">Order Price</span>
+              <span className="text-black">$1000</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium text-gray-800">Order Status</span>
+              <span className="text-black">In Process</span>
             </div>
           </div>
-              </div>
-              <Separator />
-        <div>
+        </div>
+
+        {/* Product Details */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-black">Products</h3>
+          <Separator className="bg-black" />
+          <ul className="space-y-2">
+            <li className="flex justify-between">
+              <span className="text-gray-800">Product 1</span>
+              <span className="text-black">$100</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Shipping Info */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-black">
+            Shipping Information
+          </h3>
+          <Separator className="bg-black" />
+          <div className="text-gray-800 space-y-1">
+            <div className="flex justify-between">
+              <span>User Name:</span>
+              <span className="text-black">{user?.user?.userName}</span>
+            </div>
+            <div>Address: Guheshwori</div>
+            <div>City: Kathmandu</div>
+            <div>Pincode: 2345</div>
+            <div>Phone: +977-9861495261</div>
+            <div>Note: Hello</div>
+          </div>
+        </div>
+
+        {/* Update Order Status */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-black">
+            Update Order Status
+          </h3>
+          <Separator className="bg-black" />
           <CommonForm
             formControls={[
               {
@@ -90,12 +103,14 @@ const AdminOrderDetailsView: React.FC<OrdersDetailsProps> = () => {
             ]}
             formData={formData}
             setFormData={setFormData}
-            buttonText={"Update Order Status"}
+            buttonText={"Update"}
             onSubmit={handleUpdateStatus}
+            
           />
         </div>
       </div>
     </DialogContent>
   );
 };
+
 export default AdminOrderDetailsView;
