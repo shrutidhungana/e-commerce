@@ -86,6 +86,7 @@ const UserCartItemsContent: React.FC<UserCartItemsContentProps> = ({
           description: response.error?.message,
           duration: 5000,
           variant: "destructive",
+          className: "text-white",
         });
       }
     });
@@ -116,6 +117,7 @@ const UserCartItemsContent: React.FC<UserCartItemsContentProps> = ({
           description: response.error?.message,
           duration: 5000,
           variant: "destructive",
+          className: "text-white",
         });
       }
     });
