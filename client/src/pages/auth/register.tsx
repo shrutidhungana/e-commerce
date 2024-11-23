@@ -55,7 +55,8 @@ const AuthRegister: React.FC<RegisterProps> = () => {
             title: "Error!",
             description: response.error?.message,
             duration: 5000,
-            variant: 'destructive'
+            variant: 'destructive',
+            className: "text-white",
           });
       }
     });

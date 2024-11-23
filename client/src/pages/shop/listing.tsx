@@ -132,6 +132,7 @@ const ShoppingListing: React.FC<listingProps> = () => {
           description: response.error?.message,
           duration: 5000,
           variant: "destructive",
+          className: "text-white",
         });
       }
     });

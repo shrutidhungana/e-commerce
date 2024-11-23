@@ -45,6 +45,7 @@ const Address: React.FC<AddressProps> = () => {
         title: "Error!",
         description: "You can add maximum of three address.",
         variant: "destructive",
+        className: "text-white",
       });
 
       return;
@@ -75,6 +76,7 @@ const Address: React.FC<AddressProps> = () => {
           description: response.error?.message,
           duration: 5000,
           variant: "destructive",
+          className: "text-white",
         });
       }
     });

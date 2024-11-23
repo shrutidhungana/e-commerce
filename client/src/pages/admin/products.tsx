@@ -85,6 +85,7 @@ const AdminProducts: React.FC<productsProps> = () => {
               description: response.error?.message,
               duration: 5000,
               variant: "destructive",
+              className: "text-white",
             });
           }
         })
@@ -116,6 +117,7 @@ const AdminProducts: React.FC<productsProps> = () => {
               description: response.error?.message,
               duration: 5000,
               variant: "destructive",
+              className: "text-white",
             });
           }
         });
@@ -148,6 +150,7 @@ const AdminProducts: React.FC<productsProps> = () => {
           description: response.error?.message,
           duration: 5000,
           variant: "destructive",
+          className: "text-white",
         });
       }
 

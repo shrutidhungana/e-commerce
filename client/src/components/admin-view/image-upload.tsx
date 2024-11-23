@@ -78,6 +78,7 @@ const ProductImageUpload: React.FC<ProductImageUploadProps> = ({
           description: response.data.error,
           duration: 5000,
           variant: "destructive",
+          className: "text-white",
         });
       }
     }
