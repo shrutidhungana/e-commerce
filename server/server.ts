@@ -9,7 +9,7 @@ import shopCartRouter from "./routes/shop/cart-routes";
 import shopAddressRouter from './routes/shop/address-routes'
 
 const uri: string =
-  ""; // Update this line
+  "mongodb+srv://shrutidhungana123:Falgun24@cluster0.plrct.mongodb.net/"; // Update this line
 
 mongoose
   .connect(uri)
