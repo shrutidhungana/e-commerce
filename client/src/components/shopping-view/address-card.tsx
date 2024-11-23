@@ -16,7 +16,7 @@ const AddressCard: React.FC<AddressCardProps> = ({
   handleEditAddress
 }) => {
   return (
-    <Card className="border border-gray-800 shadow-lg rounded-lg min-w-[500px] max-w-[600px] overflow-auto mx-auto">
+    <Card className="border border-gray-800 shadow-lg rounded-lg w-full max-w-[600px] overflow-auto mx-auto">
       <CardContent className="p-6 grid gap-4">
         <div>
           <Label className="block text-sm font-bold text-gray-700">
