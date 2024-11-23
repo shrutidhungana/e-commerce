@@ -54,7 +54,7 @@ export const editAddress = createAsyncThunk<Address, EditAddressPayload>(
 export const deleteAddress = createAsyncThunk<Address, DeleteAddressPayload>(
   "/addresses/deleteAddress",
   async ({ userId, addressId }) => {
-    const response = await axios.put(
+    const response = await axios.delete(
       `${removeAddress
         ?.replace(":userId", userId)
         ?.replace(":addressId", addressId)}`

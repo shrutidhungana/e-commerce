@@ -6,11 +6,17 @@ import { Address } from "@/types";
 
 type AddressCardProps = {
   addressInfo: Address;
+  handleDeleteAddress: (address: Address) => void;
+  handleEditAddress: (address: Address) => void;
 };
 
-const AddressCard: React.FC<AddressCardProps> = ({ addressInfo }) => {
+const AddressCard: React.FC<AddressCardProps> = ({
+  addressInfo,
+  handleDeleteAddress,
+  handleEditAddress
+}) => {
   return (
-    <Card className="border border-gray-800 shadow-lg rounded-lg max-w-md mx-auto">
+    <Card className="border border-gray-800 shadow-lg rounded-lg min-w-[500px] max-w-[600px] overflow-auto mx-auto">
       <CardContent className="p-6 grid gap-4">
         <div>
           <Label className="block text-sm font-bold text-gray-700">
@@ -42,10 +48,16 @@ const AddressCard: React.FC<AddressCardProps> = ({ addressInfo }) => {
         </div>
       </CardContent>
       <CardFooter className="p-4 flex justify-between border-t border-gray-200">
-        <Button className="px-4 py-2 font-semibold text-sm border border-gray-800 rounded-md hover:bg-gray-100">
+        <Button
+          className="px-4 py-2 font-semibold text-sm border border-gray-800 rounded-md"
+          onClick={() => handleEditAddress(addressInfo)}
+        >
           Edit
         </Button>
-        <Button className="px-4 py-2 font-semibold text-sm border border-gray-800 rounded-md hover:bg-gray-100">
+        <Button
+          className="px-4 py-2 font-semibold text-sm border border-gray-800 rounded-md"
+          onClick={() => handleDeleteAddress(addressInfo)}
+        >
           Delete
         </Button>
       </CardFooter>
