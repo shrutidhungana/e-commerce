@@ -93,7 +93,8 @@ const createOrder = async (
         res.status(201).json({
           success: true,
           approvalURL,
-          orderId: newlyCreatedOrder._id,
+            orderId: newlyCreatedOrder._id,
+          message: "Successfully created order!",
         });
       }
     });
