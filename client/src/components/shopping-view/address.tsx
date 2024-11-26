@@ -21,6 +21,7 @@ import Empty from "../common/Empty";
 
 type AddressProps = {
   setCurrentSelectedAddress?: (address: AddressType) => void;
+  selectedId: AddressType,
 };
 
 const initialAddressFormData: InitialAddressFormData = {
@@ -31,7 +32,7 @@ const initialAddressFormData: InitialAddressFormData = {
   notes: "",
 };
 
-const Address: React.FC<AddressProps> = ({ setCurrentSelectedAddress }) => {
+const Address: React.FC<AddressProps> = ({ setCurrentSelectedAddress, selectedId }) => {
   const [formData, setFormData] = useState<InitialAddressFormData>(
     initialAddressFormData
   );
@@ -186,6 +187,7 @@ const Address: React.FC<AddressProps> = ({ setCurrentSelectedAddress }) => {
               handleDeleteAddress={handleDeleteAddress}
               handleEditAddress={handleEditAddress}
               setCurrentSelectedAddress={setCurrentSelectedAddress}
+              selectedId={selectedId}
             />
           ))
         ) : (

@@ -34,6 +34,7 @@ import { useRouter } from "next/router";
 import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { useToast } from "@/hooks/use-toast";
 import { Response, CurrentItem } from "@/types";
+import Empty from "@/components/common/Empty";
 
 type homeProps = {};
 
@@ -228,16 +229,22 @@ const ShoppingHome: React.FC<homeProps> = () => {
               Feature Products
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {productList && productList.length > 0
-                ? productList?.map((productItem) => (
-                    <ShoppingProductTile
-                      key={productItem?._id}
-                      handleGetProductDetails={handleGetProductDetails}
-                      product={productItem}
-                      handleAddToCart={handleAddToCart}
-                    />
-                  ))
-                : null}
+              {productList && productList.length > 0 ? (
+                productList?.map((productItem) => (
+                  <ShoppingProductTile
+                    key={productItem?._id}
+                    handleGetProductDetails={handleGetProductDetails}
+                    product={productItem}
+                    handleAddToCart={handleAddToCart}
+                  />
+                ))
+              ) : (
+                <Empty
+                  title="No Products found found."
+                  description="Please,wait until some products are added."
+                  variant="card"
+                />
+              )}
             </div>
           </div>
         </section>

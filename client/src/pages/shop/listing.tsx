@@ -23,6 +23,7 @@ import { useRouter } from "next/router";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { addProductToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/hooks/use-toast";
+import Empty from "@/components/common/Empty";
 
 type listingProps = {};
 
@@ -239,16 +240,22 @@ const categoryLabel = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-            {productList && productList.length > 0
-              ? productList?.map((productItem) => (
-                  <ShoppingProductTile
-                    key={productItem?._id}
-                    product={productItem}
-                    handleGetProductDetails={handleGetProductDetails}
-                    handleAddToCart={handleAddToCart}
-                  />
-                ))
-              : null}
+            {productList && productList.length > 0 ? (
+              productList?.map((productItem) => (
+                <ShoppingProductTile
+                  key={productItem?._id}
+                  product={productItem}
+                  handleGetProductDetails={handleGetProductDetails}
+                  handleAddToCart={handleAddToCart}
+                />
+              ))
+            ) : (
+              <Empty
+                title="No Products found found."
+                description="Please,wait until some products are added."
+                variant="card"
+              />
+            )}
           </div>
         </div>
         <ProductDetailsDialog
