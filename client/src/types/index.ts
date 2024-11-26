@@ -176,7 +176,7 @@ export type FetchProductsParams = {
 };
 
 export type CartItems = {
-  id?: string;
+  _id?: string;
   image: string;
   price: number;
   productId: string;
@@ -186,7 +186,7 @@ export type CartItems = {
 };
 
 export type Cart = {
-  id?: string;
+  _id?: string;
   productId: string;
   quantity: number;
   items: CartItems[];
