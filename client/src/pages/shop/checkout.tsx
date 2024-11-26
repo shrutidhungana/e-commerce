@@ -22,7 +22,7 @@ const ShoppingCheckout: React.FC<checkoutProps> = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { toast } = useToast();
 
-  console.log(approvalURL);
+  
 
    if (approvalURL) {
      window.location.href = approvalURL;
@@ -44,6 +44,23 @@ const ShoppingCheckout: React.FC<checkoutProps> = () => {
   
   
   const handleInitiatePaypalPayment = () => {
+ if (cartItems?.items?.length === 0) {
+   toast({
+     title: "Your cart is empty. Please add items to proceed.",
+     variant: "destructive",
+   });
+
+   return;
+ }
+ if (currentSelectedAddress === null) {
+   toast({
+     title: "Please select one address to proceed.",
+     variant: "destructive",
+   });
+
+   return;
+ }
+    
     const orderData = {
       userId: user?.user?.id,
       cartId: cartItems?._id,
@@ -120,7 +137,10 @@ const ShoppingCheckout: React.FC<checkoutProps> = () => {
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5 p-5">
-          <Address setCurrentSelectedAddress={setCurrentSelectedAddress} />
+          <Address
+            setCurrentSelectedAddress={setCurrentSelectedAddress}
+            selectedId={currentSelectedAddress}
+          />
           <div className="flex flex-col gap-4">
             {cartItems && cartItems.items && cartItems.items.length > 0
               ? cartItems.items.map((item) => (
