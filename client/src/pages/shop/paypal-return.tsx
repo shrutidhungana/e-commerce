@@ -30,6 +30,8 @@ const PaypalReturnPage: React.FC<PaypalReturnProps> = () => {
         ) {
           sessionStorage.removeItem("currentOrderId");
           window.location.href = "/shop/payment-success";
+        } else {
+             window.location.href = "/shop/payment-failure";
         }
       });
     }
