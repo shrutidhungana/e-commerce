@@ -50,7 +50,7 @@ export const getAllOrdersByUserId = createAsyncThunk<
 export const getOrderDetails = createAsyncThunk<{ data: Order }, string>(
   "/order/getOrderDetails",
   async (id) => {
-    const response = await axios.get(`${OrderDetails?.replace("id", id)}`);
+    const response = await axios.get(`${OrderDetails?.replace(":id", id)}`);
     return response.data;
   }
 );
@@ -58,7 +58,11 @@ export const getOrderDetails = createAsyncThunk<{ data: Order }, string>(
 const shoppingOrderSlice = createSlice({
   name: "shoppingOrderSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    resetOrderDetails: (state) => {
+      state.orderDetails = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createNewOrder.pending, (state) => {
@@ -111,5 +115,8 @@ const shoppingOrderSlice = createSlice({
       });
   },
 });
+
+
+export const { resetOrderDetails } = shoppingOrderSlice.actions;
 
 export default shoppingOrderSlice.reducer;
