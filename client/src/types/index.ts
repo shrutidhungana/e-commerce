@@ -282,7 +282,7 @@ export type InitialOrderState = {
   approvalURL: null;
   isLoading: boolean;
   orderId: null;
-  orderDetails: null;
+  orderDetails:Order | null;
   orderList: Array<Order>;
 };
 
