@@ -1,7 +1,7 @@
 import Order from "../../modals/Order";
 import { Request, Response } from "express";
 
-const getALLOrdersOfAllUsers = async (
+const getAllOrdersOfAllUsers = async (
   req: Request,
   res: Response
 ): Promise<void | Response> => {
@@ -87,4 +87,4 @@ const updateOrderStatus = async (
   }
 };
 
-export { getALLOrdersOfAllUsers, getOrderDetailsForAdmin, updateOrderStatus };
+export { getAllOrdersOfAllUsers, getOrderDetailsForAdmin, updateOrderStatus };
