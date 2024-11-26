@@ -301,3 +301,14 @@ export type OrderPayload = {
   payerId: string | null;
   
 };
+
+export type Capture = {
+  success: boolean;
+  message: string;
+};
+
+export type CapturePaymentParams = {
+  paymentId: string;
+  payerId: string;
+  orderId: string;
+}

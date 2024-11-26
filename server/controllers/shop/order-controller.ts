@@ -20,8 +20,8 @@ const createOrder = async (
       orderDate,
       orderUpdateDate,
       paymentId,
-        payerId,
-      cartId
+      payerId,
+      cartId,
     } = req.body;
 
     const create_payment_json = {
@@ -72,8 +72,8 @@ const createOrder = async (
           orderDate,
           orderUpdateDate,
           paymentId,
-            payerId,
-          cartId
+          payerId,
+          cartId,
         });
 
         await newlyCreatedOrder.save();
@@ -93,7 +93,7 @@ const createOrder = async (
         res.status(201).json({
           success: true,
           approvalURL,
-            orderId: newlyCreatedOrder._id,
+          orderId: newlyCreatedOrder._id,
           message: "Successfully created order!",
         });
       }
@@ -134,13 +134,13 @@ const capturePayment = async (req: Request, res: Response) => {
         });
       }
 
-        if (product.totalStock < item.quantity) {
-          return res.status(400).json({
-            success: false,
-            message: `Not enough stock for the product: ${product.title}`,
-          });
-        } 
-        
+      if (product.totalStock < item.quantity) {
+        return res.status(400).json({
+          success: false,
+          message: `Not enough stock for the product: ${product.title}`,
+        });
+      }
+
       product.totalStock -= item.quantity;
 
       await product.save();
@@ -163,8 +163,6 @@ const capturePayment = async (req: Request, res: Response) => {
     });
   }
 };
-
-
 
 const getAllOrdersByUser = async (req: Request, res: Response) => {
   try {
@@ -192,28 +190,28 @@ const getAllOrdersByUser = async (req: Request, res: Response) => {
 };
 
 const getOrderDetails = async (req: Request, res: Response) => {
- try {
-   const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-   const order = await Order.findById(id);
+    const order = await Order.findById(id);
 
-   if (!order) {
-     return res.status(404).json({
-       success: false,
-       message: "Order not found!",
-     });
-   }
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found!",
+      });
+    }
 
-   res.status(200).json({
-     success: true,
-     data: order,
-   });
- } catch (e) {
-   res.status(500).json({
-     success: false,
-     message: "Some error occured!",
-   });
- }
+    res.status(200).json({
+      success: true,
+      data: order,
+    });
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: "Some error occured!",
+    });
+  }
 };
 
 export { createOrder, capturePayment, getAllOrdersByUser, getOrderDetails };
