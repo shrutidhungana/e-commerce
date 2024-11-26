@@ -18,7 +18,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 
-type AddressProps = {};
+type AddressProps = {
+  setCurrentSelectedAddress?: (address: AddressType) => void;
+};
 
 const initialAddressFormData: InitialAddressFormData = {
   address: "",
@@ -28,7 +30,7 @@ const initialAddressFormData: InitialAddressFormData = {
   notes: "",
 };
 
-const Address: React.FC<AddressProps> = () => {
+const Address: React.FC<AddressProps> = ({setCurrentSelectedAddress}) => {
   const [formData, setFormData] = useState<InitialAddressFormData>(
     initialAddressFormData
   );
@@ -182,6 +184,7 @@ const Address: React.FC<AddressProps> = () => {
                 addressInfo={singleAddressItem}
                 handleDeleteAddress={handleDeleteAddress}
                 handleEditAddress={handleEditAddress}
+                setCurrentSelectedAddress={setCurrentSelectedAddress}
               />
             ))
           : null}

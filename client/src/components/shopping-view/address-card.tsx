@@ -8,15 +8,22 @@ type AddressCardProps = {
   addressInfo: Address;
   handleDeleteAddress: (address: Address) => void;
   handleEditAddress: (address: Address) => void;
+  setCurrentSelectedAddress?: (address: Address) => void;
 };
 
 const AddressCard: React.FC<AddressCardProps> = ({
   addressInfo,
   handleDeleteAddress,
-  handleEditAddress
+  handleEditAddress,
+  setCurrentSelectedAddress
 }) => {
   return (
-    <Card className="border border-gray-800 shadow-lg rounded-lg w-full max-w-[600px] overflow-auto mx-auto">
+    <Card
+      {...(setCurrentSelectedAddress && {
+        onClick: () => setCurrentSelectedAddress(addressInfo),
+      })}
+      className="border border-gray-800 shadow-lg rounded-lg w-full max-w-[600px] overflow-auto mx-auto cursor-pointer"
+    >
       <CardContent className="p-6 grid gap-4">
         <div>
           <Label className="block text-sm font-bold text-gray-700">
