@@ -2,7 +2,7 @@ import mongoose, { Document } from "mongoose";
 
 interface IOrder extends Document {
   userId: string;
-     cartId: string;
+  cartId: string;
   cartItems: {
     productId: string;
     title: string;
@@ -31,7 +31,7 @@ interface IOrder extends Document {
 
 const OrderSchema = new mongoose.Schema<IOrder>({
   userId: String,
-    cartId: String,
+  cartId: String,
   cartItems: [
     {
       productId: String,
