@@ -11,7 +11,7 @@ const initialState: InitialOrderState = {
   orderDetails: null,
 };
 
-const { createOrder, captureOrder, getOrderDetails, getOrderList } =
+const { createOrder, captureAPayment, getOrderDetails, getOrderList } =
   apiEndpoints;
 
 export const createNewOrder = createAsyncThunk<InitialOrderState, OrderPayload>(
@@ -25,7 +25,7 @@ export const createNewOrder = createAsyncThunk<InitialOrderState, OrderPayload>(
 export const capturePayment = createAsyncThunk<Capture, CapturePaymentParams>(
   "/order/capturePayment",
   async ({ paymentId, payerId, orderId }) => {
-    const response = await axios.post(captureOrder, {
+    const response = await axios.post(captureAPayment, {
       paymentId,
       payerId,
       orderId,

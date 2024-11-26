@@ -21,7 +21,7 @@ export const apiEndpoints = {
   updateAddress: `${API_BASE_URL}/shop/address/update/:userId/:addressId`,
   removeAddress: `${API_BASE_URL}/shop/address/delete/:userId/:addressId`,
   createOrder: `${API_BASE_URL}/shop/order/create`,
-  captureOrder: `${API_BASE_URL}/shop/order/capture`,
+  captureAPayment: `${API_BASE_URL}/shop/order/capture`,
   getOrderList: `${API_BASE_URL}/shop/order/list/:userId`,
   getOrderDetails: `${API_BASE_URL}/shop/order/details/:id`,
   // Add other API endpoints here as needed
