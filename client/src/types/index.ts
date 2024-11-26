@@ -181,7 +181,7 @@ export type CartItems = {
   price: number;
   productId: string;
   quantity: number;
-  salePrice: number;
+  salePrice?: number;
   title: string;
 };
 
@@ -260,4 +260,44 @@ export type DeleteAddressPayload = {
 
 export type OrderState = {
   status: string;
-}
+};
+
+export type Order = {
+  userId: string;
+  cartId: string;
+  cartItems: Array<Cart>;
+  addressInfo: Address;
+  orderStatus: string;
+  paymentMethod: string;
+  paymentStatus: string;
+  totalAmount: number;
+  orderDate: Date | string;
+  orderUpdateDate: Date | string;
+  paymentId: string | null;
+  payerId: string | null;
+  [key: string]: string | Address | number | Date | Array<Cart>| null;
+};
+
+export type InitialOrderState = {
+  approvalURL: null;
+  isLoading: boolean;
+  orderId: null;
+  orderDetails: null;
+  orderList: Array<Order>;
+};
+
+export type OrderPayload = {
+  userId: string;
+  cartId: string;
+  cartItems: Array<Cart>;
+  addressInfo: Address;
+  orderStatus: string;
+  paymentMethod: string;
+  paymentStatus: string;
+  totalAmount: number;
+  orderDate: Date | string;
+  orderUpdateDate: Date | string;
+  paymentId: string | null;
+  payerId: string | null;
+  
+};
