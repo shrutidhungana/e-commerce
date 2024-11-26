@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import UserCartItemsContent from "./cart-items-content";
 import { SheetContent, SheetHeader, SheetTitle } from '../ui/sheet';
 import {  CartItems } from '@/types';
+import Empty from '../common/Empty';
 
 
 type UserCartWrapperProps = {
@@ -34,9 +35,19 @@ const UserCartWrapper: React.FC<UserCartWrapperProps> = ({cartItems, setOpenCart
           <SheetTitle>Your Cart</SheetTitle>
         </SheetHeader>
         <div className="mt-8 space-y-4">
-          {cartItems && cartItems?.length > 0
-            ? cartItems?.map((item) => <UserCartItemsContent cartItem={item} key={item?.id } />)
-            : null}
+          {cartItems && cartItems?.length > 0 ? (
+            cartItems?.map((item) => (
+              <UserCartItemsContent cartItem={item} key={item?.id} />
+            ))
+          ) : (
+            <Empty
+              title="No Items in Cart."
+              description="Start by adding items to Cart."
+                variant="card"
+                buttonText="Go To Products"
+                buttonLink="/shop/listing"
+            />
+          )}
         </div>
         <div className="mt-8 space-y-4">
           <div className="flex justify-between">

@@ -17,6 +17,7 @@ import {
 } from "@/store/shop/address-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
+import Empty from "../common/Empty";
 
 type AddressProps = {
   setCurrentSelectedAddress?: (address: AddressType) => void;
@@ -30,7 +31,7 @@ const initialAddressFormData: InitialAddressFormData = {
   notes: "",
 };
 
-const Address: React.FC<AddressProps> = ({setCurrentSelectedAddress}) => {
+const Address: React.FC<AddressProps> = ({ setCurrentSelectedAddress }) => {
   const [formData, setFormData] = useState<InitialAddressFormData>(
     initialAddressFormData
   );
@@ -177,17 +178,23 @@ const Address: React.FC<AddressProps> = ({setCurrentSelectedAddress}) => {
   return (
     <Card>
       <div className="mb-5 p-3 grid grid-cols-1 sm:grid-cols-2  gap-2">
-        {addressList && addressList?.length > 0
-          ? addressList?.map((singleAddressItem) => (
-              <AddressCard
-                key={singleAddressItem?.userId}
-                addressInfo={singleAddressItem}
-                handleDeleteAddress={handleDeleteAddress}
-                handleEditAddress={handleEditAddress}
-                setCurrentSelectedAddress={setCurrentSelectedAddress}
-              />
-            ))
-          : null}
+        {addressList && addressList?.length > 0 ? (
+          addressList?.map((singleAddressItem) => (
+            <AddressCard
+              key={singleAddressItem?.userId}
+              addressInfo={singleAddressItem}
+              handleDeleteAddress={handleDeleteAddress}
+              handleEditAddress={handleEditAddress}
+              setCurrentSelectedAddress={setCurrentSelectedAddress}
+            />
+          ))
+        ) : (
+          <Empty
+            title="No Address found."
+            description="Add address from the form below."
+            variant="card"
+          />
+        )}
       </div>
       <CardHeader>
         <CardTitle>
