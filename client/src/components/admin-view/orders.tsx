@@ -73,7 +73,7 @@ const AdminOrdersView: React.FC<OrdersProps> = () => {
                           ? "bg-green-500"
                           : orderItem?.orderStatus === "rejected"
                           ? "bg-red-600"
-                          : "bg-black"
+                          : "bg-yellow-600"
                       }`}
                     >
                       {orderItem?.orderStatus}
