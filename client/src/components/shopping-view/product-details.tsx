@@ -38,7 +38,7 @@ const ProductDetailsDialog: React.FC<productDetailsProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
-      <DialogContent className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-12 p-6 sm:p-12 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw]">
+      <DialogContent className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-12 p-6 sm:p-12 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw] w-full h-screen">
         {/* Product Image */}
         <div className="relative overflow-hidden rounded-lg">
           {productDetails?.image &&

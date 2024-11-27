@@ -27,7 +27,7 @@ type headerProps = {};
 
 const MenuItems = () => {
   const router = useRouter();
-  const [searchParams, setSearchParams] = useSearchParams();
+ 
 
  const handleNavigate = (getCurrentMenuItem: HeaderMenuItem) => {
    sessionStorage.removeItem("filters");
