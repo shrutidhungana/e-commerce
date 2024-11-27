@@ -16,7 +16,7 @@ const ShoppingOrderDetailsView: React.FC<OrderDetailsProps> = ({
   const { user } = useSelector((state: RootState) => state.auth);
 
   return (
-    <DialogContent className="bg-white p-6 sm:max-w-[600px] rounded-lg shadow-lg">
+    <DialogContent className="bg-white p-6 sm:max-w-[600px] max-w-full max-h-screen overflow-auto rounded-lg shadow-lg">
       <div className="space-y-8">
         {/* Order Overview */}
         <div className="space-y-4">
@@ -73,7 +73,7 @@ const ShoppingOrderDetailsView: React.FC<OrderDetailsProps> = ({
             {orderDetails?.cartItems && orderDetails?.cartItems.length > 0
               ? orderDetails?.cartItems.map((item) => (
                   <li
-                    className="flex items-center justify-between p-4 border-b border-gray-300 hover:bg-gray-100"
+                    className="flex flex-wrap items-center justify-between p-4 border-b border-gray-300 hover:bg-gray-100"
                     key={item?.price}
                   >
                     <span className="text-sm font-medium text-gray-800">
