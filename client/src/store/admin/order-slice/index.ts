@@ -32,7 +32,7 @@ export const updateOrderStatus = createAsyncThunk<Capture, UpdateOrderPayload>(
   async ({ id, orderStatus }) => {
     const response = await axios.put(
       `${UpdateAOrderStatus?.replace(":id", id)}`,
-      orderStatus
+      {orderStatus}
     );
     return response.data;
   }
@@ -41,7 +41,13 @@ export const updateOrderStatus = createAsyncThunk<Capture, UpdateOrderPayload>(
 const adminOrderSlice = createSlice({
   name: "adminOrderSlice",
   initialState,
-  reducers: {},
+  reducers: {
+     resetOrderDetails: (state) => {
+     
+
+      state.orderDetails = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllOrdersForAdmin.pending, (state) => {
@@ -74,5 +80,7 @@ const adminOrderSlice = createSlice({
       });
   },
 });
+
+export const { resetOrderDetails } = adminOrderSlice.actions;
 
 export default adminOrderSlice.reducer;

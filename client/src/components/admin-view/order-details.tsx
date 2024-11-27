@@ -4,8 +4,14 @@ import { DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { useSelector, useDispatch } from "react-redux";
 import { OrderState, Order } from "../../types";
-import { RootState, AppDispatch } from "@/store/store";
+import { RootState, AppDispatch, Response } from "@/store/store";
 import { Badge } from "../ui/badge";
+import { useToast } from "@/hooks/use-toast";
+import {
+  getAllOrdersForAdmin,
+  getOrderDetailsForAdmin,
+  updateOrderStatus,
+} from "@/store/admin/order-slice";
 
 type OrdersDetailsProps = {
   orderDetails: Order;
@@ -19,9 +25,40 @@ const AdminOrderDetailsView: React.FC<OrdersDetailsProps> = ({
 }) => {
   const [formData, setFormData] = useState<OrderState>(initialFormData);
   const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch<AppDispatch>();
+  const { toast } = useToast();
 
   const handleUpdateStatus = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const { status } = formData;
+
+    dispatch(
+      updateOrderStatus({ id: orderDetails?._id ?? "", orderStatus: status })
+    ).then((data) => {
+      const response = data as Response;
+      if (
+        response.meta.requestStatus === "fulfilled" &&
+        response.payload?.success
+      ) {
+        dispatch(getOrderDetailsForAdmin(orderDetails?._id??""));
+        dispatch(getAllOrdersForAdmin());
+        setFormData(initialFormData);
+        toast({
+          title: "Success!",
+          description: response.payload.message,
+          duration: 5000,
+          className: "bg-green-500 text-white",
+        });
+      } else {
+        toast({
+          title: "Error!",
+          description: response.error?.message,
+          duration: 5000,
+          variant: "destructive",
+          className: "text-white",
+        });
+      }
+    });
   };
 
   return (
@@ -164,6 +201,7 @@ const AdminOrderDetailsView: React.FC<OrdersDetailsProps> = ({
                 label: "Order Status",
                 name: "status",
                 componentType: "select",
+                placeholder: "Update Status",
                 options: [
                   { id: "pending", label: "Pending" },
                   { id: "inProcess", label: "In Process" },
