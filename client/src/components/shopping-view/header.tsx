@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { shoppingViewHeaderMenuItems } from "@/config";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSearchParams } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Label } from "../ui/label";
 import { HeaderMenuItem } from "@/types";
@@ -22,25 +21,25 @@ import {
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import UserCartWrapper from "./cart-wrapper";
 import { fetchCartItems } from "@/store/shop/cart-slice";
+import { Badge } from "../ui/badge";
 
 type headerProps = {};
 
 const MenuItems = () => {
   const router = useRouter();
- 
 
- const handleNavigate = (getCurrentMenuItem: HeaderMenuItem) => {
-   sessionStorage.removeItem("filters");
+  const handleNavigate = (getCurrentMenuItem: HeaderMenuItem) => {
+    sessionStorage.removeItem("filters");
 
-   const currentFilter =
-     getCurrentMenuItem.id !== "home" && getCurrentMenuItem.id !== "products"
-       ? {
-           category: [getCurrentMenuItem.id],
-         }
-       : null;
+    const currentFilter =
+      getCurrentMenuItem.id !== "home" && getCurrentMenuItem.id !== "products"
+        ? {
+            category: [getCurrentMenuItem.id],
+          }
+        : null;
 
-   sessionStorage.setItem("filters", JSON.stringify(currentFilter));
-    
+    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+
     if (router.pathname.includes("listing") && currentFilter !== null) {
       router.push({
         pathname: router.pathname,
@@ -51,10 +50,8 @@ const MenuItems = () => {
     } else {
       router.push(getCurrentMenuItem?.path);
     }
-   
- };
-  
-  
+  };
+
   return (
     <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
       {shoppingViewHeaderMenuItems?.map((menuItem: HeaderMenuItem) => (
@@ -94,6 +91,11 @@ const HeaderRightContent = () => {
           onClick={() => setOpenCartSheet(true)}
         >
           <ShoppingCart className="w-6 h-6" />
+          {cartItems?.items?.length > 0 && (
+            <Badge className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-red-500 text-white font-bold text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              {cartItems?.items?.length}
+            </Badge>
+          )}
           <span className="sr-only">User Cart</span>
         </Button>
         <UserCartWrapper
