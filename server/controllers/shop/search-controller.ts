@@ -29,7 +29,6 @@ const searchProducts = async (req:Request, res:Response):Promise<void|Response> 
       data: searchResults,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       success: false,
       message: "Error",

@@ -27,6 +27,7 @@ export const apiEndpoints = {
   captureAPayment: `${API_BASE_URL}/shop/order/capture`,
   OrderList: `${API_BASE_URL}/shop/order/list/:userId`,
   OrderDetails: `${API_BASE_URL}/shop/order/details/:id`,
+  SearchItems: `${API_BASE_URL}/shop/search/:keyword`,
 
   // Add other API endpoints here as needed
 };

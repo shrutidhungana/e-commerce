@@ -275,14 +275,14 @@ export type Order = {
   orderUpdateDate: Date | string;
   paymentId: string | null;
   payerId: string | null;
-  [key: string]: string | Address | number | Date | Array<Cart>| null;
+  [key: string]: string | Address | number | Date | Array<Cart> | null;
 };
 
 export type InitialOrderState = {
   approvalURL: null;
   isLoading: boolean;
   orderId: null;
-  orderDetails:Order | null;
+  orderDetails: Order | null;
   orderList: Array<Order>;
 };
 
@@ -299,7 +299,6 @@ export type OrderPayload = {
   orderUpdateDate: Date | string;
   paymentId: string | null;
   payerId: string | null;
-  
 };
 
 export type Capture = {
@@ -311,7 +310,7 @@ export type CapturePaymentParams = {
   paymentId: string;
   payerId: string;
   orderId: string;
-}
+};
 
 export type AdminOrderState = {
   orderDetails: Order | null;
@@ -320,6 +319,18 @@ export type AdminOrderState = {
 };
 
 export type UpdateOrderPayload = {
-  orderStatus: string,
-  id: string,
-}
+  orderStatus: string;
+  id: string;
+};
+
+export type Search = {
+  title: string;
+  description: string;
+  category: string;
+  brand: string;
+};
+
+export type InitialSearchState = {
+  isLoading: boolean;
+  searchResults: Array<Search>;
+};
