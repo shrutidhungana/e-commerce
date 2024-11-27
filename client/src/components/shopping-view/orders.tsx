@@ -74,13 +74,21 @@ useEffect(() => {
                   <TableCell>{orderItem?.orderDate?.split("T")[0]}</TableCell>
                   <TableCell>
                     <Badge
-                      className={`py-1 px-3 ${
-                        orderItem?.orderStatus === "confirmed"
-                          ? "bg-green-500"
-                          : orderItem?.orderStatus === "rejected"
-                          ? "bg-red-600"
-                          : "bg-yellow-600"
-                      }`}
+                      className={(() => {
+                        if (orderItem?.orderStatus === "confirmed")
+                          return "py-1 px-3 bg-green-500";
+                        if (orderItem?.orderStatus === "rejected")
+                          return "py-1 px-3 bg-red-600";
+                        if (orderItem?.orderStatus === "pending")
+                          return "py-1 px-3 bg-yellow-600";
+                        if (orderItem?.orderStatus === "delivered")
+                          return "py-1 px-3 bg-violet-500";
+                        if (orderItem?.orderStatus === "inProcess")
+                          return "py-1 px-3 bg-cyan-600";
+                        if (orderItem?.orderStatus === "inShipping")
+                          return "py-1 px-3 bg-orange-600";
+                        return "py-1 px-3 bg-black";
+                      })()}
                     >
                       {orderItem?.orderStatus}
                     </Badge>
@@ -91,7 +99,7 @@ useEffect(() => {
                       open={openDetailsDialog}
                       onOpenChange={() => {
                         setOpenDetailsDialog(false);
-                         dispatch(resetOrderDetails());
+                        dispatch(resetOrderDetails());
                       }}
                     >
                       <Button
@@ -110,7 +118,6 @@ useEffect(() => {
               <Empty
                 title="No  Order found"
                 description="Please,wait until some order is made"
-                
               />
             )}
           </TableBody>
