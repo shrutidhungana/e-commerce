@@ -17,7 +17,7 @@ import { AppDispatch, RootState } from "@/store/store";
 import {
   getAllOrdersForAdmin,
   getOrderDetailsForAdmin,
-
+  resetOrderDetails,
 } from "@/store/admin/order-slice";
 import Empty from "../common/Empty";
 
@@ -85,7 +85,7 @@ const AdminOrdersView: React.FC<OrdersProps> = () => {
                       open={openDetailsDialog}
                       onOpenChange={() => {
                         setOpenDetailsDialog(false);
-                       
+                       dispatch(resetOrderDetails());
                       }}
                     >
                       <Button
