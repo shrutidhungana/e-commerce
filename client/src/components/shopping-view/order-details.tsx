@@ -51,13 +51,21 @@ const ShoppingOrderDetailsView: React.FC<OrderDetailsProps> = ({
               <span className="font-medium text-gray-800">Order Status</span>
               <span className="text-black">
                 <Badge
-                  className={`py-1 px-3 ${
-                    orderDetails?.orderStatus === "confirmed"
-                      ? "bg-green-500"
-                      : orderDetails?.orderStatus === "rejected"
-                      ? "bg-red-600"
-                      : "bg-yellow-600"
-                  }`}
+                  className={(() => {
+                    if (orderDetails?.orderStatus === "confirmed")
+                      return "py-1 px-3 bg-green-500";
+                    if (orderDetails?.orderStatus === "rejected")
+                      return "py-1 px-3 bg-red-600";
+                    if (orderDetails?.orderStatus === "pending")
+                      return "py-1 px-3 bg-yellow-600";
+                    if (orderDetails?.orderStatus === "delivered")
+                      return "py-1 px-3 bg-violet-500";
+                    if (orderDetails?.orderStatus === "inProcess")
+                      return "py-1 px-3 bg-cyan-600";
+                    if (orderDetails?.orderStatus === "inShipping")
+                      return "py-1 px-3 bg-orange-600";
+                    return "py-1 px-3 bg-black";
+                  })()}
                 >
                   {orderDetails?.orderStatus}
                 </Badge>
