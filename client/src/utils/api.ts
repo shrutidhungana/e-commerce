@@ -12,7 +12,7 @@ export const apiEndpoints = {
   deleteProduct: `${API_BASE_URL}/admin/products/delete/:id`,
   AdminOrdersList: `${API_BASE_URL}/admin/orders/lists`,
   AdminOrderDetails: `${API_BASE_URL}/admin/orders/details/:id`,
-  UpdateOrderStatus: `${API_BASE_URL}/admin/orders/update/:id`,
+  UpdateAOrderStatus: `${API_BASE_URL}/admin/orders/update/:id`,
   shopProducts: `${API_BASE_URL}/shop/products/lists`,
   shopProductDetails: `${API_BASE_URL}/shop/products/lists/:id`,
   addToCart: `${API_BASE_URL}/shop/cart/add`,

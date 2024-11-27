@@ -316,4 +316,10 @@ export type CapturePaymentParams = {
 export type AdminOrderState = {
   orderDetails: Order | null;
   orderList: Array<Order>;
+  isLoading: boolean;
 };
+
+export type UpdateOrderPayload = {
+  orderStatus: string,
+  id: string,
+}
