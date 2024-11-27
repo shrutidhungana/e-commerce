@@ -28,6 +28,8 @@ export const apiEndpoints = {
   OrderList: `${API_BASE_URL}/shop/order/list/:userId`,
   OrderDetails: `${API_BASE_URL}/shop/order/details/:id`,
   SearchItems: `${API_BASE_URL}/shop/search/:keyword`,
+  AddReview: `${API_BASE_URL}/shop/review/add`,
+  Reviews: `${API_BASE_URL}/shop/review/:id`,
 
   // Add other API endpoints here as needed
 };
