@@ -59,7 +59,6 @@ const addProductReview = async (
       data: newReview,
     });
   } catch (e) {
-    console.log(e);
     res.status(500).json({
       success: false,
       message: "Error",
@@ -67,4 +66,24 @@ const addProductReview = async (
   }
 };
 
-export { addProductReview };
+const getProductReviews = async (
+  req: Request,
+  res: Response
+): Promise<void | Response> => {
+  try {
+    const { productId } = req.params;
+
+    const reviews = await ProductReview.find({ productId });
+    res.status(200).json({
+      success: true,
+      data: reviews,
+    });
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: "Error",
+    });
+  }
+};
+
+export { addProductReview, getProductReviews};
