@@ -1,7 +1,10 @@
-import Product from '../../modals/Product'
-import { Request, Response } from 'express'
+import Product from "../../modals/Product";
+import { Request, Response } from "express";
 
-const searchProducts = async (req:Request, res:Response):Promise<void|Response> => {
+const searchProducts = async (
+  req: Request,
+  res: Response
+): Promise<void | Response> => {
   try {
     const { keyword } = req.params;
     if (!keyword || typeof keyword !== "string") {
@@ -11,7 +14,7 @@ const searchProducts = async (req:Request, res:Response):Promise<void|Response> 
       });
     }
 
-    const regEx = new RegExp(keyword, "i");
+   const regEx = new RegExp(`\\b${keyword}\\b`, "i");
 
     const createSearchQuery = {
       $or: [
@@ -36,4 +39,4 @@ const searchProducts = async (req:Request, res:Response):Promise<void|Response> 
   }
 };
 
-export {searchProducts}
+export { searchProducts };
