@@ -312,3 +312,8 @@ export type CapturePaymentParams = {
   payerId: string;
   orderId: string;
 }
+
+export type AdminOrderState = {
+  orderDetails: Order | null;
+  orderList: Array<Order>;
+};

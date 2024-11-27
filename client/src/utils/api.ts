@@ -10,6 +10,9 @@ export const apiEndpoints = {
   listProducts: `${API_BASE_URL}/admin/products/lists`,
   editProduct: `${API_BASE_URL}/admin/products/edit/:id`,
   deleteProduct: `${API_BASE_URL}/admin/products/delete/:id`,
+  AdminOrdersList: `${API_BASE_URL}/admin/orders/lists`,
+  AdminOrderDetails: `${API_BASE_URL}/admin/orders/details/:id`,
+  UpdateOrderStatus: `${API_BASE_URL}/admin/orders/update/:id`,
   shopProducts: `${API_BASE_URL}/shop/products/lists`,
   shopProductDetails: `${API_BASE_URL}/shop/products/lists/:id`,
   addToCart: `${API_BASE_URL}/shop/cart/add`,
@@ -24,5 +27,6 @@ export const apiEndpoints = {
   captureAPayment: `${API_BASE_URL}/shop/order/capture`,
   OrderList: `${API_BASE_URL}/shop/order/list/:userId`,
   OrderDetails: `${API_BASE_URL}/shop/order/details/:id`,
+
   // Add other API endpoints here as needed
 };
