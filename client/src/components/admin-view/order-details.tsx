@@ -3,15 +3,17 @@ import CommonForm from "../common/form";
 import { DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { useSelector, useDispatch } from "react-redux";
-import { OrderState } from "../../types";
+import { OrderState, Order } from "../../types";
 import { RootState, AppDispatch } from "@/store/store";
 
-type OrdersDetailsProps = {};
+type OrdersDetailsProps = {
+  orderDetails: Order;
+};
 const initialFormData: OrderState = {
   status: "",
 };
 
-const AdminOrderDetailsView: React.FC<OrdersDetailsProps> = () => {
+const AdminOrderDetailsView: React.FC<OrdersDetailsProps> = ({orderDetails}) => {
   const [formData, setFormData] = useState<OrderState>(initialFormData);
   const { user } = useSelector((state: RootState) => state.auth);
 
