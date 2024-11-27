@@ -7,7 +7,7 @@ import {
 
 const router: Router = express.Router();
 
-router.get("/get", getAllOrdersOfAllUsers as express.RequestHandler);
+router.get("/lists", getAllOrdersOfAllUsers as express.RequestHandler);
 router.get("/details/:id", getOrderDetailsForAdmin as express.RequestHandler);
 router.put("/update/:id", updateOrderStatus as express.RequestHandler);
 
