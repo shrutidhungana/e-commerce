@@ -65,6 +65,7 @@ const ProductDetailsDialog: React.FC<productDetailsProps> = ({
       })
     ).then((data) => {
       const response = data as Response;
+      
       if (
         response.meta.requestStatus === "fulfilled" &&
         response.payload?.success
@@ -77,6 +78,16 @@ const ProductDetailsDialog: React.FC<productDetailsProps> = ({
           description: response.payload.message,
           duration: 5000,
           className: "bg-green-500 text-white",
+        });
+      } else {
+         setRating(0);
+         setReviewMsg("");
+        toast({
+          title: "Error!",
+          description: response.error?.message,
+          duration: 5000,
+          variant: "destructive",
+          className: "text-white",
         });
       }
     });
