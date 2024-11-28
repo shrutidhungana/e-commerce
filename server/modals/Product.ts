@@ -10,7 +10,7 @@ export interface IProduct extends Document {
   price: number;
   salePrice: number;
   totalStock: number;
-  //   averageReview: number;
+  averageReview: number;
 }
 
 const ProductSchema = new mongoose.Schema<IProduct>(
@@ -23,7 +23,7 @@ const ProductSchema = new mongoose.Schema<IProduct>(
     price: Number,
     salePrice: Number,
     totalStock: Number,
-    // averageReview: Number,
+    averageReview: Number,
   },
   { timestamps: true }
 );
