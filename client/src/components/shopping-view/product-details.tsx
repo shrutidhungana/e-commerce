@@ -11,6 +11,7 @@ import { Label } from "../ui/label";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { setProductDetails } from "@/store/shop/products-slice";
+import StarRatingComponent from "../common/star-rating";
 
 type productDetailsProps = {
   productDetails: Product | null;
@@ -110,9 +111,10 @@ const ProductDetailsDialog: React.FC<productDetailsProps> = ({
             <div className="mt-10 flex-col flex gap-2">
               <Label>Write a review</Label>
               <div className="flex gap-1">
-                <Input placeholder="Write A Review" />
-                <Button>Submit</Button>
+                <StarRatingComponent />
               </div>
+              <Input placeholder="Write A Review" />
+              <Button>Submit</Button>
             </div>
           </div>
         </div>
