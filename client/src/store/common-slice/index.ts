@@ -8,7 +8,8 @@ const initialState: FeatureImageState = {
   featureImageList: [],
 };
 
-const { AddFeatureImage, GetFeatureImage } = apiEndpoints;
+const { AddFeatureImage, GetFeatureImage, UpdateImage, DeleteImage } =
+  apiEndpoints;
 
 export const getFeatureImages = createAsyncThunk<{ data: Array<Image> }, void>(
   "/order/getFeatureImages",
@@ -25,6 +26,22 @@ export const addFeatureImage = createAsyncThunk<
   const response = await axios.post(AddFeatureImage, { image });
   return response.data;
 });
+
+export const updateFeatureImage = createAsyncThunk<
+  { data: Array<Image> },
+  { id: string; image: string }
+>("featureImages/updateFeatureImage", async ({ id, image }) => {
+  const response = await axios.put(UpdateImage.replace(":id", id), { image });
+  return response.data;
+});
+
+export const deleteFeatureImage = createAsyncThunk<{ data: Array<Image> }, string>(
+  "featureImages/deleteFeatureImage",
+  async (id) => {
+    const response = await axios.delete(DeleteImage.replace(":id", id));
+    return response.data;
+  }
+);
 
 const commonSlice = createSlice({
   name: "commonSlice",

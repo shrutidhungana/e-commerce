@@ -65,7 +65,7 @@ const AdminDashboard: React.FC<DashboardProps> = () => {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
-  // console.log(featureImageList, "featureImageList");
+ 
 
   return (
     <AdminLayout>
@@ -79,7 +79,7 @@ const AdminDashboard: React.FC<DashboardProps> = () => {
           imageLoadingState={imageLoadingState}
           isCustomStyling={true}
         />
-        <Button onClick={handleUploadFeatureImage} className="mt-5 w-full">
+        <Button onClick={handleUploadFeatureImage} className="mt-5 w-full" disabled = {!imageFile}>
           Upload
         </Button>
         <div className="flex flex-col gap-4 mt-5">
