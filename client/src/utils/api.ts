@@ -30,8 +30,8 @@ export const apiEndpoints = {
   SearchItems: `${API_BASE_URL}/shop/search/:keyword`,
   AddReview: `${API_BASE_URL}/shop/review/add`,
   Reviews: `${API_BASE_URL}/shop/review/:id`,
-  AddFeatureImage: `${API_BASE_URL}//common/feature/add`,
-  GetFeatureImage: `${API_BASE_URL}//common/feature/lists`,
+  AddFeatureImage: `${API_BASE_URL}/common/feature/add`,
+  GetFeatureImage: `${API_BASE_URL}/common/feature/lists`,
 
   // Add other API endpoints here as needed
 };

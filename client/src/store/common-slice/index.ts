@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { apiEndpoints } from "../../utils/api";
-import { Image, FeatureImageState, ImagePayload } from "../../types";
+import { Image, FeatureImageState } from "../../types";
 
 const initialState: FeatureImageState = {
   isLoading: false,
@@ -20,7 +20,7 @@ export const getFeatureImages = createAsyncThunk<{ data: Array<Image> }, void>(
 
 export const addFeatureImage = createAsyncThunk<
   { data: Array<Image> },
-  ImagePayload
+  string
 >("/order/addFeatureImage", async (image) => {
   const response = await axios.post(AddFeatureImage, { image });
   return response.data;

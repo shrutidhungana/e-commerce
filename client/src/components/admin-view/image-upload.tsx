@@ -15,7 +15,8 @@ type ProductImageUploadProps = {
   setUploadedImageUrl: React.Dispatch<React.SetStateAction<string>>;
   imageLoadingState: boolean;
   setImageLoadingState: React.Dispatch<React.SetStateAction<boolean>>;
-  isEditMode: boolean;
+  isEditMode?: boolean;
+  isCustomStyling?:boolean
 };
 
 
@@ -26,8 +27,8 @@ const ProductImageUpload: React.FC<ProductImageUploadProps> = ({
   setUploadedImageUrl,
   imageLoadingState,
   setImageLoadingState,
-  isEditMode
-  
+  isEditMode,
+  isCustomStyling = false,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { image } = apiEndpoints;
@@ -55,6 +56,8 @@ const ProductImageUpload: React.FC<ProductImageUploadProps> = ({
       inputRef.current.value = "";
     }
   };
+
+  
 
   const uploadImageToCloudinary = async () => {
     if (imageFile) {
@@ -128,7 +131,9 @@ const ProductImageUpload: React.FC<ProductImageUploadProps> = ({
   };
 
   return (
-    <div className="w-full max-w-md mx-auto mt-4">
+    <div
+      className={`w-full  mt-4 ${isCustomStyling ? "" : "max-w-md mx-auto"}`}
+    >
       <Label className="text-lg font-semibold mb-2 block">Upload Image</Label>
       <div
         className={`${
