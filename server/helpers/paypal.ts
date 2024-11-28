@@ -1,11 +1,12 @@
-import paypal from 'paypal-rest-sdk';
+import paypal from "paypal-rest-sdk";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 paypal.configure({
-  mode: "sandbox",
-  client_id:
-    "AXaRMtuIktJRFQu7SfZXGG9ZWiMB-KxdnCGiQ48VCj-W9smGAYwad39Oz-HcQgQB_8sDry6wYVgjZg17",
-  client_secret:
-    "EKV6_NXrKYsFveS8ZkACATl7Uux-eRvxP8kBLgxjMq2zByp_JSu46ehuSnkLjsJNlNNKd6O53SjoJoh2",
+  mode: process.env.PAYPAL_MODE ?? "sandbox",
+  client_id: process.env.PAYPAL_CLIENT_ID ?? "",
+  client_secret: process.env.PAYPAL_CLIENT_SECRET ?? "",
 });
 
 export default paypal;

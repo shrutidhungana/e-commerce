@@ -1,12 +1,13 @@
 import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
+import dotenv from "dotenv";
 
-
+dotenv.config();
 // Configure Cloudinary
 cloudinary.config({
-  cloud_name: "dmon20gzb",
-  api_key: "593587143943919",
-  api_secret: "PMgINIzZZpNE3NEjohFHzSRqbyU",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME ?? "",
+  api_key: process.env.CLOUDINARY_API_KEY ?? "",
+  api_secret: process.env.CLOUDINARY_API_SECRET ?? "",
 });
 
 const storage = multer.memoryStorage();

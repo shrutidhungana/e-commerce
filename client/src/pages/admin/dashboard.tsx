@@ -32,6 +32,8 @@ const AdminDashboard: React.FC<DashboardProps> = () => {
   );
   const { toast } = useToast();
 
+  console.log(featureImageList)
+
   useEffect(() => {
     dispatch(getFeatureImages());
   }, [dispatch]);
