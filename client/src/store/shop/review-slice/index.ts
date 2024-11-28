@@ -9,7 +9,7 @@ import {
 
 const initialState: InitialReviewState = {
   isLoading: false,
-  reviews: [] as ReviewType[],
+  reviews: [] 
 };
 
 const { AddReview, Reviews } = apiEndpoints;
