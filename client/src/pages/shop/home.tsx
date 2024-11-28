@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ShoppingLayout from "@/components/shopping-view/layout";
-import bannerOne from "@/assests/banner-1.webp";
-import bannerTwo from "@/assests/banner-2.webp";
-import bannerThree from "@/assests/banner-3.webp";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import {
@@ -35,6 +32,7 @@ import ShoppingProductTile from "@/components/shopping-view/product-tile";
 import { useToast } from "@/hooks/use-toast";
 import { Response, CurrentItem } from "@/types";
 import Empty from "@/components/common/Empty";
+import { getFeatureImages } from "@/store/common-slice";
 
 type homeProps = {};
 
@@ -64,8 +62,9 @@ const ShoppingHome: React.FC<homeProps> = () => {
   );
   const { toast } = useToast();
   const { user } = useSelector((state: RootState) => state.auth);
+  const { featureImageList } = useSelector((state:RootState) => state.commonFeature);
 
-  const slides = [bannerOne, bannerTwo, bannerThree];
+  
     const dispatch = useDispatch<AppDispatch>();
     const router = useRouter()
 
@@ -119,11 +118,11 @@ const ShoppingHome: React.FC<homeProps> = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides?.length);
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList?.length);
     }, 15000);
 
     return () => clearInterval(timer);
-  }, [slides]);
+  }, [featureImageList]);
 
   useEffect(() => {
     dispatch(
@@ -138,14 +137,18 @@ const ShoppingHome: React.FC<homeProps> = () => {
     if (productDetails !== null) setOpenDetailsDialog(true);
   }, [productDetails]);
 
+  useEffect(() => {
+    dispatch(getFeatureImages());
+  }, [dispatch]);
+
   return (
     <ShoppingLayout>
       <div className="flex flex-col min-h-screen">
         <div className="relative w-full h-[750px] overflow-hidden">
-          {slides?.map((slide, index) => (
+          {featureImageList && featureImageList?.length >0 ?featureImageList?.map((slide, index) => (
             <Image
               key={index}
-              src={slide}
+              src={slide?.image}
               alt={`Banner ${index + 1}`}
               layout="fill"
               objectFit="cover"
@@ -153,14 +156,14 @@ const ShoppingHome: React.FC<homeProps> = () => {
                 index === currentSlide ? "opacity-100" : "opacity-0"
               } absolute top-0 left-0  transition-opacity duration-1000`}
             />
-          ))}
+          )):(<Empty title="No feature Image found!" description="No,Feature Image Found! Wait until some image is added!"/>)}
           <Button
             variant="outline"
             size="icon"
             className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80"
             onClick={() =>
               setCurrentSlide(
-                (prevSlide) => (prevSlide - 1 + slides.length) % slides.length
+                (prevSlide) => (prevSlide - 1 + featureImageList.length) % featureImageList.length
               )
             }
           >
@@ -171,7 +174,7 @@ const ShoppingHome: React.FC<homeProps> = () => {
             size="icon"
             className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80"
             onClick={() =>
-              setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length)
+              setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList.length)
             }
           >
             <ChevronRightIcon className="w-4 h-4" />
