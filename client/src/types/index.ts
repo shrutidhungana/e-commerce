@@ -334,3 +334,16 @@ export type InitialSearchState = {
   isLoading: boolean;
   searchResults: Array<Search>;
 };
+
+export type Reviews = {
+  productId: string;
+  userId: string;
+  userName: string;
+  reviewMessage: string;
+  reviewValue: number;
+};
+
+export type InitialReviewState = {
+  isLoading: boolean;
+  reviews: Array<Reviews>;
+};
