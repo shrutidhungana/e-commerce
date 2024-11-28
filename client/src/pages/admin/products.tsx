@@ -123,11 +123,12 @@ const AdminProducts: React.FC<productsProps> = () => {
         });
   };
 
-  const isFormValid = () => {
-    return Object.keys(formData)
-      ?.map((key) => formData[key] !== "")
-      ?.every((item) => item);
-  };
+   function isFormValid() {
+     return Object.keys(formData)
+       ?.filter((currentKey) => currentKey !== "averageReview")
+       ?.map((key) => formData[key] !== "")
+       ?.every((item) => item);
+   }
 
   const handleDelete: HandleDelete = (getCurrentProductId) => {
     dispatch(deleteAddedProduct(getCurrentProductId)).then((data) => {
