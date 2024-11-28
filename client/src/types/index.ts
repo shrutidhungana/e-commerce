@@ -358,3 +358,17 @@ export type InitialReviewState = {
   isLoading: boolean;
   reviews: Array<Reviews>;
 };
+
+export type Image = {
+  image: string;
+  [key: string]: string;
+};
+
+export type FeatureImageState = {
+  isLoading: boolean;
+  featureImageList:Array<Image>
+}
+
+export type ImagePayload = {
+  image: string;
+}
