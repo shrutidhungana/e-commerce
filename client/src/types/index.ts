@@ -369,6 +369,4 @@ export type FeatureImageState = {
   featureImageList:Array<Image>
 }
 
-export type ImagePayload = {
-  image: string;
-}
+
