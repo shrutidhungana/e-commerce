@@ -32,6 +32,5 @@ export const apiEndpoints = {
   Reviews: `${API_BASE_URL}/shop/review/:id`,
   AddFeatureImage: `${API_BASE_URL}/common/feature/add`,
   GetFeatureImage: `${API_BASE_URL}/common/feature/lists`,
-  UpdateImage: `${API_BASE_URL}/common/feature/update/:id`,
   DeleteImage: `${API_BASE_URL}/common/feature/delete/:id`,
 };

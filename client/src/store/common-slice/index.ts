@@ -8,7 +8,7 @@ const initialState: FeatureImageState = {
   featureImageList: [],
 };
 
-const { AddFeatureImage, GetFeatureImage, UpdateImage, DeleteImage } =
+const { AddFeatureImage, GetFeatureImage, DeleteImage } =
   apiEndpoints;
 
 export const getFeatureImages = createAsyncThunk<{ data: Array<Image> }, void>(
@@ -27,13 +27,7 @@ export const addFeatureImage = createAsyncThunk<
   return response.data;
 });
 
-export const updateFeatureImage = createAsyncThunk<
-  { data: Array<Image> },
-  { id: string; image: string }
->("featureImages/updateFeatureImage", async ({ id, image }) => {
-  const response = await axios.put(UpdateImage.replace(":id", id), { image });
-  return response.data;
-});
+
 
 export const deleteFeatureImage = createAsyncThunk<{ data: Array<Image> }, string>(
   "featureImages/deleteFeatureImage",

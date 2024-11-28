@@ -4,11 +4,14 @@ import ProductImageUpload from "@/components/admin-view/image-upload";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { addFeatureImage, getFeatureImages } from "@/store/common-slice";
+import {
+  addFeatureImage,
+  getFeatureImages,
+  deleteFeatureImage,
+} from "@/store/common-slice";
 import { useToast } from "@/hooks/use-toast";
 import { Response } from "@/types";
-import Image from "next/image";
-import Empty from "@/components/common/Empty";
+import FeatureImageList from "@/components/admin-view/feature-image"
 
 type DashboardProps = {};
 
@@ -61,11 +64,35 @@ const AdminDashboard: React.FC<DashboardProps> = () => {
     });
   };
 
+  const handleDeleteImage = (id: string) => {
+    dispatch(deleteFeatureImage(id)).then((data) => {
+      const response = data as Response;
+      if (
+        response.meta.requestStatus === "fulfilled" &&
+        response.payload?.success
+      ) {
+        dispatch(getFeatureImages());
+        toast({
+          title: "Success!",
+          description: response.payload.message,
+          duration: 5000,
+          className: "bg-green-500 text-white",
+        });
+      } else {
+        toast({
+          title: "Error!",
+          description: response.error?.message,
+          duration: 5000,
+          variant: "destructive",
+          className: "text-white",
+        });
+      }
+    });
+  };
+
   useEffect(() => {
     dispatch(getFeatureImages());
   }, [dispatch]);
-
- 
 
   return (
     <AdminLayout>
@@ -79,32 +106,17 @@ const AdminDashboard: React.FC<DashboardProps> = () => {
           imageLoadingState={imageLoadingState}
           isCustomStyling={true}
         />
-        <Button onClick={handleUploadFeatureImage} className="mt-5 w-full" disabled = {!imageFile}>
+        <Button
+          onClick={handleUploadFeatureImage}
+          className="mt-5 w-full"
+          disabled={!imageFile}
+        >
           Upload
         </Button>
-        <div className="flex flex-col gap-4 mt-5">
-          {featureImageList && featureImageList.length > 0 ? (
-            featureImageList.map((featureImgItem) => (
-              <div
-                className="relative w-full h-[750px] overflow-hidden"
-                key={featureImgItem?._id}
-              >
-                <Image
-                  src={featureImgItem.image}
-                  alt="feature-image"
-                  className="  rounded-t-lg"
-                  layout="fill"
-                  objectFit="cover"
-                />
-              </div>
-            ))
-          ) : (
-            <Empty
-              title="No Feature Image"
-              description="No images found add some of it!"
-            />
-          )}
-        </div>
+        <FeatureImageList
+          featureImageList={featureImageList}
+          handleDeleteImage={handleDeleteImage}
+        />
       </div>
     </AdminLayout>
   );

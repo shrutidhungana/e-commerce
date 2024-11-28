@@ -50,40 +50,8 @@ const getFeatureImages = async (
   }
 };
 
-// Edit Feature Image
-const editFeatureImage = async (
-  req: Request,
-  res: Response
-): Promise<void | Response> => {
-  try {
-    const { id } = req.params;
-    const { image } = req.body;
 
-    const updatedFeature = await Feature.findByIdAndUpdate(
-      id,
-      { image },
-      { new: true } // Return the updated document
-    );
 
-    if (!updatedFeature) {
-      return res.status(404).json({
-        success: false,
-        message: "Feature image not found!",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      data: updatedFeature,
-      message: "Successfully updated feature image.",
-    });
-  } catch (e) {
-    res.status(500).json({
-      success: false,
-      message: "Some error occurred!",
-    });
-  }
-};
 
 // Delete Feature Image
 const deleteFeatureImage = async (
@@ -118,6 +86,6 @@ const deleteFeatureImage = async (
 export {
   addFeatureImage,
   getFeatureImages,
-  editFeatureImage,
+  
   deleteFeatureImage,
 };
