@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import ShoppingLayout from "../../components/shopping-view/layout";
-import ProductDetailsDialog from "../../components/shopping-view/product-details";
-import ShoppingProductTile from "../../components/shopping-view/product-tile";
-import { useToast } from "../../hooks/use-toast";
+import ShoppingLayout from "@/components/shopping-view/layout";
+import ProductDetailsDialog from "@/components/shopping-view/product-details";
+import ShoppingProductTile from "@/components/shopping-view/product-tile";
+import { useToast } from "@/hooks/use-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
-import { addProductToCart, fetchCartItems } from "../../store/shop/cart-slice";
-import { fetchProductDetails } from "../../store/shop/products-slice";
+import { AppDispatch, RootState } from "@/store/store";
+import { addProductToCart, fetchCartItems } from "@/store/shop/cart-slice";
+import { fetchProductDetails } from "@/store/shop/products-slice";
 import {
   getSearchResults,
   resetSearchResults,
-} from "../../store/shop/search-slice";
+} from "@/store/shop/search-slice";
 import { useRouter } from "next/router";
-import { Input } from "../../components/ui/input";
-import Empty from "../../components/common/Empty";
-import { Response, Cart } from "../../types";
+import { Input } from "@/components/ui/input";
+import Empty from "@/components/common/Empty";
+import { Response, Cart } from "@/types";
 
 type SearchProps = {};
 
