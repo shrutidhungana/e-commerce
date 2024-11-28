@@ -4,7 +4,7 @@ import { apiEndpoints } from "../../../utils/api";
 import {
   InitialReviewState,
   Reviews as ReviewType,
-  Capture,
+  ReviewPayload,
 } from "../../../types";
 
 const initialState: InitialReviewState = {
@@ -14,7 +14,7 @@ const initialState: InitialReviewState = {
 
 const { AddReview, Reviews } = apiEndpoints;
 
-export const addReview = createAsyncThunk<{ data: Array<ReviewType> }, Capture>(
+export const addReview = createAsyncThunk<{ data: Array<ReviewType> },ReviewPayload>(
   "/order/addReview",
   async (formdata) => {
     const response = await axios.post(AddReview, formdata);

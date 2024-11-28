@@ -302,8 +302,10 @@ export type OrderPayload = {
 };
 
 export type Capture = {
+  
   success: boolean;
   message: string;
+  
 };
 
 export type CapturePaymentParams = {
@@ -336,6 +338,15 @@ export type InitialSearchState = {
 };
 
 export type Reviews = {
+  productId: string;
+  userId: string;
+  userName: string;
+  reviewMessage: string;
+  reviewValue: number;
+  [key: string]: string |number;
+};
+
+export type ReviewPayload = {
   productId: string;
   userId: string;
   userName: string;
