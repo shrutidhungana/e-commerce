@@ -3,7 +3,7 @@ import paypal from "../../helpers/paypal";
 import Order from "../../modals/Order";
 import Cart from "../../modals/Cart";
 import Product from "../../modals/Product";
-import dotenv from "dotenv"; 
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -27,14 +27,20 @@ const createOrder = async (
       cartId,
     } = req.body;
 
+    const frontendUrl = req.get("Origin");
+
+    const returnUrl = `${frontendUrl}/shop/paypal-return`;
+
+    const cancelUrl = `${frontendUrl}/shop/paypal-cancel`;
+
     const create_payment_json = {
       intent: "sale",
       payer: {
         payment_method: "paypal",
       },
       redirect_urls: {
-        return_url: "http://localhost:3001/shop/paypal-return",
-        cancel_url: "http://localhost:3001/shop/paypal-cancel",
+        return_url: returnUrl,
+        cancel_url: cancelUrl,
       },
       transactions: [
         {
