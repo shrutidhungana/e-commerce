@@ -33,8 +33,8 @@ const createOrder = async (
         payment_method: "paypal",
       },
       redirect_urls: {
-        return_url: process.env.PAYPAL_RETURN,
-        cancel_url: process.env.PAYPAL_CANCEL
+        return_url: "http://localhost:3001/shop/paypal-return",
+        cancel_url: "http://localhost:3001/shop/paypal-cancel",
       },
       transactions: [
         {
