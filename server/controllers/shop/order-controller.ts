@@ -3,6 +3,9 @@ import paypal from "../../helpers/paypal";
 import Order from "../../modals/Order";
 import Cart from "../../modals/Cart";
 import Product from "../../modals/Product";
+import dotenv from "dotenv"; 
+
+dotenv.config();
 
 const createOrder = async (
   req: Request,
@@ -30,8 +33,8 @@ const createOrder = async (
         payment_method: "paypal",
       },
       redirect_urls: {
-        return_url: "http://localhost:3000/shop/paypal-return",
-        cancel_url: "http://localhost:3000/shop/paypal-cancel",
+        return_url: process.env.PAYPAL_RETURN,
+        cancel_url: process.env.PAYPAL_CANCEL
       },
       transactions: [
         {

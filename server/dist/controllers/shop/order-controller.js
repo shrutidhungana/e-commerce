@@ -8,6 +8,8 @@ const paypal_1 = __importDefault(require("../../helpers/paypal"));
 const Order_1 = __importDefault(require("../../modals/Order"));
 const Cart_1 = __importDefault(require("../../modals/Cart"));
 const Product_1 = __importDefault(require("../../modals/Product"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const createOrder = async (req, res) => {
     try {
         const { userId, cartItems, addressInfo, orderStatus, paymentMethod, paymentStatus, totalAmount, orderDate, orderUpdateDate, paymentId, payerId, cartId, } = req.body;
@@ -17,8 +19,8 @@ const createOrder = async (req, res) => {
                 payment_method: "paypal",
             },
             redirect_urls: {
-                return_url: "http://localhost:3000/shop/paypal-return",
-                cancel_url: "http://localhost:3000/shop/paypal-cancel",
+                return_url: process.env.PAYPAL_RETURN,
+                cancel_url: process.env.PAYPAL_CANCEL
             },
             transactions: [
                 {
