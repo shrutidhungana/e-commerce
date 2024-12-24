@@ -30,9 +30,15 @@ export const getOrderDetailsForAdmin = createAsyncThunk<
 export const updateOrderStatus = createAsyncThunk<Capture, UpdateOrderPayload>(
   "/order/updateOrderStatus",
   async ({ id, orderStatus }) => {
+    // Convert id to a string safely
+    const idStr =
+      typeof id === "string" || typeof id === "number"
+        ? String(id) // If id is string or number, convert to string
+        : JSON.stringify(id); // Otherwise, convert to string using JSON.stringify (for Date, Address, Cart[] etc.)
+
     const response = await axios.put(
-      `${UpdateAOrderStatus?.replace(":id", id)}`,
-      {orderStatus}
+      `${UpdateAOrderStatus?.replace(":id", idStr)}`,
+      { orderStatus }
     );
     return response.data;
   }

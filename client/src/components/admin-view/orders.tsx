@@ -62,10 +62,12 @@ const AdminOrdersView: React.FC<OrdersProps> = () => {
           </TableHeader>
           <TableBody>
             {orderList && orderList.length > 0 ? (
-              orderList.map((orderItem) => (
-                <TableRow key={orderItem?._id}>
-                  <TableCell>{orderItem?._id}</TableCell>
-                  <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
+              orderList?.map((orderItem) => (
+                <TableRow key={String(orderItem?._id)}>
+                  <TableCell>{String(orderItem?._id)}</TableCell>
+                  <TableCell>
+                    {orderItem?.orderDate?.toString().split("T")[0]}
+                  </TableCell>
                   <TableCell>
                     <Badge
                       className={(() => {
@@ -97,7 +99,9 @@ const AdminOrdersView: React.FC<OrdersProps> = () => {
                       }}
                     >
                       <Button
-                        onClick={() => handleFetchOrderDetails(orderItem?._id)}
+                        onClick={() =>
+                          handleFetchOrderDetails(String(orderItem?._id ?? ""))
+                        }
                       >
                         View Details
                       </Button>

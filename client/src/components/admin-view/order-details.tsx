@@ -3,8 +3,9 @@ import CommonForm from "../common/form";
 import { DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { useSelector, useDispatch } from "react-redux";
-import { OrderState, Order } from "../../types";
-import { RootState, AppDispatch, Response } from "@/store/store";
+import { OrderState, Order, Response } from"@/types";
+import { RootState, AppDispatch } from "@/store/store";
+
 import { Badge } from "../ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -14,7 +15,7 @@ import {
 } from "@/store/admin/order-slice";
 
 type OrdersDetailsProps = {
-  orderDetails: Order;
+  orderDetails: Order | null;
 };
 const initialFormData: OrderState = {
   status: "",
@@ -40,7 +41,7 @@ const AdminOrderDetailsView: React.FC<OrdersDetailsProps> = ({
         response.meta.requestStatus === "fulfilled" &&
         response.payload?.success
       ) {
-        dispatch(getOrderDetailsForAdmin(orderDetails?._id ?? ""));
+        dispatch(getOrderDetailsForAdmin(String(orderDetails?._id ?? "")));
         dispatch(getAllOrdersForAdmin());
         setFormData(initialFormData);
         toast({
@@ -73,12 +74,12 @@ const AdminOrderDetailsView: React.FC<OrdersDetailsProps> = ({
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="font-medium text-gray-800">Order ID</span>
-              <span className="text-black">{orderDetails?._id}</span>
+              <span className="text-black">{String(orderDetails?._id)}</span>
             </div>
             <div className="flex justify-between">
               <span className="font-medium text-gray-800">Order Date</span>
               <span className="text-black">
-                {orderDetails?.orderDate?.split("T")[0]}
+                {orderDetails?.orderDate?.toString().split("T")[0]}
               </span>
             </div>
             <div className="flex justify-between">
@@ -124,10 +125,10 @@ const AdminOrderDetailsView: React.FC<OrdersDetailsProps> = ({
           <Separator className="bg-black" />
           <ul className="space-y-4">
             {orderDetails?.cartItems && orderDetails?.cartItems.length > 0
-              ? orderDetails?.cartItems.map((item) => (
+              ? orderDetails?.cartItems.map((item:any) => (
                   <li
                     className="flex flex-wrap items-center justify-between p-4 border-b border-gray-300 hover:bg-gray-100"
-                    key={item?.price}
+                    key={item?.id}
                   >
                     <span className="text-sm font-medium text-gray-800">
                       Title:

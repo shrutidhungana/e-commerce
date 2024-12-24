@@ -6,7 +6,7 @@ import {
   Airplay,
   BabyIcon,
   ChevronLeftIcon,
-  ChevronRightIcon, 
+  ChevronRightIcon,
   CloudLightning,
   Heater,
   Images,
@@ -54,8 +54,6 @@ const brandsWithIcon = [
   { id: "ethnic", label: "Ethnic", icon: BookUser },
 ];
 
-
-
 const ShoppingHome: React.FC<homeProps> = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [openDetailsDialog, setOpenDetailsDialog] = useState<boolean>(false);
@@ -64,29 +62,29 @@ const ShoppingHome: React.FC<homeProps> = () => {
   );
   const { toast } = useToast();
   const { user } = useSelector((state: RootState) => state.auth);
-  const { featureImageList } = useSelector((state: RootState) => state.commonFeature);
-  
-  console.log(categoriesWithIcon)
+  const { featureImageList } = useSelector(
+    (state: RootState) => state.commonFeature
+  );
 
-  
-    const dispatch = useDispatch<AppDispatch>();
-    const router = useRouter()
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
 
   const handleGetProductDetails = (getCurrentProductId: string) => {
     dispatch(fetchProductDetails(getCurrentProductId));
   };
-    
-    
-    const handleNavigateToListingPage = (getCurrentItem:CurrentItem, section: string) => {
-        
-        sessionStorage.removeItem("filters");
-        const currentFilter = {
-            [section]: [getCurrentItem.id],
-        };
-        
-        sessionStorage.setItem("filters", JSON.stringify(currentFilter));
-        router.push(`/shop/listing`)
-    }
+
+  const handleNavigateToListingPage = (
+    getCurrentItem: CurrentItem,
+    section: string
+  ) => {
+    sessionStorage.removeItem("filters");
+    const currentFilter = {
+      [section]: [getCurrentItem.id],
+    };
+
+    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
+    router.push(`/shop/listing`);
+  };
 
   const handleAddToCart = (getCurrentProductId: string) => {
     dispatch(
@@ -122,7 +120,9 @@ const ShoppingHome: React.FC<homeProps> = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList?.length);
+      setCurrentSlide(
+        (prevSlide) => (prevSlide + 1) % featureImageList?.length
+      );
     }, 15000);
 
     return () => clearInterval(timer);
@@ -149,25 +149,34 @@ const ShoppingHome: React.FC<homeProps> = () => {
     <ShoppingLayout>
       <div className="flex flex-col min-h-screen">
         <div className="relative w-full h-[750px] overflow-hidden">
-          {featureImageList && featureImageList?.length >0 ?featureImageList?.map((slide, index) => (
-            <Image
-              key={index}
-              src={slide?.image}
-              alt={`Banner ${index + 1}`}
-              layout="fill"
-              objectFit="cover"
-              className={`${
-                index === currentSlide ? "opacity-100" : "opacity-0"
-              } absolute top-0 left-0  transition-opacity duration-1000`}
+          {featureImageList && featureImageList?.length > 0 ? (
+            featureImageList?.map((slide, index) => (
+              <Image
+                key={index}
+                src={slide?.image}
+                alt={`Banner ${index + 1}`}
+                layout="fill"
+                objectFit="cover"
+                className={`${
+                  index === currentSlide ? "opacity-100" : "opacity-0"
+                } absolute top-0 left-0  transition-opacity duration-1000`}
+              />
+            ))
+          ) : (
+            <Empty
+              title="No feature Image found!"
+              description="No,Feature Image Found! Wait until some image is added!"
             />
-          )):(<Empty title="No feature Image found!" description="No,Feature Image Found! Wait until some image is added!"/>)}
+          )}
           <Button
             variant="outline"
             size="icon"
             className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80"
             onClick={() =>
               setCurrentSlide(
-                (prevSlide) => (prevSlide - 1 + featureImageList.length) % featureImageList.length
+                (prevSlide) =>
+                  (prevSlide - 1 + featureImageList.length) %
+                  featureImageList.length
               )
             }
           >
@@ -178,7 +187,9 @@ const ShoppingHome: React.FC<homeProps> = () => {
             size="icon"
             className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80"
             onClick={() =>
-              setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList.length)
+              setCurrentSlide(
+                (prevSlide) => (prevSlide + 1) % featureImageList.length
+              )
             }
           >
             <ChevronRightIcon className="w-4 h-4" />

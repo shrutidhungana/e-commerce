@@ -186,10 +186,12 @@ export type CartItems = {
 };
 
 export type Cart = {
+  
   _id?: string;
   productId: string;
   quantity: number;
   items: CartItems[];
+  
 };
 
 export type CartState = {
@@ -322,7 +324,7 @@ export type AdminOrderState = {
 
 export type UpdateOrderPayload = {
   orderStatus: string;
-  id: string;
+ id: string | number | Date | Address | Cart[];
 };
 
 export type Search = {
