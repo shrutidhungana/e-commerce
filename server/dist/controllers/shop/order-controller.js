@@ -13,17 +13,14 @@ dotenv_1.default.config();
 const createOrder = async (req, res) => {
     try {
         const { userId, cartItems, addressInfo, orderStatus, paymentMethod, paymentStatus, totalAmount, orderDate, orderUpdateDate, paymentId, payerId, cartId, } = req.body;
-        const frontendUrl = req.get("Origin");
-        const returnUrl = `${frontendUrl}/shop/paypal-return`;
-        const cancelUrl = `${frontendUrl}/shop/paypal-cancel`;
         const create_payment_json = {
             intent: "sale",
             payer: {
                 payment_method: "paypal",
             },
             redirect_urls: {
-                return_url: returnUrl,
-                cancel_url: cancelUrl,
+                return_url: "http://localhost:3001/shop/paypal-return",
+                cancel_url: "http://localhost:3001/shop/paypal-cancel",
             },
             transactions: [
                 {
@@ -46,15 +43,16 @@ const createOrder = async (req, res) => {
         };
         paypal_1.default.payment.create(create_payment_json, async (error, paymentInfo) => {
             if (error) {
-                console.error(error);
+                console.log(error);
                 return res.status(500).json({
                     success: false,
-                    message: "Error while creating PayPal payment",
+                    message: "Error while creating paypal payment",
                 });
             }
             else {
                 const newlyCreatedOrder = new Order_1.default({
                     userId,
+                    cartId,
                     cartItems,
                     addressInfo,
                     orderStatus,
@@ -65,22 +63,20 @@ const createOrder = async (req, res) => {
                     orderUpdateDate,
                     paymentId,
                     payerId,
-                    cartId,
                 });
                 await newlyCreatedOrder.save();
-                // Safely access approval_url
-                const approvalURL = paymentInfo?.links?.find((link) => link.rel === "approval_url")?.href;
-                if (!approvalURL) {
+                const approvalLink = paymentInfo.links?.find((link) => link.rel === "approval_url");
+                if (!approvalLink) {
                     return res.status(500).json({
                         success: false,
-                        message: "Approval URL not found in PayPal response",
+                        message: "No approval URL returned by PayPal",
                     });
                 }
+                const approvalURL = approvalLink.href;
                 res.status(201).json({
                     success: true,
                     approvalURL,
                     orderId: newlyCreatedOrder._id,
-                    message: "Successfully created order!",
                 });
             }
         });
