@@ -68,7 +68,7 @@ useEffect(() => {
           </TableHeader>
           <TableBody>
             {orderList && orderList.length > 0 ? (
-              orderList.map((orderItem) => (
+              orderList.map((orderItem:any) => (
                 <TableRow key={orderItem?._id}>
                   <TableCell>{orderItem?._id}</TableCell>
                   <TableCell>{orderItem?.orderDate?.split("T")[0]}</TableCell>

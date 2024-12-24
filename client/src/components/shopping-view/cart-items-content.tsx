@@ -23,8 +23,7 @@ const UserCartItemsContent: React.FC<UserCartItemsContentProps> = ({
   const dispatch = useDispatch<AppDispatch>();
 
   const individualPrice = (
-    (cartItem?.salePrice > 0 ? cartItem?.salePrice : cartItem?.price) *
-    cartItem?.quantity
+    (cartItem?.salePrice ?? cartItem?.price ?? 0) * (cartItem?.quantity ?? 1)
   ).toFixed(2);
 
   const handleUpdateQuantity = (
@@ -39,8 +38,8 @@ const UserCartItemsContent: React.FC<UserCartItemsContentProps> = ({
           (item: Cart) => item.productId === getCartItem?.productId
         );
 
-        const getCurrentProductIndex = productList.findIndex(
-          (product) => product._id === getCartItem?.productId
+        const getCurrentProductIndex = productList?.findIndex(
+          (product:any) => product._id === getCartItem?.productId
         );
         const getTotalStock = productList[getCurrentProductIndex]?.totalStock;
 

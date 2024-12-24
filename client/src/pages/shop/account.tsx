@@ -1,14 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import ShoppingLayout from "@/components/shopping-view/layout";
-import accImg from "@/assests/account.jpg";
+import accImg from "../../../public/account.jpg";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ShoppingOrders from "@/components/shopping-view/orders";
 import Address from "@/components/shopping-view/address";
+import { Address as AddressType } from "@/types";
 
 type accountProps = {};
 
 const ShoppingAccount: React.FC<accountProps> = () => {
+   const [currentSelectedAddress, setCurrentSelectedAddress] =
+     useState<AddressType| null>(null);
   return (
     <ShoppingLayout>
       <div className="flex flex-col">
@@ -32,7 +35,10 @@ const ShoppingAccount: React.FC<accountProps> = () => {
                 <ShoppingOrders />
               </TabsContent>
               <TabsContent value="address">
-                <Address />
+                <Address
+                  setCurrentSelectedAddress={setCurrentSelectedAddress}
+                  selectedId={currentSelectedAddress}
+                />
               </TabsContent>
             </Tabs>
           </div>

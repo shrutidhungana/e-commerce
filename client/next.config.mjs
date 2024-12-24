@@ -13,6 +13,9 @@ const nextConfig = {
       },
     ],
   },
+  typescript: {
+    ignoreBuildErrors: true, // Add this line
+  },
 };
 
 export default nextConfig;

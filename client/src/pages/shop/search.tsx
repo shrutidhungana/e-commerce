@@ -58,7 +58,7 @@ const SearchProducts: React.FC<SearchProps> = () => {
     getCurrentProductId: string,
     getTotalStock: string
   ) => {
-    let getCartItems = cartItems.items || [];
+    let getCartItems = cartItems.items|| [];
 
     if (getCartItems.length) {
       const indexOfCurrentItem = getCartItems.findIndex(
@@ -66,14 +66,15 @@ const SearchProducts: React.FC<SearchProps> = () => {
       );
       if (indexOfCurrentItem > -1) {
         const getQuantity = getCartItems[indexOfCurrentItem].quantity;
-        if (getQuantity + 1 > getTotalStock) {
-          toast({
-            title: `Only ${getQuantity} quantity can be added for this item.`,
-            variant: "destructive",
-          });
+         const totalStock = Number(getTotalStock); 
+       if (getQuantity + 1 > totalStock) {
+         toast({
+           title: `Only ${getQuantity} quantity can be added for this item.`,
+           variant: "destructive",
+         });
 
-          return;
-        }
+         return;
+       }
       }
     }
 
@@ -138,9 +139,9 @@ const SearchProducts: React.FC<SearchProps> = () => {
           />
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {searchResults.map((item) => (
+          {searchResults.map((item:any) => (
             <ShoppingProductTile
-              key={item?.id}
+              key={String(item?.id)}
               product={item}
               handleGetProductDetails={handleGetProductDetails}
               handleAddToCart={handleAddToCart}

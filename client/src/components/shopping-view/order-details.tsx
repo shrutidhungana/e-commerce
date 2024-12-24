@@ -27,12 +27,12 @@ const ShoppingOrderDetailsView: React.FC<OrderDetailsProps> = ({
           <div className="space-y-2">
             <div className="flex justify-between">
               <span className="font-medium text-gray-800">Order ID</span>
-              <span className="text-black">{orderDetails?._id}</span>
+              <span className="text-black">{String(orderDetails?._id)}</span>
             </div>
             <div className="flex justify-between">
               <span className="font-medium text-gray-800">Order Date</span>
               <span className="text-black">
-                {orderDetails?.orderDate?.split("T")[0]}
+                {orderDetails?.orderDate?.toString().split("T")[0]}
               </span>
             </div>
             <div className="flex justify-between">
@@ -79,7 +79,7 @@ const ShoppingOrderDetailsView: React.FC<OrderDetailsProps> = ({
           <Separator className="bg-black" />
           <ul className="space-y-4">
             {orderDetails?.cartItems && orderDetails?.cartItems.length > 0
-              ? orderDetails?.cartItems.map((item) => (
+              ? orderDetails?.cartItems.map((item:any) => (
                   <li
                     className="flex flex-wrap items-center justify-between p-4 border-b border-gray-300 hover:bg-gray-100"
                     key={item?.price}

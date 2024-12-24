@@ -311,9 +311,9 @@ export type Capture = {
 };
 
 export type CapturePaymentParams = {
-  paymentId: string;
-  payerId: string;
-  orderId: string;
+  paymentId: string[] | string;
+  payerId: string[] | string;
+  orderId:  string[] |string;
 };
 
 export type AdminOrderState = {

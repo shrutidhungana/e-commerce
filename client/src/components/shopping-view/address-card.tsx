@@ -9,7 +9,7 @@ type AddressCardProps = {
   handleDeleteAddress: (address: Address) => void;
   handleEditAddress: (address: Address) => void;
   setCurrentSelectedAddress?: (address: Address) => void;
-  selectedId: Address;
+  selectedId: Address| null;
 };
 
 const AddressCard: React.FC<AddressCardProps> = ({

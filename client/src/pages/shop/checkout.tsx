@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import ShoppingLayout from "@/components/shopping-view/layout";
-import img from "@/assests/account.jpg";
+import img from "../../../public/account.jpg";
 import Image from "next/image";
 import Address from "@/components/shopping-view/address";
 import { useDispatch, useSelector } from "react-redux";

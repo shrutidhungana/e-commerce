@@ -112,7 +112,11 @@ const shoppingCartSlice = createSlice({
         deleteItemInCart.fulfilled,
         (state, action: PayloadAction<{ data: Array<Cart> }>) => {
           state.isLoading = false;
-          state.cartItems = action.payload.data;
+          // state.cartItems = action.payload.data;
+          const data = Array.isArray(action.payload.data)
+            ? action.payload.data
+            : [action.payload.data];
+          state.cartItems = data;
         }
       )
       .addCase(deleteItemInCart.rejected, (state) => {

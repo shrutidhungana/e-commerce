@@ -21,10 +21,8 @@ const UserCartWrapper: React.FC<UserCartWrapperProps> = ({cartItems, setOpenCart
       ? cartItems.reduce(
           (sum, currentItem) =>
             sum +
-            (currentItem?.salePrice > 0
-              ? currentItem?.salePrice
-              : currentItem?.price) *
-              currentItem?.quantity,
+            (currentItem?.salePrice ?? currentItem?.price ?? 0) *
+              (currentItem?.quantity ?? 0),
           0
         )
       : 0;
@@ -36,7 +34,7 @@ const UserCartWrapper: React.FC<UserCartWrapperProps> = ({cartItems, setOpenCart
         </SheetHeader>
         <div className="mt-8 space-y-4">
           {cartItems && cartItems?.length > 0 ? (
-            cartItems?.map((item) => (
+            cartItems?.map((item:any) => (
               <UserCartItemsContent cartItem={item} key={item?.id} />
             ))
           ) : (

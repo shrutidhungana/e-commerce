@@ -12,11 +12,12 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-   // add this line to help the paths resolve from `src`
-     "paths": {
+    // add this line to help the paths resolve from `src`
+    "paths": {
       "@/*": ["./src/*"]
     },
-    "target": "ES2017"
+    "target": "ES2017",
+    
   },
   "include": [
     "next-env.d.ts",

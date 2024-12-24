@@ -21,7 +21,7 @@ import Empty from "../common/Empty";
 
 type AddressProps = {
   setCurrentSelectedAddress?: (address: AddressType) => void;
-  selectedId: AddressType,
+  selectedId: AddressType|null,
 };
 
 const initialAddressFormData: InitialAddressFormData = {
@@ -180,7 +180,7 @@ const Address: React.FC<AddressProps> = ({ setCurrentSelectedAddress, selectedId
     <Card>
       <div className="mb-5 p-3 grid grid-cols-1 sm:grid-cols-2  gap-2">
         {addressList && addressList?.length > 0 ? (
-          addressList?.map((singleAddressItem) => (
+          addressList?.map((singleAddressItem: any) => (
             <AddressCard
               key={singleAddressItem?.userId}
               addressInfo={singleAddressItem}
