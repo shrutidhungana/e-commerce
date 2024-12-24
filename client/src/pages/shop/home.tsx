@@ -54,6 +54,8 @@ const brandsWithIcon = [
   { id: "ethnic", label: "Ethnic", icon: BookUser },
 ];
 
+
+
 const ShoppingHome: React.FC<homeProps> = () => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [openDetailsDialog, setOpenDetailsDialog] = useState<boolean>(false);
@@ -62,7 +64,9 @@ const ShoppingHome: React.FC<homeProps> = () => {
   );
   const { toast } = useToast();
   const { user } = useSelector((state: RootState) => state.auth);
-  const { featureImageList } = useSelector((state:RootState) => state.commonFeature);
+  const { featureImageList } = useSelector((state: RootState) => state.commonFeature);
+  
+  console.log(categoriesWithIcon)
 
   
     const dispatch = useDispatch<AppDispatch>();
