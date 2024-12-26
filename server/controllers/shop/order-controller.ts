@@ -98,6 +98,7 @@ const createOrder = async (
             success: true,
             approvalURL,
             orderId: newlyCreatedOrder._id,
+            message: "Payment created successfully!"
           });
         }
       });

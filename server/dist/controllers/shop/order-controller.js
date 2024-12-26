@@ -77,6 +77,7 @@ const createOrder = async (req, res) => {
                     success: true,
                     approvalURL,
                     orderId: newlyCreatedOrder._id,
+                    message: "Payment created successfully!"
                 });
             }
         });
