@@ -19,4 +19,4 @@ In order page it is possible to view all the order and change the Order Status a
 
 To know more about the application,you can click on the link below:
 
-# https://e-commerce-hazel-iota-68.vercel.app
+ https://e-commerce-hazel-iota-68.vercel.app
