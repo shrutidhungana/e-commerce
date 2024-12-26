@@ -7,6 +7,7 @@ const initialState: AuthState = {
   isAuthenticated: false,
   isLoading: true,
   user: null,
+  token: null,
 };
 
 const { register, login, logout, auth } = apiEndpoints;
@@ -51,18 +52,34 @@ export const logoutUser = createAsyncThunk<User | null>(
   }
 );
 
+// export const checkAuth = createAsyncThunk<User | null>(
+//   "/auth/checkauth",
+
+//   async () => {
+//     const response = await axios.get<User>(auth, {
+//       withCredentials: true,
+//       headers: {
+//         "Cache-Control":
+//           "no-store, no-cache, must-revalidate, proxy-revalidate",
+//       },
+//     });
+    
+//     return response.data;
+//   }
+// );
+
 export const checkAuth = createAsyncThunk<User | null>(
   "/auth/checkauth",
 
-  async () => {
+  async (token) => {
     const response = await axios.get<User>(auth, {
-      withCredentials: true,
       headers: {
+        Authorization: `Bearer ${token}`,
         "Cache-Control":
           "no-store, no-cache, must-revalidate, proxy-revalidate",
       },
     });
-    
+
     return response.data;
   }
 );
@@ -72,6 +89,11 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {},
+    resetTokenAndCredentials: (state) => {
+      state.isAuthenticated = false;
+      state.user = null;
+      state.token = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -101,7 +123,12 @@ const authSlice = createSlice({
           state.isLoading = false;
           // Handle the case when the user is registered successfully
           if (action.payload && action.payload.success) {
-            state.user = action.payload; // Assuming user is part of the payload
+            state.user = action.payload;
+            state.token = action.payload.token;
+            sessionStorage.setItem(
+              "token",
+              JSON.stringify(action.payload.token)
+            ); // Assuming user is part of the payload
             state.isAuthenticated = true;
           } else {
             state.user = null;
@@ -113,6 +140,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+        state.token = null;
       })
       .addCase(logoutUser.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -130,7 +158,7 @@ const authSlice = createSlice({
           // Check if action.payload is not null
           if (action.payload) {
             state.user = action.payload;
-            
+
             state.isAuthenticated = true;
           } else {
             // Handle the case where action.payload is null
@@ -147,5 +175,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, resetTokenAndCredentials } = authSlice.actions;
 export default authSlice.reducer;

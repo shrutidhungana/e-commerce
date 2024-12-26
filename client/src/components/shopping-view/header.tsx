@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { logoutUser } from "@/store/auth-slice";
+import { logoutUser, resetTokenAndCredentials } from "@/store/auth-slice";
 import { HousePlug, LogOut, Menu, ShoppingCart, UserCog } from "lucide-react";
 import { AppDispatch, RootState } from "@/store/store";
 import { Button } from "../ui/button";
@@ -22,6 +22,7 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import UserCartWrapper from "./cart-wrapper";
 import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Badge } from "../ui/badge";
+
 
 type headerProps = {};
 
@@ -77,7 +78,10 @@ const HeaderRightContent = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const handleLogout = () => {
-    dispatch(logoutUser());
+    // dispatch(logoutUser());
+    dispatch(resetTokenAndCredentials());
+    sessionStorage.clear();
+    router.push("/auth/login");
   };
   useEffect(() => {
     dispatch(fetchCartItems(user?.user?.id ?? ""));

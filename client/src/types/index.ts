@@ -5,6 +5,7 @@ export type User = {
   name: string;
   email: string;
   success: boolean;
+  token?: null;
 
   user: {
     id: string;
@@ -17,6 +18,7 @@ export type AuthState = {
   isAuthenticated: boolean;
   isLoading: boolean;
   user: User | null;
+  token:null|undefined,
 };
 
 export type FormControl = {

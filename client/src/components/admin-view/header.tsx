@@ -2,8 +2,9 @@ import React from "react";
 import { Button } from "../ui/button";
 import { AlignJustify, LogOut } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "@/store/auth-slice";
+import { logoutUser, resetTokenAndCredentials } from "@/store/auth-slice";
 import { AppDispatch } from "@/store/store";
+import { useRouter } from "next/router";
 
 type AdminHeaderProps = {
   setOpen: (open: boolean) => void;
@@ -11,9 +12,14 @@ type AdminHeaderProps = {
 
 const AdminHeader: React.FC<AdminHeaderProps> = ({setOpen}) => {
     const dispatch = useDispatch<AppDispatch>();
-    
+    const router = useRouter()
+  
+  
     const handleLogout = () => {
-      dispatch(logoutUser());
+      // dispatch(logoutUser());
+        dispatch(resetTokenAndCredentials());
+        sessionStorage.clear();
+        router.push("/auth/login");
     };
 
   return (
